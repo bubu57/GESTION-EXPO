@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS gestion_expo;
 USE gestion_expo;
 
 CREATE TABLE Exposition (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT PRIMARY KEY,
     nom VARCHAR(100),
     type VARCHAR(50),
     lieux VARCHAR(100),
