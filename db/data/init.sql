@@ -10,14 +10,16 @@ CREATE TABLE Exposition (
     quota INT,
     visiteur INT,
     date_debut DATE,
-    date_fin DATE
+    date_fin DATE,
+    id_lieu INT,
+    FOREIGN KEY (id_lieu) REFERENCES Lieu(id)
 );
 
 CREATE TABLE Visiteur (
     id INT PRIMARY KEY AUTO_INCREMENT,
     visiteur VARCHAR(50),
     prenom VARCHAR(50),
-    email VARCHAR(100),
+    email VARCHAR(100)
 );
 
 CREATE TABLE Inscription (
@@ -42,17 +44,14 @@ CREATE TABLE Lieu (
     longitude FLOAT
 );
 
-ALTER TABLE Exposition
-ADD COLUMN id INT,
-ADD FOREIGN KEY (id) REFERENCES Lieux(id);
-
 CREATE TABLE Utilisateur (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     login VARCHAR(100),
     mot_de_passe VARCHAR(100),
     niveau VARCHAR(100)
 );
 
 CREATE TABLE Parametre (
-
+    id INT PRIMARY KEY AUTO_INCREMENT
+    -- Ajoutez vos colonnes pour les paramètres ici
 );
