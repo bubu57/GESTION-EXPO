@@ -5,7 +5,7 @@ USE gestion_expo;
 CREATE TABLE Exposition (
     id INT PRIMARY KEY,
     nom VARCHAR(100),
-    type VARCHAR(50),
+    types VARCHAR(50),
     lieux VARCHAR(100),
     quota INT,
     visiteur INT,
