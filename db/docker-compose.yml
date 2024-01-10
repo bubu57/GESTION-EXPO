@@ -1,10 +1,8 @@
 version: '3'
 services:
   db:
-    image: mariadb:latest
+    build: .
     container_name: db_expo
-    cap_add:
-      - SYS_NICE
     restart: always
     environment:
       - MYSQL_DATABASE=user
@@ -12,6 +10,3 @@ services:
     ports:
       - '3306:3306'
       - '3307:3307'
-    volumes:
-      - ./data/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./data/init.sql:/init.sql
