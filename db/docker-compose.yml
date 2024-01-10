@@ -1,8 +1,8 @@
 version: '3'
 services:
   db:
-    build: .
-    container_name: db_gestion
+    image: mariadb:latest
+    container_name: db_expo
     cap_add:
       - SYS_NICE
     restart: always
