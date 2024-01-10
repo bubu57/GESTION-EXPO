@@ -13,4 +13,4 @@ services:
       - '3306:3306'
       - '3307:3307'
     volumes:
-      - ./test.sql:/docker-entrypoint-initdb.d/test.sql
+      - ./init.sql:/docker-entrypoint-initdb.d/test.sql
