@@ -12,7 +12,6 @@ CREATE TABLE Exposition (
     date_debut DATE,
     date_fin DATE,
     id_lieu INT,
-    FOREIGN KEY (id_lieu) REFERENCES Lieu(id)
 );
 
 CREATE TABLE Visiteur (
@@ -30,8 +29,6 @@ CREATE TABLE Inscription (
     date_sortie DATE,
     qrcode VARCHAR(100),
     status_entree VARCHAR(20),
-    FOREIGN KEY (id_visiteur) REFERENCES Visiteur(id),
-    FOREIGN KEY (id_exposition) REFERENCES Exposition(id)
 );
 
 CREATE TABLE Lieu (
