@@ -11,7 +11,7 @@ CREATE TABLE Exposition (
     visiteur INT,
     date_debut DATE,
     date_fin DATE,
-    id_lieu INT,
+    id_lieu INT
 );
 
 CREATE TABLE Visiteur (
@@ -28,7 +28,7 @@ CREATE TABLE Inscription (
     date_entree DATE,
     date_sortie DATE,
     qrcode VARCHAR(100),
-    status_entree VARCHAR(20),
+    status_entree VARCHAR(20)
 );
 
 CREATE TABLE Lieu (
