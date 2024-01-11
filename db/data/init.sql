@@ -2,11 +2,21 @@ CREATE DATABASE IF NOT EXISTS gestion_expo;
 
 USE gestion_expo;
 
+CREATE TABLE Lieu (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    numero INT,
+    rue VARCHAR(100),
+    ville VARCHAR(100),
+    code_postal INT,
+    latitude FLOAT,
+    longitude FLOAT
+);
+
 CREATE TABLE Exposition (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(100),
     type VARCHAR(50),
-    lieux VARCHAR(100),
+    lieux INT,
     quota INT,
     visiteur INT,
     date_debut DATE,
@@ -32,16 +42,6 @@ CREATE TABLE Inscription (
     status_entree VARCHAR(20),
     FOREIGN KEY (id_visiteur) REFERENCES Visiteur(id),
     FOREIGN KEY (id_exposition) REFERENCES Exposition(id)
-);
-
-CREATE TABLE Lieu (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    numero INT,
-    rue VARCHAR(100),
-    ville VARCHAR(100),
-    code_postal INT,
-    latitude FLOAT,
-    longitude FLOAT
 );
 
 CREATE TABLE Utilisateur (
