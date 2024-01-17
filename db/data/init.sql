@@ -53,5 +53,4 @@ CREATE TABLE Utilisateur (
 
 CREATE TABLE Parametre (
     id INT PRIMARY KEY AUTO_INCREMENT
-    -- Ajoutez vos colonnes pour les paramètres ici
 );
