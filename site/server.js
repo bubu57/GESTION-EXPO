@@ -41,6 +41,9 @@ app.get('/api/app', (req, res) => {
     });
 });
 
+app.get('/api/enregistrement', (req, res) => {
+});
+
 
 // app.get('/api/app', (req, res) => {
 //     res.send({
