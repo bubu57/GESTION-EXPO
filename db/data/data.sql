@@ -6,7 +6,7 @@ INSERT INTO Lieu (numero, rue, ville, code_postal, latitude, longitude)
 VALUES 
   (123, 'Rue de la Liberté', 'Paris', 75001, 48.8566, 2.3522),
   (456, 'Main Street', 'New York', 10001, 40.7128, -74.0060),
-  (789, 'Oxford Street', 'London', '10000', 51.5074, -0.1278);
+  (789, 'Oxford Street', 'London', 10000, 51.5074, -0.1278);
 
 -- Ajout de données dans la table Exposition
 INSERT INTO Exposition (nom, type, lieux, quota, visiteur, date_debut, date_fin, id_lieu)
