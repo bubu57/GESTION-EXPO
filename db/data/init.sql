@@ -18,8 +18,8 @@ CREATE TABLE Exposition (
     type VARCHAR(50),
     quota INT,
     visiteur INT,
-    date_debut DATE,
-    date_fin DATE,
+    date_debut VARCHAR(10),
+    date_fin VARCHAR(10),
     id_lieu INT,
     FOREIGN KEY (id_lieu) REFERENCES Lieu(id)
 );

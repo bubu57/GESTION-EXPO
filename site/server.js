@@ -69,8 +69,8 @@ app.post('/api/enregistrement', (req, res) => {
   `;
 
   const expoQuery = `
-    INSERT INTO Exposition (id, id_lieu, nom, type)
-    VALUES (5, 5, "${req.body.nom}", "${req.body.type}");
+    INSERT INTO Exposition (id, id_lieu, quota ,nom, type, date_debut, date_fin)
+    VALUES (5, 5, ${req.body.quota} ,"${req.body.nom}", "${req.body.type}", "${req.body.date_debut}", "${req.body.date_fin}");
   `;
 
   // Commencez la transaction
