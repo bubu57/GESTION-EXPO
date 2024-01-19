@@ -1,3 +1,4 @@
+import { json } from 'express';
 import React, { useState } from 'react';
 
 const EnregistrementExpo = () => {
@@ -27,7 +28,7 @@ const EnregistrementExpo = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(formData),
+      body: {'test': 'value'},
     })
       .then(response => response.json())
       .then(data => {
