@@ -63,21 +63,58 @@ app.post('/api/enregistrement', (req, res) => {
 
   const id = get_id_expo() + 1;
 
-  const requette = `INSERT INTO Lieu (id, rue)
+  const lieuQuery = `
+  INSERT INTO Lieu (id, rue)
   VALUES (5, "${req.body.lieu}");
-  INSERT INTO Exposition (id, id_lieu, nom, type)
-  VALUES (5, 5, "${req.body.nom}", "${req.body.type}");
-`;
+  `;
 
+  const expoQuery = `
+    INSERT INTO Exposition (id, id_lieu, nom, type)
+    VALUES (5, 5, "${req.body.nom}", "${req.body.type}");
+  `;
 
-  connection.query(requette, (err, results) => {
+  // Commencez la transaction
+  connection.beginTransaction((err) => {
     if (err) {
-      console.error('Erreur lors de la création d\'une nouvelle expo:', err);
-      res.status(500).json({ error: 'Erreur interne du serveur' });
-    } else {
-      res.json(results)
+      console.error(err);
+      res.status(500).json({ error: 'Erreur lors de la création d\'une nouvelle expo' });
+      return;
     }
+
+    // Exécutez la première requête (lieuQuery)
+    connection.query(lieuQuery, (err, results) => {
+      if (err) {
+        console.error(err);
+        return connection.rollback(() => {
+          res.status(500).json({ error: 'Erreur lors de la création d\'une nouvelle expo' });
+        });
+      }
+
+      // Exécutez la deuxième requête (expoQuery)
+      connection.query(expoQuery, (err, results) => {
+        if (err) {
+          console.error(err);
+          return connection.rollback(() => {
+            res.status(500).json({ error: 'Erreur lors de la création d\'une nouvelle expo' });
+          });
+        }
+
+        // Commit si tout s'est bien passé
+        connection.commit((err) => {
+          if (err) {
+            console.error(err);
+            return connection.rollback(() => {
+              res.status(500).json({ error: 'Erreur lors de la création d\'une nouvelle expo' });
+            });
+          }
+
+          // Transaction réussie, envoyez la réponse au client
+          res.json({ success: true });
+        });
+      });
+    });
   });
+
 });
 
 
