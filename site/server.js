@@ -14,6 +14,20 @@ const connection = mysql.createConnection({
     database: process.env.DB_NAME,
 });
 
+function get_id_expo() {
+  const requette = `
+    SELECT id from Exposition;
+  `;
+  connection.query(requette, (err, results) => {
+    if (err) {
+      console.error('Erreur lors de la récupération des données de la table exposition:', err);
+      res.status(500).json({ error: 'Erreur interne du serveur' });
+    } else {
+      return results;
+    }
+  });
+}
+
 connection.connect((err) => {
     if (err) {
       console.error('Erreur de connexion à la base de données:', err);
@@ -41,12 +55,29 @@ app.get('/api/app', (req, res) => {
     });
 });
 
-// Exemple côté serveur avec Express
+
+
 app.post('/api/enregistrement', (req, res) => {
-  // ... traiter les données reçues de la requête
-  // Envoyer une réponse JSON
   console.log(req.body);
   res.json({ success: true, message: 'Enregistrement réussi' });
+
+  const id = get_id_expo() + 1;
+
+  const requette = `INSERT INTO Lieu (id, rue)
+  VALUES (5, "${req.body.lieu}");
+  INSERT INTO Exposition (id, id_lieu, nom, type)
+  VALUES (5, 5, "${req.body.nom}", "${req.body.type}");
+`;
+
+
+  connection.query(requette, (err, results) => {
+    if (err) {
+      console.error('Erreur lors de la création d\'une nouvelle expo:', err);
+      res.status(500).json({ error: 'Erreur interne du serveur' });
+    } else {
+      res.json(results)
+    }
+  });
 });
 
 
