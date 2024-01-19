@@ -1,4 +1,4 @@
-import { json } from 'express';
+
 import React, { useState } from 'react';
 
 const EnregistrementExpo = () => {
@@ -21,18 +21,16 @@ const EnregistrementExpo = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Envoi des données au backend
+  
     fetch('/api/enregistrement', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: {'test': 'value'},
+      body: JSON.stringify(formData),
     })
       .then(response => response.json())
       .then(data => {
-        // Traitez la réponse si nécessaire
         console.log('Réponse du serveur:', data);
       })
       .catch(error => {

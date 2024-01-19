@@ -41,8 +41,14 @@ app.get('/api/app', (req, res) => {
     });
 });
 
-app.get('/api/enregistrement', (req, res) => {
+// Exemple côté serveur avec Express
+app.post('/api/enregistrement', (req, res) => {
+  // ... traiter les données reçues de la requête
+  // Envoyer une réponse JSON
+  console.log(req.body);
+  res.json({ success: true, message: 'Enregistrement réussi' });
 });
+
 
 
 // app.get('/api/app', (req, res) => {
