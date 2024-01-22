@@ -61,8 +61,6 @@ app.post('/api/enregistrement', (req, res) => {
   console.log(req.body);
   res.json({ success: true, message: 'Enregistrement réussi' });
 
-  const id = get_id_expo() + 1;
-
   const lieuQuery = `
   INSERT INTO Lieu (id, rue)
   VALUES (5, "${req.body.lieu}");

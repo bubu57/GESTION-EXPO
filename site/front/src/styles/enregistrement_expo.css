@@ -1,5 +1,5 @@
 body {
-    background-color: gray;
+    background-color: #F0F0F0F0;
 }
 
 .container {
@@ -14,13 +14,12 @@ body {
 .img {
     width: 30%;
     height: 100%;
-    background-color: aqua;
+    background-image: url("../img/bg_form.PNG");
 }
 
 .form {
     width: 70%;
     height: 100%;
-    background-color: blueviolet;
 }
 
 .title {
@@ -35,7 +34,6 @@ body {
 
 .form-name {
     width: 30%;
-    background-color: blue;
     height: 90%;
 }
 
@@ -47,10 +45,10 @@ body {
 }
 
 .form-input {
-    background-color: white;
     width: 80%;
     height: 90%;
 }
+
 .div-input {
     padding-top: 40px;
     border-bottom: 2px solid #000000;
@@ -66,10 +64,49 @@ input {
     width: 80%;
 }
 
-.button {
-    background-color: aquamarine;
+button {
+    background-color: #31BB4F;
     width: 200px;
     height: 30px;
+    border: 0;
+    cursor: pointer;
+    margin-top: 30px;
 }
 
 
+@media screen and (max-width: 1350px) {
+    .container {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+}
+
+@media screen and (max-width: 1050px) {
+    .img {
+        display: none;
+    }
+    .form {
+        width: 100%;
+    }
+}
+
+
+@media screen and (max-width: 800px) {
+    .form-input {
+        width: 70%;
+    }
+    .form-name {
+        width: 30%;
+    }
+
+    .label {
+        padding-right: 10px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        margin-left: 5%;
+        margin-right: 5%;
+    }  
+}
