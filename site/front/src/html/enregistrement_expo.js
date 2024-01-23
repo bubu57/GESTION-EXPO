@@ -79,6 +79,15 @@ const EnregistrementExpoForm = ({ formData, handleChange, handleSubmit }) => {
                   value={formData.lieu}
                   onChange={handleChange}
                 />
+                {suggestions.length > 0 && (
+                  <ul className="suggestions-list">
+                    {suggestions.map((suggestion, index) => (
+                      <li key={index} onClick={() => handleSuggestionClick(suggestion)}>
+                        {suggestion}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
               <div className='div-input'>
                 <input
