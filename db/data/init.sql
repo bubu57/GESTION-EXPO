@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS gestion_expo;
 USE gestion_expo;
 
 CREATE TABLE Lieu (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     numero INT,
     rue VARCHAR(100),
     ville VARCHAR(100),
@@ -13,7 +13,7 @@ CREATE TABLE Lieu (
 );
 
 CREATE TABLE Exposition (
-    id INT PRIMARY KEY ,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(100),
     type VARCHAR(50),
     quota INT,
@@ -32,7 +32,7 @@ CREATE TABLE Visiteur (
 );
 
 CREATE TABLE Inscription (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     id_exposition INT,
     id_visiteur INT,
     date_entree DATE,

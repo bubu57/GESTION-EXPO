@@ -6,7 +6,6 @@ services:
     restart: always
     environment:
       - MYSQL_DATABASE=user
-      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=projet2024expo
     ports:
       - '3306:3306'
-      - '3307:3307'
