@@ -124,9 +124,9 @@ app.post('/api/enregistrement', (req, res) => {
 // })
 
 app.get('/*', (_, res) => {
-    res.sendFile(path.join(__direname, '/front/build/index.html'));
+  res.sendFile(path.join(__dirname, '/front/build/index.html'));
 })
 
 app.listen(PORT, () => {
-    console.log(`server lancé sur le port: ${PORT}`);
+  console.log(`server lancé sur le port: ${PORT}`);
 })
