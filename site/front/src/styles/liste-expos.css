@@ -3,8 +3,13 @@
 /* Styles pour les écrans larges */
 .colonne-container {
   display: flex;
-  flex-wrap: column;
-  gap: 120px;
+    flex-wrap: column;
+    gap: 120px;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    height: 40vh;
 }
 
 .colonne {
@@ -56,6 +61,15 @@
     width: 62rem;
     height: 256px;
 }
+
+.rectangle-2{
+  box-sizing: border-box;
+  border: 1px solid #000;
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 80rem;
+  height: 400px;
+}
 .text-historique {
   margin-top: -2.1rem;
   margin-left: 87rem;
@@ -65,11 +79,19 @@
   margin-left: 93rem;
 }
 
-
+.button-reserved-1{   margin-left: 48rem;
+  margin-top: 5rem;
+  position: absolute;}
+.button-reserved-2{
+  margin-left: 48rem;
+    margin-top: 5rem;
+    position: absolute;
+}
 .button-histo{
   margin-left: 92rem;
-    position: absolute;
-    top: 64px;
+  position: absolute;
+  top: -34px;
+  display: flex;
 }
 /* Styles pour les écrans moyens */
 @media screen and (max-width: 1200px) {
@@ -77,7 +99,44 @@
       gap: 20px;
   }
 }
+.header {
+  position: absolute;
+  display: flow;
+  display: block;
+  top: 100px;
+}
+.date-text-listes-expos{
+  position: absolute;
+  margin-left: 9rem;
+  margin-top: 5.5rem;
 
+}
+.heure{
+  position: absolute;
+  /* display: list-item; */
+  margin-left: 25rem;
+  margin-top: 5.5rem;
+  font-size: 22px;
+}
+.heure-text-listes-expos{
+  position: absolute;
+  margin-left: 31rem;
+  margin-top: 5.5rem;
+
+}
+
+.title-expo{
+  position: absolute;
+  font-size: 44px;
+  margin-left: 68rem;
+  margin-top: 1rem;
+}
+
+.search {
+  position: sticky;
+  margin-top: 5rem;
+  margin-left: 1rem;
+}
 /* Styles pour les écrans plus petits */
 @media screen and (max-width: 768px) {
   .colonne {

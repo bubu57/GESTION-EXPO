@@ -37,7 +37,7 @@ const Historique = ({ formData, handleChange, handleSubmit }) => {
       <div>
       <p class='title-expo-historique'>Expositions passées </p>
       </div>
-      <div class="img">
+      <div class="img-profile">
         <button>
           <img src={ProfilLabel} alt='' />
           </button>
@@ -147,6 +147,7 @@ const Historique = ({ formData, handleChange, handleSubmit }) => {
         </div>
 </div>
 </div>
+
 
           </div>
     

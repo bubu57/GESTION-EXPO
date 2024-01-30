@@ -7,6 +7,8 @@ import ButtonReserved from './Button-reserved.svg'
 import Elipse from './Ellipse.svg'
 import Search from './Search.svg'
 import { Link } from 'react-router-dom';
+
+
 const EnregistrementVisiteur = ({ formData, handleChange, handleSubmit }) => {
   return (
     
@@ -14,12 +16,23 @@ const EnregistrementVisiteur = ({ formData, handleChange, handleSubmit }) => {
           <img src={logo} alt='' class='img-logo'/>
         
       <div className='header'>
-
+    
 
         <p className='text-expo'>Expositions</p>
         <p className = 'text-venir'>à venir</p> 
         <p className='text-enregistrement'>Enregistrement</p>
         <p className='text-historique'>Historique</p>
+        <p className='date'>Date</p>
+      <div className='date-text-listes-expos'>
+        
+        <textarea id="zoneTexte" placeholder="Saisissez une date ici..."></textarea>
+    </div>
+
+    <p className='heure'>Heure</p>
+      <div className='heure-text-listes-expos'>
+        
+        <textarea id="zoneTexte" placeholder="Saisissez une heure ici..."></textarea>
+    </div>
         <Link to ="/historique">
           <div >
         <button>
@@ -31,11 +44,6 @@ const EnregistrementVisiteur = ({ formData, handleChange, handleSubmit }) => {
       <div>
       <p class='title-expo'>Liste des expositions </p>
       </div>
-      <div class="img">
-        <button>
-          <img src={ProfilLabel} alt='' />
-          </button>
-          </div>
  
        
         <div className='header-boutton'>
@@ -47,6 +55,7 @@ const EnregistrementVisiteur = ({ formData, handleChange, handleSubmit }) => {
       <div className='search'>
         <img src={Search}></img>
         <p className='search-txt'></p>
+
       </div>
 
       <div className='colonne-container'>
@@ -57,9 +66,9 @@ const EnregistrementVisiteur = ({ formData, handleChange, handleSubmit }) => {
           <div className='expo'>
             <p className='expo-titre'></p>
             <div className='expo-content'>
-            <Link to ="/historique">
-                <button><img src = {ButtonReserved } alt='' class='img-button'></img></button>
-              </Link>
+           <div className='button-reserved-1'> <Link to ="/formulaire-enregistrement">
+                <button><img src = {ButtonReserved } alt=''></img></button>
+              </Link></div>
               <div className='expo-label'>
                 <p className='expo-label-txt'>Type</p>
                 <p class="expo-label-quota"> Quota </p>
@@ -87,9 +96,79 @@ const EnregistrementVisiteur = ({ formData, handleChange, handleSubmit }) => {
           <div className='expo'>
             <p className='expo-titre'></p>
             <div className='expo-content'>
+              <div className='button-reserved-2'>
             <Link to ="/formulaire-enregistrement">
-                <button><img src = {ButtonReserved } alt='' class='img-button'></img></button>
+                <button><img src = {ButtonReserved } alt=''></img></button>
               </Link>
+              </div>
+              <div className='expo-label'>
+                <p className='expo-label-txt'>Type</p>
+                <p class="expo-label-quota"> Quota </p>
+                <p class="expo-label-date"> Date </p>
+                <p class="expo-label-ville"> Ville </p>
+              </div>
+
+              <div className='expo-boutton'>
+                <p className='expo-boutton-txt'></p>
+              </div> 
+            </div>
+
+
+
+
+
+          </div>
+        </div>
+
+        
+        </div>
+
+        <div className='colonne-col3'>
+        <div className='rectangle'>
+
+
+
+          <div className='expo'>
+            <p className='expo-titre'></p>
+            <div className='expo-content'>
+              <div className='button-reserved-2'>
+            <Link to ="/formulaire-enregistrement">
+                <button><img src = {ButtonReserved } alt=''></img></button>
+              </Link>
+              </div>
+              <div className='expo-label'>
+                <p className='expo-label-txt'>Type</p>
+                <p class="expo-label-quota"> Quota </p>
+                <p class="expo-label-date"> Date </p>
+                <p class="expo-label-ville"> Ville </p>
+              </div>
+
+              <div className='expo-boutton'>
+                <p className='expo-boutton-txt'></p>
+              </div> 
+            </div>
+
+
+
+
+
+          </div>
+        </div>
+        </div>
+        
+        <div className='colonne-col4'>
+        <div className='rectangle'>
+
+
+
+          <div className='expo'>
+            <p className='expo-titre'></p>
+            <div className='expo-content'>
+              <div className='button-reserved-2'>
+            <Link to ="/formulaire-enregistrement">
+                <button><img src = {ButtonReserved } alt=''></img></button>
+              </Link>
+              </div>
               <div className='expo-label'>
                 <p className='expo-label-txt'>Type</p>
                 <p class="expo-label-quota"> Quota </p>
@@ -110,11 +189,76 @@ const EnregistrementVisiteur = ({ formData, handleChange, handleSubmit }) => {
         </div>
         </div>
 </div>
+<div className='colonne-col5'>
+        <div className='rectangle'>
+
+
+
+          <div className='expo'>
+            <p className='expo-titre'></p>
+            <div className='expo-content'>
+              <div className='button-reserved-2'>
+            <Link to ="/formulaire-enregistrement">
+                <button><img src = {ButtonReserved } alt=''></img></button>
+              </Link>
+              </div>
+              <div className='expo-label'>
+                <p className='expo-label-txt'>Type</p>
+                <p class="expo-label-quota"> Quota </p>
+                <p class="expo-label-date"> Date </p>
+                <p class="expo-label-ville"> Ville </p>
+              </div>
+
+              <div className='expo-boutton'>
+                <p className='expo-boutton-txt'></p>
+              </div> 
+            </div>
+
+
+
+
+
+          </div>
+        </div>
+        </div>
+        <div className='colonne-col6'>
+        <div className='rectangle'>
+
+
+
+          <div className='expo'>
+            <p className='expo-titre'></p>
+            <div className='expo-content'>
+              <div className='button-reserved-2'>
+            <Link to ="/formulaire-enregistrement">
+                <button><img src = {ButtonReserved } alt=''></img></button>
+              </Link>
+              </div>
+              <div className='expo-label'>
+                <p className='expo-label-txt'>Type</p>
+                <p class="expo-label-quota"> Quota </p>
+                <p class="expo-label-date"> Date </p>
+                <p class="expo-label-ville"> Ville </p>
+              </div>
+
+              <div className='expo-boutton'>
+                <p className='expo-boutton-txt'></p>
+              </div> 
+            </div>
+
+
+
+
+
+          </div>
+        </div>
+        </div>
 </div>
 
   
     
     );
 };
+
 
 export default EnregistrementVisiteur;

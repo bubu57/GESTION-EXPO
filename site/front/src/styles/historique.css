@@ -1,5 +1,5 @@
-.title-expo-historique{
-
+/* Style de base */
+.title-expo-historique {
         font-size: 2.5rem;
         width: 100%;
         background-color: #f0f0f0;
@@ -7,11 +7,27 @@
         background-position: center;
         height: 100%;
         font-family: math;
+    }
     
-}
-
-.button-histo-histo{
-        margin-left: 92rem;
-    position: absolute;
-    top: 106px;
-}
+    .button-histo-histo {
+        margin-left: 4%; /* Utilisation de pourcentage au lieu de pixels pour une meilleure adaptabilité */
+        position: absolute;
+        top: 10px; /* Utilisation de valeurs plus flexibles */
+    }
+    
+    /* Media query pour les écrans de taille moyenne à grande */
+    @media screen and (min-width: 768px) {
+        .button-histo-histo {
+            margin-left: 8%;
+            top: 20px;
+        }
+    }
+    
+    /* Media query pour les écrans de grande taille */
+    @media screen and (min-width: 1200px) {
+        .button-histo-histo {
+            margin-left: 12%;
+            top: 30px;
+        }
+    }
+    

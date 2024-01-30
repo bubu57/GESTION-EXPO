@@ -61,11 +61,13 @@
     color: #9e9e9e;
 }
 .date{
-    font-size: 25px;
+    font-size: 32px;
     color: #9e9e9e;
     margin-left: 3rem;
-    margin-top: 3rem;
+    margin-top: 1.5rem;
+    position: absolute;
 }
+
 
 .img-register{
     margin-left: 126rem;
@@ -78,7 +80,7 @@
 
 .email-text{
     margin-left: 8rem;
-    position: absolute;
+    position: absolute; 
  
     top: 722px;
 }
