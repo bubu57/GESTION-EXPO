@@ -1,0 +1,44 @@
+
+.div-titre {
+  border-bottom: 2px solid #000000;
+  width: 300px;
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  width: 100%;
+}
+
+.col {
+  width: 50%;
+}
+
+.expo {
+  width: 500px;
+  border: 2px solid #000000;
+  margin-top: 50px;
+}
+
+.expo-content {
+  display: flex;
+  width: 100%;
+}
+
+.expo-text {
+  width: 70%;
+  padding-left: 5px;
+  text-align: left;
+}
+
+.reserver {
+  margin-top: 40px;
+  width: 30%;
+  height: 50px;
+  margin-right: 5px;
+  background-color: aquamarine;
+} 

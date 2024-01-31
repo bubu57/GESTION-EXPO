@@ -40,35 +40,44 @@ app.use(express.json())
 app.use(express.static('front/build'))
 
 app.get('/api/app', (req, res) => {
-    const requette = `
-      SELECT Exposition.*, Lieu.ville
-      FROM Exposition
-      JOIN Lieu ON Exposition.id_lieu = Lieu.id
-    `;
-    connection.query(requette, (err, results) => {
-      if (err) {
-        console.error('Erreur lors de la récupération des données de la table exposition:', err);
-        res.status(500).json({ error: 'Erreur interne du serveur' });
-      } else {
-        res.json(results)
-      }
-    });
+  const expositionQuery = 'SELECT * FROM Exposition';
+  const lieuQuery = 'SELECT * FROM Lieu';
+
+  connection.query(expositionQuery, (expositionErr, expositionResults) => {
+    if (expositionErr) {
+      console.error('Erreur lors de la récupération des données de la table exposition:', expositionErr);
+      res.status(500).json({ error: 'Erreur interne du serveur' });
+    } else {
+      connection.query(lieuQuery, (lieuErr, lieuResults) => {
+        if (lieuErr) {
+          console.error('Erreur lors de la récupération des données de la table lieu:', lieuErr);
+          res.status(500).json({ error: 'Erreur interne du serveur' });
+        } else {
+          // Combine les données exposition et lieu
+          const combinedResults = expositionResults.map(exposition => {
+            const lieu = lieuResults.find(l => l.id === exposition.id);
+            return { ...exposition, ville: lieu.rue };
+          });
+
+          res.json(combinedResults);
+        }
+      });
+    }
+  });
 });
 
 
 
 app.post('/api/enregistrement', (req, res) => {
-  console.log(req.body);
-  res.json({ success: true, message: 'Enregistrement réussi' });
 
   const lieuQuery = `
-  INSERT INTO Lieu (id, rue)
-  VALUES (5, "${req.body.lieu}");
+  INSERT INTO Lieu (rue)
+  VALUES ("${req.body.lieu}");
   `;
 
   const expoQuery = `
-    INSERT INTO Exposition (id, id_lieu, quota ,nom, type, date_debut, date_fin)
-    VALUES (5, 5, ${req.body.quota} ,"${req.body.nom}", "${req.body.type}", "${req.body.date_debut}", "${req.body.date_fin}");
+    INSERT INTO Exposition (quota ,nom, type, date_debut, date_fin)
+    VALUES (${req.body.quota} ,"${req.body.nom}", "${req.body.type}", "${req.body.date_debut}", "${req.body.date_fin}");
   `;
 
   // Commencez la transaction
@@ -107,7 +116,7 @@ app.post('/api/enregistrement', (req, res) => {
           }
 
           // Transaction réussie, envoyez la réponse au client
-          res.json({ success: true });
+          res.json({ success: true, message: 'Enregistrement réussi' });
         });
       });
     });
@@ -116,6 +125,45 @@ app.post('/api/enregistrement', (req, res) => {
 });
 
 
+
+app.post('/api/register_user', (req, res) => {
+  console.log(req.body);
+
+  const lieuQuery = `
+  INSERT INTO Visiteur (nom, prenom, email)
+  VALUES ("${req.body.nom}", "${req.body.prenom}", "${req.body.mail}");
+  `;
+
+  // Commencez la transaction
+  connection.beginTransaction((err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Erreur lors de la création d\'un nouvelle user' });
+      return;
+    }
+
+  // Exécutez la requête 
+  connection.query(lieuQuery, (err, results) => {
+    if (err) {
+      console.error(err);
+      return connection.rollback(() => {
+        res.status(500).json({ error: 'Erreur lors de la création d\'un nouvelle user' });
+      });
+    }
+
+      // Commit si tout s'est bien passé
+      connection.commit((err) => {
+        if (err) {
+          console.error(err);
+          return connection.rollback(() => {
+            res.status(500).json({ error: 'Erreur lors de la création d\'un nouvelle user' });
+          });
+        }
+      });
+    });
+    res.json({ success: true, message: 'Enregistrement réussi' });
+  });
+});
 
 // app.get('/api/app', (req, res) => {
 //     res.send({

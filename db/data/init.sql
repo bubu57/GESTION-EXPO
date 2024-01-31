@@ -19,16 +19,15 @@ CREATE TABLE Exposition (
     quota INT,
     visiteur INT,
     date_debut VARCHAR(10),
-    date_fin VARCHAR(10),
-    id_lieu INT,
-    FOREIGN KEY (id_lieu) REFERENCES Lieu(id)
+    date_fin VARCHAR(10)
 );
 
 CREATE TABLE Visiteur (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    visiteur VARCHAR(50),
+    nom VARCHAR(50),
     prenom VARCHAR(50),
-    email VARCHAR(100)
+    email VARCHAR(100),
+    date VARCHAR(10)
 );
 
 CREATE TABLE Inscription (
@@ -38,9 +37,7 @@ CREATE TABLE Inscription (
     date_entree DATE,
     date_sortie DATE,
     qrcode VARCHAR(100),
-    status_entree VARCHAR(20),
-    FOREIGN KEY (id_visiteur) REFERENCES Visiteur(id),
-    FOREIGN KEY (id_exposition) REFERENCES Exposition(id)
+    status_entree VARCHAR(20)
 );
 
 CREATE TABLE Utilisateur (
