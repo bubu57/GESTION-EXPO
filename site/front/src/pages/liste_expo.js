@@ -3,11 +3,18 @@ import axios from 'axios';
 
 const ListesExpos = () => {
   const [expositions, setExpositions] = useState([]);
+  const [villeFiltre, setVilleFiltre] = useState('');
+  const [dateFiltre, setDateFiltre] = useState('');
+  const [heureFiltre, setHeureFiltre] = useState('');
+  const [expositionsFiltrees, setExpositionsFiltrees] = useState([]);
+  const [afficherDetails, setAfficherDetails] = useState(false);
+
 
   useEffect(() => {
     // Charger les données des expositions depuis le serveur
     axios.get('/api/app') // Assurez-vous d'avoir une route '/api/expositions' sur votre serveur
       .then(response => {
+
         setExpositions(response.data);
         console.log(response.data);
       })
@@ -16,11 +23,59 @@ const ListesExpos = () => {
       });
   }, []);
 
-  // Diviser le tableau d'expositions en deux parties
-  const middleIndex = Math.ceil(expositions.length / 2);
-  const firstColumn = expositions.slice(0, middleIndex);
-  const secondColumn = expositions.slice(middleIndex);
+  // filtrer par ville
+  useEffect(() => {
+    // Filtrer les expositions en fonction de la ville
+    const expositionsFiltrees = expositions.filter(expo =>
+      expo.ville.toLowerCase().includes(villeFiltre.toLowerCase())
+    );
+    setExpositionsFiltrees(expositionsFiltrees);
+  }, [villeFiltre, expositions]);
+
+  const handleVilleInputChange = (e) => {
+    setVilleFiltre(e.target.value);
+  };
+
+  // filtrer par date
+  useEffect(() => {
+    // Filtrer les expositions en fonction de la ville
+    const expositionsFiltrees = expositions.filter(expo =>
+      expo.date_debut.toLowerCase().includes(dateFiltre.toLowerCase())
+    );
+    setExpositionsFiltrees(expositionsFiltrees);
+  }, [dateFiltre, expositions]);
+
+  const handleDateInputChange = (e) => {
+    setDateFiltre(e.target.value);
+  };
+
+  // filtrer par heure
+  useEffect(() => {
+    // Filtrer les expositions en fonction de la ville
+    const expositionsFiltrees = expositions.filter(expo =>
+      expo.heure_debut.toLowerCase().includes(heureFiltre.toLowerCase())
+    );
+    setExpositionsFiltrees(expositionsFiltrees);
+  }, [heureFiltre, expositions]);
+
+  const handleHeureInputChange = (e) => {
+    setHeureFiltre(e.target.value);
+  };
   
+
+
+  // Fonction pour afficher les détails
+  const handleVoirPlusClick = () => {
+    setAfficherDetails(true);
+  };
+
+  // Fonction pour cacher les détails
+  const handleFermerDetails = () => {
+    setAfficherDetails(false);
+  };
+
+
+
   return(
     <div className='1container'>
       <center>
@@ -28,49 +83,80 @@ const ListesExpos = () => {
       </center>
 
       <div className='search'>
-        <p className='text' >Chercher par ville</p>
+        <div className='div-inputt'>
+          <p>Filrer par ville</p>
+          <input
+            className='input'
+            type="text"
+            placeholder="Paris"
+            value={villeFiltre}
+            onChange={handleVilleInputChange}
+          />
+        </div>
+
+        <div className='div-inputt'>
+          <p>Filrer par date</p>
+          <input
+              className='input'
+              type="date"
+              placeholder="mm/dd/yyyy"
+              value={dateFiltre}
+              onChange={handleDateInputChange}
+          />
+        </div>
+
+        <div className='div-inputt'>
+          <p>Filrer par heure</p>
+          <input
+            className='input'
+            type="text"
+            placeholder="15:30"
+            value={heureFiltre}
+            onChange={handleHeureInputChange}
+          />
+        </div>
       </div>
       <center>
         <div className='content'>
-          <div className='col'>
-            {firstColumn.map((expo, index) => (
-              <div key={index} className='expo'>
-                <center><p className='text-expo'>{expo.nom}</p></center>
-                <div className='expo-content'>
-                  <div className='expo-text'>
-                    <p className='label-type'>Type: {expo.type}</p>
-                    <p className='label-quota'>Quota: {expo.quota}</p>
-                    <p className='label-date'>Date: {expo.date_debut} - {expo.date_fin}</p>
-                    <p className='label-ville'>Ville: {expo.ville}</p>
-                  </div>
-                  <div className='spacer'></div>
-                  <div className='reserver'>
-                    <center><p className='label-reserver'>Voir plus</p></center>
-                  </div>
+          {expositionsFiltrees.map((expo, index) => (
+            <div key={index} className='expo'>
+              <center><p className='text-expo'>{expo.nom}</p></center>
+              <div className='expo-content'>
+                <div className='expo-text'>
+                  <p className='label-type'>Type: {expo.type}</p>
+                  <p className='label-quota'>Quota: {expo.quota}</p>
+                  <p className='label-date'>Date: {expo.date_debut} - {expo.date_fin}</p>
+                  <p className='label-ville'>Ville: {expo.ville}</p>
+                  <p className='label-heure'>Horaire: {expo.heure_debut} - {expo.heure_fin}</p>
                 </div>
-              </div>
-            ))}
-          </div>
+                <div className='spacer'></div>
+                <div className='reserver' onClick={handleVoirPlusClick}>
+                  <center><p className='label-reserver'>Voir plus</p></center>
+                </div>
 
-          <div className='col'>
-            {secondColumn.map((expo, index) => (
-              <div key={index} className='expo'>
-                <center><p className='text-expo'>{expo.nom}</p></center>
-                <div className='expo-content'>
-                  <div className='expo-text'>
-                    <p className='label-type'>Type: {expo.type}</p>
-                    <p className='label-quota'>Quota: {expo.quota}</p>
-                    <p className='label-date'>Date: {expo.date_debut} - {expo.date_fin}</p>
-                    <p className='label-ville'>Ville: {expo.ville}</p>
+
+
+                {afficherDetails && (
+                  <div className='overlay'>
+                    <div className='details'>
+                      <button onClick={handleFermerDetails}>Fermer</button>
+                      <center>
+                      <p className='labell'>Nom: {expo.nom}</p>
+                      <p className='labell'>Type: {expo.type}</p>
+                      <p className='labella'>Quota: {expo.quota}</p>
+                      <p className='labell'>Date: {expo.date_debut} - {expo.date_fin}</p>
+                      <p className='labell'>Horaire: {expo.heure_debut} - {expo.heure_fin}</p>
+                      <p className='labell'>Adresse: {expo.numero} {expo.rue} {expo.ville} {expo.cp}</p>
+                      <p className='labell'>Coordonnee: {expo.latitude} {expo.longitude}</p>
+                    </center>
+                    </div>
                   </div>
-                  <div className='spacer'></div>
-                  <div className='reserver'>
-                    <center><p className='label-reserver'>Voir plus</p></center>
-                  </div>
-                </div>
+                )}
+
+          
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </center>
     </div>

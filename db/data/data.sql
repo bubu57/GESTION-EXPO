@@ -9,11 +9,11 @@ VALUES
   (789, 'Oxford Street', 'London', 10000, 51.5074, -0.1278);
 
 -- Ajout de données dans la table Exposition
-INSERT INTO Exposition (nom, type, quota, visiteur, date_debut, date_fin)
+INSERT INTO Exposition (nom, type, quota, visiteur, date_debut, date_fin, heure_debut, heure_fin)
 VALUES 
-  ('Exposition Art Moderne', 'Art', 100, 0, '2024-01-01', '2024-01-10'),
-  ('Salon du Livre', 'Littérature', 150, 0, '2024-02-01', '2024-02-10'),
-  ('Expo Technologique', 'Technologie', 120, 0, '2024-03-01', '2024-03-10');
+  ('Exposition Art Moderne', 'Art', 100, 0, '2024-01-01', '2024-01-10', '15:30:00', '17:45:00'),
+  ('Salon du Livre', 'Littérature', 150, 0, '2024-02-01', '2024-02-10', '10:30:00', '17:45:00'),
+  ('Expo Technologique', 'Technologie', 120, 0, '2024-03-01', '2024-03-10', '07:30:00', '17:45:00');
 
 -- Ajout de données dans la table Visiteur
 INSERT INTO Visiteur (nom, prenom, email)

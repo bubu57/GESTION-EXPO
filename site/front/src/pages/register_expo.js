@@ -124,26 +124,29 @@ const EnregistrementExpo = () => {
                   name="nom"
                   value={formData.nom}
                   onChange={handleChange}
+                  required
                 />
               </div>
               <div className='div-input'>
                 <input
                   className='date_debut'
-                  type="text"
+                  type="date"
                   placeholder="21/02/2024"
                   name="date_debut"
                   value={formData.date_debut}
                   onChange={handleChange}
+                  required
                 />
               </div>
               <div className='div-input'>
                 <input
                   className='date_fin'
-                  type="text"
+                  type="date"
                   placeholder="22/02/2024"
                   name="date_fin"
                   value={formData.date_fin}
                   onChange={handleChange}
+                  required
                 />
               </div>
               <div className='div-input'>
@@ -154,6 +157,7 @@ const EnregistrementExpo = () => {
                   name="quota"
                   value={formData.quota}
                   onChange={handleChange}
+                  required
                 />
               </div>
               <div className='div-input'>
@@ -164,6 +168,7 @@ const EnregistrementExpo = () => {
                   name="type"
                   value={formData.type}
                   onChange={handleChange}
+                  required
                 />
               </div>
               <div className='div-input'>
@@ -174,6 +179,7 @@ const EnregistrementExpo = () => {
                   name="lieu"
                   value={formData.lieu}
                   onChange={handleChange}
+                  required
                 />
                 {suggestions.length > 0 && (
                   <ul className="suggestions-list">

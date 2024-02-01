@@ -19,7 +19,9 @@ CREATE TABLE Exposition (
     quota INT,
     visiteur INT,
     date_debut VARCHAR(10),
-    date_fin VARCHAR(10)
+    date_fin VARCHAR(10),
+    heure_debut TIME,
+    heure_fin TIME
 );
 
 CREATE TABLE Visiteur (

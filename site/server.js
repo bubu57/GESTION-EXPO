@@ -14,20 +14,6 @@ const connection = mysql.createConnection({
     database: process.env.DB_NAME,
 });
 
-function get_id_expo() {
-  const requette = `
-    SELECT id from Exposition;
-  `;
-  connection.query(requette, (err, results) => {
-    if (err) {
-      console.error('Erreur lors de la récupération des données de la table exposition:', err);
-      res.status(500).json({ error: 'Erreur interne du serveur' });
-    } else {
-      return results;
-    }
-  });
-}
-
 connection.connect((err) => {
     if (err) {
       console.error('Erreur de connexion à la base de données:', err);
@@ -56,7 +42,7 @@ app.get('/api/app', (req, res) => {
           // Combine les données exposition et lieu
           const combinedResults = expositionResults.map(exposition => {
             const lieu = lieuResults.find(l => l.id === exposition.id);
-            return { ...exposition, ville: lieu.rue };
+            return { ...exposition, ville: lieu.ville, numero: lieu.numero, rue: lieu.rue, cp: lieu.code_postale, latitude: lieu.latitude, longitude: lieu.longitude };
           });
 
           res.json(combinedResults);
