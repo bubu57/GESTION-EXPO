@@ -8,6 +8,7 @@ const ListesExpos = () => {
   const [heureFiltre, setHeureFiltre] = useState('');
   const [expositionsFiltrees, setExpositionsFiltrees] = useState([]);
   const [afficherDetails, setAfficherDetails] = useState(false);
+  const [expositionSelectionnee, setExpositionSelectionnee] = useState(null);
 
 
   useEffect(() => {
@@ -65,13 +66,13 @@ const ListesExpos = () => {
 
 
   // Fonction pour afficher les détails
-  const handleVoirPlusClick = () => {
-    setAfficherDetails(true);
+  const handleVoirPlusClick = (expo) => {
+    setExpositionSelectionnee(expo);
   };
 
   // Fonction pour cacher les détails
   const handleFermerDetails = () => {
-    setAfficherDetails(false);
+    setExpositionSelectionnee(null);
   };
 
 
@@ -130,13 +131,13 @@ const ListesExpos = () => {
                   <p className='label-heure'>Horaire: {expo.heure_debut} - {expo.heure_fin}</p>
                 </div>
                 <div className='spacer'></div>
-                <div className='reserver' onClick={handleVoirPlusClick}>
+                <div className='reserver' onClick={() => handleVoirPlusClick(expo)}>
                   <center><p className='label-reserver'>Voir plus</p></center>
                 </div>
 
 
 
-                {afficherDetails && (
+                {expositionSelectionnee && expositionSelectionnee.id === expo.id && (
                   <div className='overlay'>
                     <div className='details'>
                       <button onClick={handleFermerDetails}>Fermer</button>
