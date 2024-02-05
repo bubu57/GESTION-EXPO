@@ -29,13 +29,8 @@ CREATE TABLE Visiteur (
     nom VARCHAR(50),
     prenom VARCHAR(50),
     email VARCHAR(100),
-    date VARCHAR(10)
-);
-
-CREATE TABLE Inscription (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    id_exposition INT,
-    id_visiteur INT,
+    date DATE,
+    id_expo INT,
     date_entree DATE,
     date_sortie DATE,
     qrcode VARCHAR(100),
@@ -46,7 +41,7 @@ CREATE TABLE Utilisateur (
     id INT PRIMARY KEY AUTO_INCREMENT,
     login VARCHAR(100),
     mot_de_passe VARCHAR(100),
-    niveau VARCHAR(100)
+    niveau VARCHAR(100),
 );
 
 CREATE TABLE Parametre (

@@ -22,13 +22,6 @@ VALUES
   ('Bob', 'Martin', 'bob@example.com'),
   ('Charlie', 'Johnson', 'charlie@example.com');
 
--- Ajout de données dans la table Inscription
-INSERT INTO Inscription (id_exposition, id_visiteur, date_entree, date_sortie, qrcode, status_entree)
-VALUES 
-  (1, 1, '2024-01-05', '2024-01-08', 'QR123', 'Entrée autorisée'),
-  (2, 2, '2024-02-05', '2024-02-08', 'QR456', 'Entrée autorisée'),
-  (3, 3, '2024-03-05', '2024-03-08', 'QR789', 'Entrée autorisée');
-
 -- Ajout de données dans la table Utilisateur
 INSERT INTO Utilisateur (login, mot_de_passe, niveau)
 VALUES 

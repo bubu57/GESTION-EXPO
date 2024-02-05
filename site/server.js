@@ -113,11 +113,12 @@ app.post('/api/enregistrement', (req, res) => {
 
 
 app.post('/api/register_user', (req, res) => {
+
   console.log(req.body);
 
   const lieuQuery = `
-  INSERT INTO Visiteur (nom, prenom, email)
-  VALUES ("${req.body.nom}", "${req.body.prenom}", "${req.body.mail}");
+  INSERT INTO Visiteur (nom, prenom, email, id_expo, date)
+  VALUES ("${req.body.nom}", "${req.body.prenom}", "${req.body.mail}", "${req.body.id_expo}", "${req.body.date}");
   `;
 
   // Commencez la transaction
@@ -145,9 +146,9 @@ app.post('/api/register_user', (req, res) => {
             res.status(500).json({ error: 'Erreur lors de la création d\'un nouvelle user' });
           });
         }
+        res.json({ success: true, message: 'Enregistrement réussi' });
       });
     });
-    res.json({ success: true, message: 'Enregistrement réussi' });
   });
 });
 
