@@ -48,7 +48,7 @@ const FormEnregistrements = () => {
 
   const handleSubmit = (e) => {
 
-    const qrcode_data = `${formData.nom}|${formData.prenom}|${formData.id_expo}`;
+    const qrcode_data = `${formData.nom};${formData.prenom};${formData.id_expo}`;
     setText(qrcode_data)
 
     e.preventDefault();

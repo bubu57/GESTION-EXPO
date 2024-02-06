@@ -57,8 +57,8 @@ app.get('/api/app', (req, res) => {
 app.post('/api/enregistrement', (req, res) => {
 
   const lieuQuery = `
-  INSERT INTO Lieu (rue)
-  VALUES ("${req.body.lieu}");
+  INSERT INTO Lieu (numero, rue, code_postal, ville, latitude, longitude)
+  VALUES ("${req.body.numero}", "${req.body.rue}", "${req.body.code_postale}", "${req.body.ville}", "${req.body.latitude}", "${req.body.longitude}");
   `;
 
   const expoQuery = `

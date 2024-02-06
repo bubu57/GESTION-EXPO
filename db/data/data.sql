@@ -28,5 +28,3 @@ VALUES
   ('Axel AIR', 'password', '1'),
   ('jean dupont', 'password', '1'),
   ('bubu', 'password', '1');
-
--- Ajout de données dans la table Parametre (si nécessaire)

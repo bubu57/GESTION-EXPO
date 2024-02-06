@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-//import EnregistrementExpoForm from '../html/enregistrement_expo.js';
 
 
 const EnregistrementExpo = () => {
@@ -11,9 +10,15 @@ const EnregistrementExpo = () => {
     date_fin: '',
     quota: '',
     type: '',
-    lieu: '',
     latitude: '',
-    longitude: ''
+    longitude: '',
+    numero: '',
+    rue: '',
+    ville: '',
+    code_postale: '',
+    heure_debut: '',
+    heure_fin: '',
+    lieu: ''
   });
   const [suggestions, setSuggestions] = useState([]);
 
@@ -54,10 +59,9 @@ const EnregistrementExpo = () => {
       lieu: suggestion,
     });
 
-    await getLatitudeLongitude(suggestion);
-
     // Effacer les suggestions après la sélection
     setSuggestions([]);
+    await getLatitudeLongitude(suggestion);
   };
 
   const getLatitudeLongitude = async (adresse) => {
@@ -68,35 +72,67 @@ const EnregistrementExpo = () => {
     try {
       const response = await axios.get(apiUrl);
       const location = response.data.results[0].geometry.location;
+      const splitedadresse = response.data.results[0].address_components;
+
+
 
       // Mettre à jour les champs 'latitude' et 'longitude' dans l'état local
       setFormData({
         ...formData,
         latitude: location.lat,
         longitude: location.lng,
+        numero: splitedadresse[0].long_name,
+        rue: splitedadresse[1].long_name,
+        ville: splitedadresse[2].long_name,
+        code_postale: splitedadresse[6].long_name,
+        lieu: adresse,
       });
+
     } catch (error) {
       console.error('Erreur lors de la récupération de la latitude et de la longitude:', error);
     }
   };
 
+
   const handleSubmit = (e) => {
-    e.preventDefault();
-  
-    fetch('/api/enregistrement', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Réponse du serveur:', data);
+
+    let check = true;
+    const d = new Date("17/12/2022");
+
+    if (formData.heure_debut > formData.heure_fin) {
+      alert('heure debut > heure fin');
+      check = false;
+    }
+
+    if (formData.date_debut < d) {
+      alert('date debut < date actuelle');
+      check = false;
+    }
+
+    if (formData.date_debut > formData.date_fin) {
+      alert('date debut > date fin');
+      check = false;
+    }
+
+    if (check) {
+      e.preventDefault();
+
+      fetch('/api/enregistrement', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       })
-      .catch(error => {
-        console.error('Erreur lors de la requête:', error);
-      });
+        .then(response => response.json())
+        .then(data => {
+          console.log('Réponse du serveur:', data);
+        })
+        .catch(error => {
+          console.error('Erreur lors de la requête:', error);
+        });
+    }
+
   };
   return(
     <div className='container'>
@@ -109,6 +145,8 @@ const EnregistrementExpo = () => {
               <p className='label'>Nom exposition</p>
               <p className='label'>Date debut</p>
               <p className='label'>Date fin</p>
+              <p className='label'>heure debut</p>
+              <p className='label'>heure fin</p>
               <p className='label'>Quota</p>
               <p className='label'>Genre</p>
               <p className='label'>Adresse</p>
@@ -151,6 +189,28 @@ const EnregistrementExpo = () => {
               </div>
               <div className='div-input'>
                 <input
+                  className='heure_debut'
+                  type="time"
+                  placeholder="10:00"
+                  name="heure_debut"
+                  value={formData.heure_debut}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className='div-input'>
+                <input
+                  className='heure_fin'
+                  type="time"
+                  placeholder="15:00"
+                  name="heure_fin"
+                  value={formData.heure_fin}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className='div-input'>
+                <input
                   className='quota'
                   type="text"
                   placeholder="200"
@@ -173,6 +233,7 @@ const EnregistrementExpo = () => {
               </div>
               <div className='div-input'>
                 <input
+                  id='lieuInput'
                   className='lieu'
                   type="text"
                   placeholder="13 bis rue de paris 54000 paris"
