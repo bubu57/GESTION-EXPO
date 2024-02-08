@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 import axios from 'axios';
 
 const ListesExpos = () => {
@@ -136,7 +137,6 @@ const ListesExpos = () => {
                 </div>
 
 
-
                 {expositionSelectionnee && expositionSelectionnee.id === expo.id && (
                   <div className='overlay'>
                     <div className='details'>
@@ -149,6 +149,11 @@ const ListesExpos = () => {
                       <p className='labell'>Horaire: {expo.heure_debut} - {expo.heure_fin}</p>
                       <p className='labell'>Adresse: {expo.numero} {expo.rue} {expo.ville} {expo.cp}</p>
                       <p className='labell'>Coordonnee: {expo.latitude} {expo.longitude}</p>
+                      <Link to="/register_user">
+                        <div className='reserver' >
+                          <center><p className='label-reserver'>Voir plus</p></center>
+                        </div>
+                      </Link>
                     </center>
                     </div>
                   </div>

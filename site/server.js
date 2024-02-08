@@ -62,8 +62,8 @@ app.post('/api/enregistrement', (req, res) => {
   `;
 
   const expoQuery = `
-    INSERT INTO Exposition (quota ,nom, type, date_debut, date_fin)
-    VALUES (${req.body.quota} ,"${req.body.nom}", "${req.body.type}", "${req.body.date_debut}", "${req.body.date_fin}");
+    INSERT INTO Exposition (quota ,nom, type, date_debut, date_fin, heure_debut, heure_fin)
+    VALUES (${req.body.quota} ,"${req.body.nom}", "${req.body.type}", "${req.body.date_debut}", "${req.body.date_fin}", "${req.body.heure_debut}", "${req.body.heure_fin}");
   `;
 
   // Commencez la transaction
@@ -114,8 +114,6 @@ app.post('/api/enregistrement', (req, res) => {
 
 app.post('/api/register_user', (req, res) => {
 
-  console.log(req.body);
-
   const lieuQuery = `
   INSERT INTO Visiteur (nom, prenom, email, id_expo, date)
   VALUES ("${req.body.nom}", "${req.body.prenom}", "${req.body.mail}", "${req.body.id_expo}", "${req.body.date}");
@@ -151,12 +149,6 @@ app.post('/api/register_user', (req, res) => {
     });
   });
 });
-
-// app.get('/api/app', (req, res) => {
-//     res.send({
-//         msg: 'Hello world'
-//     })
-// })
 
 app.get('/*', (_, res) => {
   res.sendFile(path.join(__dirname, '/front/build/index.html'));
