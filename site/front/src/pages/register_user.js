@@ -91,7 +91,8 @@ const FormEnregistrements = () => {
               <p className='label'>Prenom</p>
               <p className='label'>Nom</p>
               <p className='label'>Mail</p>
-              <p className='label'>Date</p>
+              <p className='label'>Date de début</p>
+              <p className='label'>Date de fin</p>
               <p className='label'>expositions</p>
             </div>
             <div className='form-input'>
@@ -127,13 +128,25 @@ const FormEnregistrements = () => {
               </div>
               <div className='div-input'>
                 <input
-                  className='date'
+                  className='date de début'
                   type="date"
                   placeholder="21/02/2003"
                   name="date"
-                  value={formData.date}
+                  value={formData.datedebut}
                   onChange={handleChange}
                 />
+                
+              </div>
+              <div className='div-input'>
+                <input
+                  className='date de fin'
+                  type="date"
+                  placeholder="21/02/2003"
+                  name="date"
+                  value={formData.datefin}
+                  onChange={handleChange}
+                />
+                
               </div>
               <select value={formData.id_expo} onChange={handleExpoChange}>
                 <option value=""></option>
