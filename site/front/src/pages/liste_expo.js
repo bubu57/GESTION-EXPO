@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import Header from './header.js'
 
 const ListesExpos = () => {
   const [expositions, setExpositions] = useState([]);
@@ -80,6 +81,7 @@ const ListesExpos = () => {
 
   return(
     <div className='1container'>
+      <Header></Header>
       <center>
         <div className='div-titre'><p className='titre'>Listes des expositions</p></div>
       </center>

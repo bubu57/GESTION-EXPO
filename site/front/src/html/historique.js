@@ -8,32 +8,16 @@ import Search from './Search.svg'
 import { Link } from 'react-router-dom';
 import ButtonRedFinished from'./button-red.svg'
 import Close from './Close.svg'
+import Header from './header';
 
 const Historique = ({ formData, handleChange, handleSubmit }) => {
     return (
 
       <div>
-        <header>
-        <p>Expositions passées </p>
-        </header>
-
+        <Header></Header>
 
         <div>
-          <img src={logo} alt='' class='img-logo'/>
-        
-      <div className='header'>
-
-
-        <p className='text-expo'>Expositions</p>
-        <p className = 'text-venir'>à venir</p> 
-        <p className='text-enregistrement'>Enregistrement</p>
-        <p className='text-historique'>Historique</p>
-        <Link to ='/historique'>
-        <button className='button-histo-histo'>
-        <img src = {poly} className='button-histo-histo'></img>
-        
-        </button>
-        </Link>
+          
       <div>
       <p class='title-expo-historique'>Expositions passées </p>
       </div>
@@ -47,12 +31,6 @@ const Historique = ({ formData, handleChange, handleSubmit }) => {
         <div className='header-boutton'>
           <p className='heder-boutton-txt'></p>
         </div>
-      </div>
-
-      
-      <div className='search'>
-        <img src={Search}></img>
-        <p className='search-txt'></p>
       </div>
 
       <div className='colonne-container'>
@@ -150,8 +128,6 @@ const Historique = ({ formData, handleChange, handleSubmit }) => {
 
 
           </div>
-    
-            </div>
       
       );
   };

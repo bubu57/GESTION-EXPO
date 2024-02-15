@@ -5,7 +5,7 @@ import ListesExpos from "./pages/liste_expo.js";
 import GenerateurQRCode from "./pages/QRCode-generateur.js";
 import Historique from "./pages/historique.js";
 import FormEnregistrement from './pages/register_user.js'
-
+import Header from './pages/header.js'
 const App = () => {
     return (
         <BrowserRouter>
@@ -15,6 +15,7 @@ const App = () => {
                 <Route path="/qrcode" element={<GenerateurQRCode />} />
                 <Route path="/historique" element={<Historique />} />
                 <Route path="/register_user" element={<FormEnregistrement />} />
+                <Route path="/header" element={<Header />} />
             </Routes>
         </BrowserRouter>
     );

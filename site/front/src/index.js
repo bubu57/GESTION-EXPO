@@ -7,7 +7,7 @@ import "./styles/qrcode.css"
 import "./styles/historique.css"
 import "./styles/register_user.css"
 import "./styles/register-form-visitor.css"
-
+import "./styles/header.css"
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
