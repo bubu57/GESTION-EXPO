@@ -1,32 +1,48 @@
-/* Style de base */
-.title-expo-historique {
-        font-size: 2.5rem;
-        width: 100%;
-        background-color: #f0f0f0;
-        text-align: center;
-        background-position: center;
-        height: 100%;
-        font-family: math;
+body, html {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  
+  .container-histo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; 
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  
+  main {
+    text-align: center;
+    margin-top: 50px; 
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .profile-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 60rem;
     }
-    
-    .button-histo-histo {
-        margin-left: 4%; /* Utilisation de pourcentage au lieu de pixels pour une meilleure adaptabilité */
-        position: absolute;
-        top: 10px; /* Utilisation de valeurs plus flexibles */
+  @media only screen and (max-width: 768px) {
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
     }
-    
-    /* Media query pour les écrans de taille moyenne à grande */
-    @media screen and (min-width: 768px) {
-        .button-histo-histo {
-            margin-left: 8%;
-            top: 20px;
-        }
+   
+    main {
+      margin-top: 100px; 
     }
-    
-    /* Media query pour les écrans de grande taille */
-    @media screen and (min-width: 1200px) {
-        .button-histo-histo {
-            margin-left: 12%;
-            top: 30px;
-        }
-    }
+  }
+  }
