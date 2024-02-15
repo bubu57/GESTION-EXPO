@@ -29,7 +29,7 @@ const FormEnregistrement = ({ formData, handleChange, handleSubmit }) => {
                 placeholder="Paris exposition"
                 name="nom"
                 value={formData.nom}
-                onChange={handleChange}
+                onChange={handleChange} 
             />
             </div>
             <div className='div-input'>
