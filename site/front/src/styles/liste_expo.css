@@ -19,9 +19,10 @@
   display: block;
 }
 .titre{
-  font-size: 2rem;
-  position: relative;
-  margin-top: 4rem;
+  font-size: 3rem;
+    position: relative;
+    margin-top: 4rem;
+    white-space: nowrap;
 }
 .input {
   width: 100%;

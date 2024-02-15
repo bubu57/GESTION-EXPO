@@ -20,7 +20,7 @@ const Historique = ({ formData, handleChange, handleSubmit }) => {
    </Header>
     <div className='container-histo'>
     
-     <section className='profile-section'>Expositions passés</section>
+     <h className="titre-histo">Expositions passés</h>
      </div>
 
     </div>

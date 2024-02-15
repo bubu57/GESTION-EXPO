@@ -42,7 +42,7 @@ const EnregistrementVisiteur = ({ formData, handleChange, handleSubmit }) => {
         </div>
         </Link>
       <div>
-      <p class='title-expo'>Liste des expositions </p>
+      <h>Liste des expositions</h>
       </div>
  
        

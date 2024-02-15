@@ -9,7 +9,12 @@ body, html {
     padding: 20px;
     text-align: center;
   }
-  
+  .titre-histo{
+    font-size: 3rem;
+    position: relative;
+    margin-bottom: 65rem;
+    white-space: nowrap;
+  }
   
   .container-histo {
     display: flex;
@@ -45,4 +50,48 @@ body, html {
       margin-top: 100px; 
     }
   }
+  }
+
+  .exhibition-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 -10px;
+  }
+  
+  .exhibition-box {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    flex-basis: calc(33.333% - 20px);
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .exhibition-box img {
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .exhibition-box h3 {
+    margin: 0 0 10px;
+  }
+  
+  .exhibition-box p {
+    margin: 0;
+    color: #666;
+  }
+  
+  @media (max-width: 768px) {
+    .exhibition-box {
+      flex-basis: calc(50% - 20px);
+    }
+  }
+  
+  @media (max-width: 500px) {
+    .exhibition-box {
+      flex-basis: 100%;
+    }
   }

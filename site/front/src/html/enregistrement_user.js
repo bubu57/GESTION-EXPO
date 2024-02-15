@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 const FormEnregistrement = ({ formData, handleChange, handleSubmit }) => {
     return (
 <div className='container'>
+    <Header></Header>
     <div className='img'></div>
     <div className='form'>
     <center><p className='title'>Enregistrement exposition</p></center>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import QRCode from "react-qr-code";
 import emailjs from '@emailjs/browser';
-
+import Header from './header.js'
 const FormEnregistrements = () => {
   const [expositions, setExpositions] = useState([]);
   const [formData, setFormData] = useState({
@@ -78,8 +78,10 @@ const FormEnregistrements = () => {
     });
   };
 
-  return (
+  return (<div>
+    <Header></Header>
     <div className='container'>
+      
       <div className='img'></div>
       <div className='form'>
         <center><p className='title'>Enregistrement Utilisateur</p></center>
@@ -147,6 +149,7 @@ const FormEnregistrements = () => {
           </center>
         </form>
       </div>
+    </div>
     </div>
   );
 };
