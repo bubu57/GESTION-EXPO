@@ -15,7 +15,7 @@ const QRCodeComponent = () => {
       service: 'gmail',
       auth: {
         user: 'bunelierpro@gmail.com',
-        pass: '@t2B95sT57970'
+        pass: ''
       }
     });
 
