@@ -92,31 +92,61 @@ const EnregistrementExpo = () => {
       console.error('Erreur lors de la récupération de la latitude et de la longitude:', error);
     }
   };
-
-
   const handleSubmit = (e) => {
-
+    e.preventDefault();
+    
     let check = true;
-    const d = new Date("17/12/2022");
+    const currentDate = new Date();
+  
+   
+    const selectedStartDate = new Date(`${formData.date_debut}T00:00:00Z`);
+    
+  
+    const selectedEndDate = new Date(`${formData.date_fin}T00:00:00Z`);
+  
+   
+    const selectedStartTime = new Date(`01/01/1970 ${formData.heure_debut}`);
+  
+   
+    const currentUTCDate = new Date(Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()));
+  
 
-    if (formData.heure_debut > formData.heure_fin) {
-      alert('heure debut > heure fin');
+    if (selectedStartDate < currentUTCDate) {
+      alert('La date de début doit être supérieure ou égale à la date actuelle.');
       check = false;
     }
+  
 
-    if (formData.date_debut < d) {
-      alert('date debut < date actuelle');
+    if (selectedEndDate < currentUTCDate) {
+      alert('La date de fin doit être supérieure ou égale à la date actuelle.');
       check = false;
     }
+  
 
-    if (formData.date_debut > formData.date_fin) {
-      alert('date debut > date fin');
+    if (selectedEndDate < selectedStartDate) {
+      alert('La date de fin doit être supérieure ou égale à la date de début.');
       check = false;
     }
+  
+
+    if (selectedStartDate.toDateString() === currentDate.toDateString()) {
+    
+      const selectedHours = selectedStartTime.getHours();
+      const selectedMinutes = selectedStartTime.getMinutes();
+      const currentHours = currentDate.getHours();
+      const currentMinutes = currentDate.getMinutes();
+  
+
+      if (selectedHours < currentHours || (selectedHours === currentHours && selectedMinutes <= currentMinutes)) {
+        alert('L\'heure de début doit être supérieure ou égale à l\'heure actuelle.');
+        check = false;
+      }
+    }
+  
+  
+  
 
     if (check) {
-      e.preventDefault();
-
       fetch('/api/enregistrement', {
         method: 'POST',
         headers: {
@@ -132,8 +162,9 @@ const EnregistrementExpo = () => {
           console.error('Erreur lors de la requête:', error);
         });
     }
-
   };
+  
+  
   return(
     <div className='container'>
       <div className='img'></div>
