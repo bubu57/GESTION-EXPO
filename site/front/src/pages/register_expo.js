@@ -169,7 +169,7 @@ const EnregistrementExpo = () => {
                 <input
                   className='date_debut'
                   type="date"
-                  placeholder="21/02/2024"
+                  placeholder="jj-mm-aaaa"
                   name="date_debut"
                   value={formData.date_debut}
                   onChange={handleChange}
@@ -180,7 +180,7 @@ const EnregistrementExpo = () => {
                 <input
                   className='date_fin'
                   type="date"
-                  placeholder="22/02/2024"
+                  placeholder="jj-mm-aaaa"
                   name="date_fin"
                   value={formData.date_fin}
                   onChange={handleChange}
@@ -191,7 +191,7 @@ const EnregistrementExpo = () => {
                 <input
                   className='heure_debut'
                   type="time"
-                  placeholder="10:00"
+                  placeholder="Time"
                   name="heure_debut"
                   value={formData.heure_debut}
                   onChange={handleChange}
