@@ -1,22 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import QRCode from "react-qr-code";
-import emailjs from '@emailjs/browser';
-import Header from './header.js'
+import * as htmlToImage from 'html-to-image';
+import Header from './header.js';
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: 'exposgratuites@gmail.com',
+    pass: 'gestionexpo2024',
+  },
+});
+
 const FormEnregistrements = () => {
   const [expositions, setExpositions] = useState([]);
   const [formData, setFormData] = useState({
     prenom: '',
     nom: '',
     mail: '',
-    date: '',
+    date_debut: '',
+    date_fin: '',
     id_expo: '',
   });
   const [qrcodeData, setQrcodeData] = useState('');
+  const qrCodeRef = useRef(null);
 
   useEffect(() => {
-    // Charger les données des expositions depuis le serveur
-    axios.get('/api/app') // Assurez-vous d'avoir une route '/api/expositions' sur votre serveur
+    axios.get('/api/app')
       .then(response => {
         setExpositions(response.data);
       })
@@ -26,7 +37,6 @@ const FormEnregistrements = () => {
   }, []);
 
   const handleExpoChange = (e) => {
-    // Mise à jour de l'ID de l'exposition lors de la sélection dans la liste déroulante
     setFormData({
       ...formData,
       id_expo: e.target.value,
@@ -41,128 +51,149 @@ const FormEnregistrements = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Génération du texte pour le QR code
-    const qrcodeData = `${formData.nom};${formData.prenom};${formData.id_expo}`;
-    setQrcodeData(qrcodeData);
+    const currentDate = new Date();
+    const selectedStartDate = new Date(formData.date_debut);
+    selectedStartDate.setHours(0, 0, 0, 0);
+    currentDate.setHours(0, 0, 0, 0);
 
-    // Envoi de l'email
-    const serviceId = 'service_0v2mvem';
-    const templateId = 'template_qrnfd99';
-    const publicKey = 'CWK-4Od19eqgeZfus';
+    if (selectedStartDate < currentDate) {
+      alert('La date de début doit être supérieure ou égale à la date actuelle.');
+      return;
+    }
 
-    const templateParams = {
-      from_name: formData.prenom + ' ' + formData.nom,
-      to_email: formData.mail,
-      message: `Voici votre QR code pour l'exposition : ${qrcodeData}`,
-      qr_code: qrcodeData,
+    const selectedEndDate = new Date(formData.date_fin);
+    selectedEndDate.setHours(0, 0, 0, 0);
+
+    if (selectedEndDate < currentDate) {
+      alert('La date de fin doit être supérieure ou égale à la date actuelle.');
+      return;
+    }
+
+    if (selectedEndDate < selectedStartDate) {
+      alert('La date de fin doit être postérieure ou égale à la date de début.');
+      return;
+    }
+
+    const qrCodeImage = await htmlToImage.toPng(qrCodeRef.current);
+
+    const mailOptions = {
+      from: 'exposgratuites@gmail.com',
+      to: formData.mail,
+      subject: 'Votre QR code pour l\'exposition',
+      text: `Bonjour ${formData.prenom} ${formData.nom},\nVoici votre QR code pour l'exposition : ${qrcodeData}`,
+      attachments: [
+        {
+          filename: 'qrcode.png',
+          content: qrCodeImage.split(';base64,').pop(),
+          encoding: 'base64',
+        },
+      ],
     };
 
-    emailjs.send(serviceId, templateId, templateParams, publicKey)
-      .then((response) => {
-        console.log('Email sent successfully!', response);
-      })
-      .catch((error) => {
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
         console.error('Error sending email:', error);
-      });
+      } else {
+        console.log('Email sent successfully!', info);
+      }
+    });
 
-    // Réinitialisation du formulaire après envoi
     setFormData({
       prenom: '',
       nom: '',
       mail: '',
-      date: '',
+      date_debut: '',
+      date_fin: '',
       id_expo: '',
     });
   };
 
-  return (<div>
-    <Header></Header>
-    <div className='container'>
-      
-      <div className='img'></div>
-      <div className='form'>
-        <center><p className='title'>Enregistrement Utilisateur</p></center>
-        <form onSubmit={handleSubmit}>
-          <div className='form-block'>
-            <div className='form-name'>
-              <p className='label'>Prenom</p>
-              <p className='label'>Nom</p>
-              <p className='label'>Mail</p>
-              <p className='label'>Date de début</p>
-              <p className='label'>Date de fin</p>
-              <p className='label'>expositions</p>
+  return (
+    <div>
+      <Header></Header>
+      <div className='container'>
+        <div className='img'></div>
+        <div className='form'>
+          <center><p className='title'>Enregistrement Utilisateur</p></center>
+          <form onSubmit={handleSubmit}>
+            <div className='form-block'>
+              <div className='form-name'>
+                <p className='label'>Prenom</p>
+                <p className='label'>Nom</p>
+                <p className='label'>Mail</p>
+                <p className='label'>Date de début</p>
+                <p className='label'>Date de fin</p>
+                <p className='label'>Expositions</p>
+              </div>
+              <div className='form-input'>
+                <div className='div-input'>
+                  <input
+                    className='prenom'
+                    type="text"
+                    placeholder="Axel"
+                    name="prenom"
+                    value={formData.prenom}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className='div-input'>
+                  <input
+                    className='nom'
+                    type="text"
+                    placeholder="Air"
+                    name="nom"
+                    value={formData.nom}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className='div-input'>
+                  <input
+                    className='mail'
+                    type="text"
+                    placeholder="mail"
+                    name="mail"
+                    value={formData.mail}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className='div-input'>
+                  <input
+                    className='date_debut'
+                    type="date"
+                    placeholder="21/02/2003"
+                    name="date_debut"
+                    value={formData.date_debut}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className='div-input'>
+                  <input
+                    className='date_fin'
+                    type="date"
+                    placeholder="21/02/2003"
+                    name="date_fin"
+                    value={formData.date_fin}
+                    onChange={handleChange}
+                  />
+                </div>
+                <select value={formData.id_expo} onChange={handleExpoChange}>
+                  <option value=""></option>
+                  {expositions.map((expo, index) => (
+                    <option key={index} value={expo.id}>{expo.nom}</option>
+                  ))}
+                </select>
+              </div>
             </div>
-            <div className='form-input'>
-              <div className='div-input'>
-                <input
-                  className='prenom'
-                  type="text"
-                  placeholder="Axel"
-                  name="prenom"
-                  value={formData.prenom}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className='div-input'>
-                <input
-                  className='date_debut'
-                  type="text"
-                  placeholder="Air"
-                  name="nom"
-                  value={formData.nom}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className='div-input'>
-                <input
-                  className='mail'
-                  type="text"
-                  placeholder="mail"
-                  name="mail"
-                  value={formData.mail}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className='div-input'>
-                <input
-                  className='date de début'
-                  type="date"
-                  placeholder="21/02/2003"
-                  name="date"
-                  value={formData.datedebut}
-                  onChange={handleChange}
-                />
-                
-              </div>
-              <div className='div-input'>
-                <input
-                  className='date de fin'
-                  type="date"
-                  placeholder="21/02/2003"
-                  name="date"
-                  value={formData.datefin}
-                  onChange={handleChange}
-                />
-                
-              </div>
-              <select value={formData.id_expo} onChange={handleExpoChange}>
-                <option value=""></option>
-                {expositions.map((expo, index) => (
-                  <option key={index} value={expo.id}>{expo.nom}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <center>
-            <button type="submit" className='button-text'>Enregistrer</button>
-            <QRCode value={qrcodeData} />
-          </center>
-        </form>
+            <center>
+              <button type="submit" className='button-text'>Enregistrer</button>
+              <QRCode ref={qrCodeRef} value={qrcodeData} />
+            </center>
+          </form>
+        </div>
       </div>
-    </div>
     </div>
   );
 };
