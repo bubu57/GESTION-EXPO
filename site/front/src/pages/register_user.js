@@ -1,17 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import QRCode from "react-qr-code";
+import emailjs from '@emailjs/browser';
 import * as htmlToImage from 'html-to-image';
-import Header from './header.js';
-const nodemailer = require('nodemailer');
+import jsPDF from 'jspdf';
 
-const transporter = nodemailer.createTransport({
-  service: 'Gmail',
-  auth: {
-    user: 'exposgratuites@gmail.com',
-    pass: 'gestionexpo2024',
-  },
-});
+import Header from './header.js'
 
 const FormEnregistrements = () => {
   const [expositions, setExpositions] = useState([]);
@@ -27,6 +21,7 @@ const FormEnregistrements = () => {
   const qrCodeRef = useRef(null);
 
   useEffect(() => {
+  
     axios.get('/api/app')
       .then(response => {
         setExpositions(response.data);
@@ -51,55 +46,41 @@ const FormEnregistrements = () => {
     });
   };
 
+  const generateQRCode = async () => {
+    try {
+
+      const qrCodeImage = await htmlToImage.toPng(qrCodeRef.current);
+      setQrcodeData(qrCodeImage);
+    } catch (error) {
+      console.error('Error generating QR code:', error);
+    }
+  };
+
+  const handleSaveQRCodeAsPDF = async () => {
+  try {
+  
+    await generateQRCode();
+
+
+    if (qrcodeData) {
+   
+      const doc = new jsPDF();
+      doc.addImage(qrcodeData, 'PNG', 10, 10, 50, 50);
+      doc.save('qrcode.pdf'); 
+
+      console.log('QR code saved as PDF');
+    } else {
+      console.error('QR code data is empty.');
+    }
+  } catch (error) {
+    console.error('Error saving QR code as PDF:', error);
+  }
+};
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const currentDate = new Date();
-    const selectedStartDate = new Date(formData.date_debut);
-    selectedStartDate.setHours(0, 0, 0, 0);
-    currentDate.setHours(0, 0, 0, 0);
-
-    if (selectedStartDate < currentDate) {
-      alert('La date de début doit être supérieure ou égale à la date actuelle.');
-      return;
-    }
-
-    const selectedEndDate = new Date(formData.date_fin);
-    selectedEndDate.setHours(0, 0, 0, 0);
-
-    if (selectedEndDate < currentDate) {
-      alert('La date de fin doit être supérieure ou égale à la date actuelle.');
-      return;
-    }
-
-    if (selectedEndDate < selectedStartDate) {
-      alert('La date de fin doit être postérieure ou égale à la date de début.');
-      return;
-    }
-
-    const qrCodeImage = await htmlToImage.toPng(qrCodeRef.current);
-
-    const mailOptions = {
-      from: 'exposgratuites@gmail.com',
-      to: formData.mail,
-      subject: 'Votre QR code pour l\'exposition',
-      text: `Bonjour ${formData.prenom} ${formData.nom},\nVoici votre QR code pour l'exposition : ${qrcodeData}`,
-      attachments: [
-        {
-          filename: 'qrcode.png',
-          content: qrCodeImage.split(';base64,').pop(),
-          encoding: 'base64',
-        },
-      ],
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error('Error sending email:', error);
-      } else {
-        console.log('Email sent successfully!', info);
-      }
-    });
 
     setFormData({
       prenom: '',
@@ -189,7 +170,18 @@ const FormEnregistrements = () => {
             </div>
             <center>
               <button type="submit" className='button-text'>Enregistrer</button>
-              <QRCode ref={qrCodeRef} value={qrcodeData} />
+              {}
+              {formData.prenom && formData.nom && formData.mail && formData.date_debut && formData.date_fin && (
+  <QRCode
+    ref={qrCodeRef}
+    value={`${formData.prenom} ${formData.nom} ${formData.mail} ${formData.date_debut} ${formData.date_fin}`}
+  />
+)}
+
+            </center>
+            {}
+            <center>
+              <button onClick={handleSaveQRCodeAsPDF}>Enregistrer le QR code en PDF</button>
             </center>
           </form>
         </div>

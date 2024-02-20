@@ -57,5 +57,8 @@
   "devDependencies": {
     "html-loader": "^5.0.0",
     "react-scripts": "^5.0.1"
-  }
+  },
+"browser":{
+  "crypto":false
+}
 }
