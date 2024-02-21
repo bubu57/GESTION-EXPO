@@ -15,21 +15,21 @@ const QRCodegenerateurs = () => {
 
     function handleChange(e) {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
+        setFormData(prevFormData => ({
+            ...prevFormData,
             [name]: value
-        });
+        }));
     }
 
     async function convertQRCodeToPdf() {
         try {
-            
+            // Convertir le QR code en une image
             const qrCodeImage = await htmlToImage.toPng(qrCodeRef.current);
 
-
+            // Créer un document PDF
             const doc = new jsPDF();
-            doc.addImage(qrCodeImage, 'PNG', 10, 10, 50, 50); 
-            doc.save('qrcode.pdf'); 
+            doc.addImage(qrCodeImage, 'PNG', 10, 10, 50, 50); // Ajouter l'image QR code au PDF
+            doc.save('qrcode.pdf'); // Enregistrer le PDF
 
             console.log('QR code converted to PDF');
         } catch (error) {
