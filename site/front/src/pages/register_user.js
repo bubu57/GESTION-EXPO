@@ -1,8 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import QRCode from "react-qr-code";
-import emailjs from '@emailjs/browser';
-import * as htmlToImage from 'html-to-image';
+import QRCode from 'qrcode';
 import jsPDF from 'jspdf';
 
 import Header from './header.js';
@@ -14,12 +12,8 @@ const FormEnregistrements = () => {
     nom: '',
     mail: '',
     date_debut: '',
-    date_fin: '',
     id_expo: '',
-    heure_expo: '',
   });
-  const [qrcodeData, setQrcodeData] = useState('');
-  const qrCodeRef = useRef(null);
 
   useEffect(() => {
     axios.get('/api/app')
@@ -33,15 +27,11 @@ const FormEnregistrements = () => {
 
   const handleExpoChange = (e) => {
     const selectedExpoId = e.target.value;
-    const selectedExpo = expositions.find(expo => expo.id === selectedExpoId);
-    console.log('Selected Expo:', selectedExpo);
-    
     setFormData({
       ...formData,
       id_expo: selectedExpoId,
     });
   };
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,81 +40,53 @@ const FormEnregistrements = () => {
       [name]: value,
     });
   };
-  
+
   const generateQRCode = async () => {
     try {
-      const qrCodeImage = await htmlToImage.toPng(qrCodeRef.current);
-      setQrcodeData(qrCodeImage);
+      const qrCodeData = `${formData.prenom} ${formData.nom} ${formData.date_debut} ${formData.id_expo}`;
+      const qrCodeDataURL = await QRCode.toDataURL(qrCodeData);
+      return qrCodeDataURL;
     } catch (error) {
-      console.error('Error generating QR code:', error);
+      console.error('Erreur lors de la génération du QR code:', error);
+      throw error;
     }
   };
 
   const handleSaveQRCodeAsPDF = async () => {
     try {
-      await generateQRCode();
-      if (qrcodeData) {
-        const doc = new jsPDF();
-        doc.addImage(qrcodeData, 'PNG', 10, 10, 50, 50);
-        doc.save('qrcode.pdf');
-        console.log('QR code saved as PDF');
-      } else {
-        console.error('QR code data is empty.');
-      }
+      const qrCodeDataURL = await generateQRCode();
+      const doc = new jsPDF();
+      doc.addImage(qrCodeDataURL, 'PNG', 10, 10, 50, 50);
+      doc.save('qrcode.pdf');
+      console.log('QR code sauvegardé en PDF');
     } catch (error) {
-      console.error('Error saving QR code as PDF:', error);
+      console.error('Erreur lors de la sauvegarde du QR code en PDF:', error);
     }
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    console.log('FormData:', formData);
+    try {
+      const selectedExpo = expositions.find(expo =>
+        new Date(expo.date_debut) <= new Date(formData.date_debut) &&
+        new Date(expo.date_fin) >= new Date(formData.date_debut)
+      );
+      if (!selectedExpo) {
+        alert('Aucune exposition correspondante trouvée pour la date sélectionnée.');
+        return;
+      }
 
-    const selectedExpo = expositions.find(expo =>
-      new Date(expo.date_debut) <= new Date(formData.date_debut) &&
-      new Date(expo.date_fin) >= new Date(formData.date_debut)
-    );
-  
-    console.log('Selected Expo:', selectedExpo);
-  
-
-    if (!selectedExpo) {
-      alert('Aucune exposition correspondante trouvée pour la date sélectionnée.');
-      return;
+      await axios.post('/api/register_user', formData);
+      console.log('Données soumises avec succès.');
+      await handleSaveQRCodeAsPDF();
+    } catch (error) {
+      console.error('Erreur lors de la soumission du formulaire:', error);
     }
-
-
-    fetch('/api/register_user', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Réponse du serveur:', data);
-    })
-    .catch(error => {
-      console.error('Erreur lors de la requête:', error);
-    });
-
-
-
-
-    function genqrcode() {
-      
-    }
-
-    await handleSaveQRCodeAsPDF(); 
   };
-  
-  
+
   return (
     <div>
-      <Header></Header>
+      <Header />
       <div className='container'>
         <div className='img'></div>
         <div className='form'>
@@ -186,7 +148,7 @@ const FormEnregistrements = () => {
                 <select value={formData.id_expo} onChange={handleExpoChange}>
                   <option value=""></option>
                   {expositions.map((expo, index) => (
-                    <option key={index} value={expo.id} disabled={new Date(formData.date_debut) < new Date(expo.date_debut) || new Date(formData.date_fin) > new Date(expo.date_fin)}>
+                    <option key={index} value={expo.id} disabled={new Date(formData.date_debut) < new Date(expo.date_debut) || new Date(formData.date_debut) > new Date(expo.date_fin)}>
                       {expo.nom}
                     </option>
                   ))}
@@ -194,12 +156,6 @@ const FormEnregistrements = () => {
               </div>
             </div>
             <center>
-              {formData.prenom && formData.nom && formData.mail && formData.date_debut && (
-                <QRCode
-                  ref={qrCodeRef}
-                  value={`${formData.prenom} ${formData.nom} ${formData.date_debut} ${formData.id_expo}`}
-                />
-              )}
               <button type="submit" className='button-text'>Enregistrer le QR code en PDF</button>
             </center>
           </form>
