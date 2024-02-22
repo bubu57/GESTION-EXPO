@@ -33,7 +33,7 @@ const Header = () =>  {
         <nav className='nav-bar'>
           <ul>
             <li>
-              <Link to="/liste_expo" onClick={closeMenu}>
+              <Link to="/" onClick={closeMenu}>
                 <a href='' className='active'> Accueil </a>
               </Link>
             </li>

@@ -4,7 +4,6 @@ import App from './App';
 import "./styles/register_expo.css";
 import "./styles/liste_expo.css";
 import "./styles/qrcode.css"
-import "./styles/historique.css"
 import "./styles/register_user.css"
 import "./styles/register-form-visitor.css"
 import "./styles/header.css"
