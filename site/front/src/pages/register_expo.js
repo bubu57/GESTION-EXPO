@@ -154,13 +154,13 @@ const EnregistrementExpo = () => {
         },
         body: JSON.stringify(formData),
       })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Réponse du serveur:', data);
-        })
-        .catch(error => {
-          console.error('Erreur lors de la requête:', error);
-        });
+      .then(response => response.json())
+      .then(data => {
+        console.log('Réponse du serveur:', data);
+      })
+      .catch(error => {
+        console.error('Erreur lors de la requête:', error);
+      });
     }
   };
   

@@ -116,8 +116,8 @@ app.post('/api/enregistrement', (req, res) => {
 app.post('/api/register_user', (req, res) => {
 
   const lieuQuery = `
-  INSERT INTO Visiteur (nom, prenom, email, id_expo, date)
-  VALUES ("${req.body.nom}", "${req.body.prenom}", "${req.body.mail}", "${req.body.id_expo}", "${req.body.date}");
+  INSERT INTO Visiteur (nom, prenom, email, id_expo, date_entree)
+  VALUES ("${req.body.nom}", "${req.body.prenom}", "${req.body.mail}", "${req.body.id_expo}", "${req.body.date_debut}");
   `;
 
   // Commencez la transaction
