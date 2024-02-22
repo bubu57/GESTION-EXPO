@@ -11,8 +11,8 @@ const App = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<EnregistrementExpo />} />
-                <Route path="/liste_expo" element={<ListesExpos />} />
+                <Route path="/" element={<ListesExpos />} />
+                <Route path="/register_expo" element={<EnregistrementExpo />} />
                 <Route path="/qrcode" element={<GenerateurQRCode />} />
                 <Route path="/historique" element={<Historique />} />
                 <Route path="/register_user" element={<FormEnregistrement />} />

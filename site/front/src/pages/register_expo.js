@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+import Header from './header';
 
 
 const EnregistrementExpo = () => {
@@ -165,7 +166,8 @@ const EnregistrementExpo = () => {
   };
   
   
-  return(
+  return(<div>
+    <Header></Header>
     <div className='container'>
       <div className='img'></div>
       <div className='form'>
@@ -313,6 +315,7 @@ const EnregistrementExpo = () => {
           </center>
         </form>
       </div>
+    </div>
     </div>
   );
 };
