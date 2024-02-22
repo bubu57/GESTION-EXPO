@@ -1,101 +1,110 @@
-
+/* Réinitialisation des styles */
 * {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    text-decoration: none;
-    box-sizing: border-box;
-  }
-  
-  .logo img{
-    width: 66px;
-    padding-bottom: 1rem;
-  }
-  header {
-    width: 100%;
-    height: 100px;
-    background: black;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 100px;
-  }
-  
-  .logo{
-    font-size: 2px;
-    font-weight: bold;
-    color: #fefefe;
-  }
-  
-  .hamburger{
-    display: none;
-  
-  }
-  
-  .nav-bar ul{
-    display: flex;
-  }
-  
-  .nav-bar ul li a {
-    display: block;
-    color: #fefefe;
-    font-size: 20px;
-    padding: 10px 25px;
-    border-radius: 50px;
-    transition: 0.2s;
-    margin: 0 20px;
-  }
-  
-  .nav-bar ul li a:hover{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Styles pour le logo */
+.logo img {
+  width: 66px;
+  padding-bottom: 1rem;
+}
+
+/* Styles pour le header */
+header {
+  width: 100%;
+  height: 100px;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 100px;
+}
+
+/* Styles pour le texte du logo */
+.logo {
+  font-size: 2px;
+  font-weight: bold;
+  color: #fefefe;
+}
+
+/* Styles pour le hamburger */
+.hamburger {
+  display: none;
+}
+
+.hamburger.line {
+  width: 30px;
+  height: 3px;
+  background: #fefefe;
+  margin: 6px 0;
+  cursor: pointer;
+}
+
+/* Styles pour la barre de navigation */
+.nav-bar ul {
+  display: flex;
+}
+
+.nav-bar ul li a {
+  display: block;
+  color: #fefefe;
+  font-size: 20px;
+  padding: 10px 25px;
+  border-radius: 50px;
+  transition: 0.2s;
+  margin: 0 20px;
+}
+
+.nav-bar ul li a:hover {
   color: black;
   background: #fefefe;
+}
+
+/* Media queries pour les tailles d'écran spécifiques */
+@media only screen and (max-width: 1320px) {
+  header {
+    padding: 0 50px;
   }
-  
-  
-  @media only screen and (max-width:1320px){
-    header {
-      padding : 0 50px;
-    }
+}
+
+@media only screen and (max-width: 1100px) {
+  header {
+    padding: 0 30px;
   }
-    @media only screen and (max-width:1100px){
-      header {
-        padding : 0 30px;
-      }
+}
+
+@media only screen and (max-width: 900px) {
+  .hamburger {
+    display: block;
+    cursor: pointer;
   }
-  @media only screen and (max-width:900px){
-    .hamburger {
-     display: block;
-     cursor: pointer;
-    }
-  
-    .hamburger.line{
-      width: 30px;
-      height: 3px;
-      background: #fefefe;
-      margin: 6px 0;
-    }
-    .nav-bar{
-      height:450px;
-     position: absolute;
-     top: 80px;
-     left: 0;
-     right: 0;
-     width: 100vw;
-     background: white;
-     transition: 0.2s;
-     overflow: hidden;
-    }
-    .nav-bar ul {
-      display: block;
-     width: fit-content;
-     margin: 80px auto 0 auto ;
-     text-align: center;
-     transition: 0.5s;
-  
-    }
-    .nav-bar ul li a {
-      margin-bottom: 12px;
-      color: black;
-    }
-  
+
+  .nav-bar {
+    position: relative;
+    overflow: hidden;
+    height: auto;
   }
+
+  .nav-bar ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+  }
+
+  .nav-bar.open ul {
+    display: block;
+  }
+
+  .nav-bar ul li {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+}

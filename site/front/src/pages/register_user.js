@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import QRCode from 'qrcode';
 import jsPDF from 'jspdf';
-
+import ButtonReserved from './Button-reserved.svg';
 import Header from './header.js';
 
 const FormEnregistrements = () => {
@@ -54,16 +54,50 @@ const FormEnregistrements = () => {
 
   const handleSaveQRCodeAsPDF = async () => {
     try {
+      // Vérifier si les données des expositions sont disponibles
+      if (expositions.length === 0) {
+        console.error('Aucune donnée d exposition disponible.');
+        return;
+      }
+    
       const qrCodeDataURL = await generateQRCode();
       const doc = new jsPDF();
-      doc.addImage(qrCodeDataURL, 'PNG', 10, 10, 50, 50);
+      
+      // Récupérer le nom de l'exposition en fonction de son ID
+      const selectedExpo = expositions.find(expo => expo.id === formData.id_expo);
+      if (selectedExpo) {
+        const nomExposition = `Nom de l'exposition : ${selectedExpo.nom}\n`;
+        const dateDebut = `Date de début : ${selectedExpo.date_debut}\n`;
+        const dateFin = `Date de fin : ${selectedExpo.date_fin}\n`;
+        const lieu = `Lieu : ${selectedExpo.lieu}\n\n`;
+        const descriptionText = nomExposition + dateDebut + dateFin + lieu;
+        doc.text(descriptionText, 10, 20); // Ajouter la description à partir de la position (10, 20)
+      }
+    
+      // Ajouter la date sélectionnée par l'utilisateur
+      const dateSelectionnee = `Date sélectionnée : ${formData.date_debut}\n\n`;
+      doc.text(dateSelectionnee, 10, 70);
+    
+      // Ajouter le nom et prénom de l'utilisateur
+      const nomPrenom = `Nom : ${formData.nom}\nPrénom : ${formData.prenom}\n\n`;
+      doc.text(nomPrenom, 10, 90);
+    
+      // Ajouter le texte "Veuillez vous présenter à l'entrée muni de votre QRCode"
+      const textePresentation = "Veuillez vous présenter à l'entrée muni de votre QRCode";
+      doc.text(textePresentation, 10, 120);
+    
+      // Ajouter l'image du QR code
+      doc.addImage(qrCodeDataURL, 'PNG', 10, 140, 50, 50);
+      
+      // Sauvegarder le document PDF
       doc.save('qrcode.pdf');
       console.log('QR code sauvegardé en PDF');
     } catch (error) {
       console.error('Erreur lors de la sauvegarde du QR code en PDF:', error);
     }
   };
-
+  
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -94,10 +128,10 @@ const FormEnregistrements = () => {
           <form onSubmit={handleSubmit}>
             <div className='form-block'>
               <div className='form-name'>
-                <p className='label'>Prenom</p>
+                <p className='label'>Prénom</p>
                 <p className='label'>Nom</p>
                 <p className='label'>Mail</p>
-                <p className='label'>Date d'entree</p>
+                <p className='label'>Date d'entrée</p>
                 <p className='label'>Expositions</p>
               </div>
               <div className='form-input'>
@@ -145,7 +179,8 @@ const FormEnregistrements = () => {
                     required
                   />
                 </div>
-                <select value={formData.id_expo} onChange={handleExpoChange}>
+              
+                <select  className='select-exposition' value={formData.id_expo} onChange={handleExpoChange}>
                   <option value=""></option>
                   {expositions.map((expo, index) => (
                     <option key={index} value={expo.id} disabled={new Date(formData.date_debut) < new Date(expo.date_debut) || new Date(formData.date_debut) > new Date(expo.date_fin)}>
@@ -153,10 +188,11 @@ const FormEnregistrements = () => {
                     </option>
                   ))}
                 </select>
+              
               </div>
             </div>
-            <center>
-              <button type="submit" className='button-text'>Enregistrer le QR code en PDF</button>
+            <center className='button-reserved-registeruser'>
+              <button type="submit" className='button-text' >  <img src={ButtonReserved} alt="button"></img></button>
             </center>
           </form>
         </div>
