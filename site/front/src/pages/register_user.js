@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import QRCode from 'qrcode';
 import jsPDF from 'jspdf';
-import ButtonReserved from './Button-reserved.svg';
+import ButtonReserved from '../img/Button-reserved.svg';
 import Header from './header.js';
 
 const FormEnregistrements = () => {
