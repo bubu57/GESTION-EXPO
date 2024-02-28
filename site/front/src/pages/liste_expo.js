@@ -8,9 +8,7 @@ const ListesExpos = () => {
   const [villeFiltre, setVilleFiltre] = useState('');
   const [dateFiltre, setDateFiltre] = useState('');
   const [heureFiltre, setHeureFiltre] = useState('');
-  const [expositionsFiltrees, setExpositionsFiltrees] = useState([]);
-  const [afficherDetails, setAfficherDetails] = useState(false);
-  const [expositionSelectionnee, setExpositionSelectionnee] = useState(null);
+  const [expositionsFiltrees, setExpositionsFiltrees] = useState([]);  const [expositionSelectionnee, setExpositionSelectionnee] = useState(null);
 
 
   useEffect(() => {
