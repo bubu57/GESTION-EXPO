@@ -10,7 +10,7 @@ const App = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<ListesExpos />} />
+                <Route path="/listesexpos" element={<ListesExpos />} />
                 <Route path="/register_expo" element={<EnregistrementExpo />} />
                 <Route path="/historique" element={<HistoExpo />} />
                 <Route path="/register_user" element={<FormEnregistrement />} />

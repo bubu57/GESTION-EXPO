@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import QRCode from 'qrcode';
 import jsPDF from 'jspdf';
-import ButtonReserved from '../img/Button-reserved.svg';
+
 import Header from './header.js';
 
 const FormEnregistrements = () => {
@@ -52,7 +52,7 @@ const FormEnregistrements = () => {
     }
   };
 
-  const handleSaveQRCodeAsPDF = async () => {
+  const handleSaveQRCodeAsPDF = async (qrCodeDataURL) => {
     try {
       // Vérifier si les données des expositions sont disponibles
       if (expositions.length === 0) {
@@ -60,7 +60,6 @@ const FormEnregistrements = () => {
         return;
       }
     
-      const qrCodeDataURL = await generateQRCode();
       const doc = new jsPDF();
       
       // Récupérer le nom de l'exposition en fonction de son ID
@@ -96,8 +95,7 @@ const FormEnregistrements = () => {
       console.error('Erreur lors de la sauvegarde du QR code en PDF:', error);
     }
   };
-  
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -110,13 +108,37 @@ const FormEnregistrements = () => {
         return;
       }
 
+      // Soumettre le formulaire et enregistrer l'utilisateur
       await axios.post('/api/register_user', formData);
       console.log('Données soumises avec succès.');
-      await handleSaveQRCodeAsPDF();
+
+      // Générer le QR code
+      const qrCodeDataURL = await generateQRCode();
+
+      // Sauvegarder le QR code en tant que PDF
+      await handleSaveQRCodeAsPDF(qrCodeDataURL);
+      
+      // Envoyer l'e-mail avec le QR code
+      await sendEmailWithQRCode(formData.mail, qrCodeDataURL);
+
     } catch (error) {
       console.error('Erreur lors de la soumission du formulaire:', error);
     }
   };
+
+  const sendEmailWithQRCode = async (email, qrCodeDataURL) => {
+    try {
+      const response = await axios.post('/api/send_email', {
+        email: email,
+        qrCodeDataURL: qrCodeDataURL,
+      });
+      console.log('E-mail envoyé avec succès:', response.data);
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi de l\'e-mail:', error);
+      throw error;
+    }
+  };
+  
 
   return (
     <div>
@@ -192,7 +214,7 @@ const FormEnregistrements = () => {
               </div>
             </div>
             <center className='button-reserved-registeruser'>
-              <button type="submit" className='button-text' >  <img src={ButtonReserved} alt="button"></img></button>
+              <button type="submit" className='button-text' >  <img src alt="button"></img></button>
             </center>
           </form>
         </div>

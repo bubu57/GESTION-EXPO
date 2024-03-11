@@ -8,76 +8,94 @@ const ListesExpos = () => {
   const [villeFiltre, setVilleFiltre] = useState('');
   const [dateFiltre, setDateFiltre] = useState('');
   const [heureFiltre, setHeureFiltre] = useState('');
-  const [expositionsFiltrees, setExpositionsFiltrees] = useState([]);  const [expositionSelectionnee, setExpositionSelectionnee] = useState(null);
-
+  const [triParDate, setTriParDate] = useState('asc');
+  const [expositionsFiltrees, setExpositionsFiltrees] = useState([]);
+  const [expositionSelectionnee, setExpositionSelectionnee] = useState(null);
+  const [dateError, setDateError] = useState('');
 
   useEffect(() => {
     // Charger les données des expositions depuis le serveur
-    axios.get('/api/app') // Assurez-vous d'avoir une route '/api/expositions' sur votre serveur
+    axios.get('/api/app')
       .then(response => {
-
-        setExpositions(response.data);
-        console.log(response.data);
+        // Convertir les dates au format américain (mm/dd/yyyy)
+        const expositionsFormattedDates = response.data.map(expo => ({
+          ...expo,
+          date_debut: new Date(expo.date_debut).toLocaleDateString('en-US'),
+          date_fin: new Date(expo.date_fin).toLocaleDateString('en-US'),
+        }));
+        setExpositions(expositionsFormattedDates);
       })
       .catch(error => {
         console.error('Erreur lors de la récupération des expositions:', error);
       });
   }, []);
 
-  // filtrer par ville
+  // Filtrer par ville
   useEffect(() => {
-    // Filtrer les expositions en fonction de la ville
     const expositionsFiltrees = expositions.filter(expo =>
       expo.ville.toLowerCase().includes(villeFiltre.toLowerCase())
     );
     setExpositionsFiltrees(expositionsFiltrees);
   }, [villeFiltre, expositions]);
 
-  const handleVilleInputChange = (e) => {
-    setVilleFiltre(e.target.value);
-  };
-
-  // filtrer par date
+  // Filtrer par date
   useEffect(() => {
-    // Filtrer les expositions en fonction de la ville
-    const expositionsFiltrees = expositions.filter(expo =>
-      expo.date_debut.toLowerCase().includes(dateFiltre.toLowerCase())
-    );
+    const expositionsFiltrees = expositions.filter(expo => {
+      if (!dateFiltre) return true; // Si aucune date sélectionnée, afficher toutes les expositions
+      const selectedDate = new Date(dateFiltre);
+      const expoStartDate = new Date(expo.date_debut);
+      const expoEndDate = new Date(expo.date_fin);
+      return selectedDate >= expoStartDate && selectedDate <= expoEndDate;
+    });
     setExpositionsFiltrees(expositionsFiltrees);
   }, [dateFiltre, expositions]);
 
-  const handleDateInputChange = (e) => {
-    setDateFiltre(e.target.value);
-  };
-
-  // filtrer par heure
+  // Filtrer par heure
   useEffect(() => {
-    // Filtrer les expositions en fonction de la ville
     const expositionsFiltrees = expositions.filter(expo =>
       expo.heure_debut.toLowerCase().includes(heureFiltre.toLowerCase())
     );
     setExpositionsFiltrees(expositionsFiltrees);
   }, [heureFiltre, expositions]);
 
+  const handleDateInputChange = (e) => {
+    const selectedDate = e.target.value;
+    const currentDate = new Date().toISOString().split('T')[0];
+
+    if (selectedDate >= currentDate) {
+      setDateError('');
+      setDateFiltre(selectedDate);
+      // Déclencher le tri par date à chaque changement de date
+      setTriParDate('asc'); // Tri par défaut croissant
+    } else {
+      setDateError('Attention: Vous ne pouvez pas sélectionner une date antérieure à la date actuelle.');
+      setDateFiltre('');
+    }
+  };
+
   const handleHeureInputChange = (e) => {
     setHeureFiltre(e.target.value);
   };
-  
 
+  const handleTriParDateChange = (e) => {
+    if (dateFiltre) {
+      setTriParDate(e.target.value);
+    }
+  };
 
-  // Fonction pour afficher les détails
   const handleVoirPlusClick = (expo) => {
     setExpositionSelectionnee(expo);
   };
 
-  // Fonction pour cacher les détails
   const handleFermerDetails = () => {
     setExpositionSelectionnee(null);
   };
 
+  const handleVilleInputChange = (e) => {
+    setVilleFiltre(e.target.value);
+  };
 
-
-  return(
+  return (
     <div className='1container'>
       <Header></Header>
       <center>
@@ -86,7 +104,7 @@ const ListesExpos = () => {
 
       <div className='search'>
         <div className='div-inputt'>
-          <p>Filrer par ville</p>
+          <p>Filtrer par ville</p>
           <input
             className='input'
             type="text"
@@ -97,18 +115,19 @@ const ListesExpos = () => {
         </div>
 
         <div className='div-inputt'>
-          <p>Filrer par date</p>
+          <p>Filtrer par date</p>
           <input
-              className='input'
-              type="date"
-              placeholder="mm/dd/yyyy"
-              value={dateFiltre}
-              onChange={handleDateInputChange}
+            className='input'
+            type="date"
+            placeholder="mm/dd/yyyy"
+            value={dateFiltre}
+            onChange={handleDateInputChange}
           />
+          {dateError && <p className="error-message">{dateError}</p>}
         </div>
 
         <div className='div-inputt'>
-          <p>Filrer par heure</p>
+          <p>Filtrer par heure</p>
           <input
             className='input'
             type="text"
@@ -136,37 +155,33 @@ const ListesExpos = () => {
                   <center><p className='label-reserver'>Voir plus</p></center>
                 </div>
 
-
                 {expositionSelectionnee && expositionSelectionnee.id === expo.id && (
                   <div className='overlay'>
                     <div className='details'>
                       <button onClick={handleFermerDetails}>Fermer</button>
                       <center>
-                      <p className='labell'>Nom: {expo.nom}</p>
-                      <p className='labell'>Type: {expo.type}</p>
-                      <p className='labella'>Quota: {expo.quota}</p>
-                      <p className='labell'>Date: {expo.date_debut} - {expo.date_fin}</p>
-                      <p className='labell'>Horaire: {expo.heure_debut} - {expo.heure_fin}</p>
-                      <p className='labell'>Adresse: {expo.numero} {expo.rue} {expo.ville} {expo.cp}</p>
-                      <p className='labell'>Coordonnee: {expo.latitude} {expo.longitude}</p>
-                      <Link to="/register_user">
-                        <div className='reserver' >
-                          <center><p className='label-reserver'>Voir plus</p></center>
-                        </div>
-                      </Link>
-                    </center>
+                        <p className='labell'>Nom: {expo.nom}</p>
+                        <p className='labell'>Type: {expo.type}</p>
+                        <p className='labella'>Quota: {expo.quota}</p>
+                        <p className='labell'>Date: {expo.date_debut} - {expo.date_fin}</p>
+                        <p className='labell'>Horaire: {expo.heure_debut} - {expo.heure_fin}</p>
+                        <p className='labell'>Adresse: {expo.numero} {expo.rue} {expo.ville} {expo.cp}</p>
+                        <p className='labell'>Coordonnee: {expo.latitude} {expo.longitude}</p>
+                        <Link to="/register_user">
+                          <div className='reserver' >
+                            <center><p className='label-reserver'>Voir plus</p></center>
+                          </div>
+                        </Link>
+                      </center>
                     </div>
                   </div>
                 )}
-
-          
               </div>
             </div>
           ))}
         </div>
       </center>
     </div>
-
   );
 };
 
