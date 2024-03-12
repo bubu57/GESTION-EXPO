@@ -1,232 +1,188 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 import axios from 'axios';
-import QRCode from 'qrcode';
-import jsPDF from 'jspdf';
+import Header from './header.js'
 
-import Header from './header.js';
-
-const FormEnregistrements = () => {
+const ListesExpos = () => {
   const [expositions, setExpositions] = useState([]);
-  const [formData, setFormData] = useState({
-    prenom: '',
-    nom: '',
-    mail: '',
-    date_debut: '',
-    heure: '', 
-    id_expo: '',
-  });
+  const [villeFiltre, setVilleFiltre] = useState('');
+  const [dateFiltre, setDateFiltre] = useState('');
+  const [heureFiltre, setHeureFiltre] = useState('');
+  const [triParDate, setTriParDate] = useState('asc');
+  const [expositionsFiltrees, setExpositionsFiltrees] = useState([]);
+  const [expositionSelectionnee, setExpositionSelectionnee] = useState(null);
+  const [dateError, setDateError] = useState('');
 
   useEffect(() => {
+    // Charger les données des expositions depuis le serveur
     axios.get('/api/app')
       .then(response => {
-        setExpositions(response.data);
+        // Convertir les dates au format américain (mm/dd/yyyy)
+        const expositionsFormattedDates = response.data.map(expo => ({
+          ...expo,
+          date_debut: new Date(expo.date_debut).toLocaleDateString('en-US'),
+          date_fin: new Date(expo.date_fin).toLocaleDateString('en-US'),
+        }));
+        setExpositions(expositionsFormattedDates);
       })
       .catch(error => {
         console.error('Erreur lors de la récupération des expositions:', error);
       });
   }, []);
 
-  const handleExpoChange = (e) => {
-    const selectedExpoId = e.target.value;
-    setFormData({
-      ...formData,
-      id_expo: selectedExpoId,
+  // Filtrer par ville
+  useEffect(() => {
+    const expositionsFiltrees = expositions.filter(expo =>
+      expo.ville.toLowerCase().includes(villeFiltre.toLowerCase())
+    );
+    setExpositionsFiltrees(expositionsFiltrees);
+  }, [villeFiltre, expositions]);
+
+  // Filtrer par date
+  useEffect(() => {
+    const expositionsFiltrees = expositions.filter(expo => {
+      if (!dateFiltre) return true; // Si aucune date sélectionnée, afficher toutes les expositions
+      const selectedDate = new Date(dateFiltre);
+      const expoStartDate = new Date(expo.date_debut);
+      const expoEndDate = new Date(expo.date_fin);
+      return selectedDate >= expoStartDate && selectedDate <= expoEndDate;
     });
-  };
+    setExpositionsFiltrees(expositionsFiltrees);
+  }, [dateFiltre, expositions]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  // Filtrer par heure
+  useEffect(() => {
+    const expositionsFiltrees = expositions.filter(expo =>
+      expo.heure_debut.toLowerCase().includes(heureFiltre.toLowerCase())
+    );
+    setExpositionsFiltrees(expositionsFiltrees);
+  }, [heureFiltre, expositions]);
 
-  const generateQRCode = async () => {
-    try {
-      const qrCodeData = `${formData.prenom} ${formData.nom} ${formData.date_debut} ${formData.heure} ${formData.id_expo}`; 
-      const qrCodeDataURL = await QRCode.toDataURL(qrCodeData);
-      return qrCodeDataURL;
-    } catch (error) {
-      console.error('Erreur lors de la génération du QR code:', error);
-      throw error;
+  const handleDateInputChange = (e) => {
+    const selectedDate = e.target.value;
+    const currentDate = new Date().toISOString().split('T')[0];
+
+    if (selectedDate >= currentDate) {
+      setDateError('');
+      setDateFiltre(selectedDate);
+      // Déclencher le tri par date à chaque changement de date
+      setTriParDate('asc'); // Tri par défaut croissant
+    } else {
+      setDateError('Attention: Vous ne pouvez pas sélectionner une date antérieure à la date actuelle.');
+      setDateFiltre('');
     }
   };
 
-  const handleSaveQRCodeAsPDF = async (qrCodeDataURL) => {
-    try {
-      if (expositions.length === 0) {
-        console.error('Aucune donnée d exposition disponible.');
-        return;
-      }
-    
-      const doc = new jsPDF();
-      
-      const selectedExpo = expositions.find(expo => expo.id === formData.id_expo);
-      if (selectedExpo) {
-        const nomExposition = `Nom de l'exposition : ${selectedExpo.nom}\n`;
-        const dateDebut = `Date de début : ${selectedExpo.date_debut}\n`;
-        const dateFin = `Date de fin : ${selectedExpo.date_fin}\n`;
-        const lieu = `Lieu : ${selectedExpo.lieu}\n\n`;
-        const descriptionText = nomExposition + dateDebut + dateFin + lieu;
-        doc.text(descriptionText, 10, 20); 
-      }
-    
-      const dateSelectionnee = `Date sélectionnée : ${formData.date_debut}\n`;
-      const heureSelectionnee = `Heure sélectionnée : ${formData.heure}\n\n`; 
-      doc.text(dateSelectionnee, 10, 70);
-      doc.text(heureSelectionnee, 10, 80); 
-    
-      const nomPrenom = `Nom : ${formData.nom}\nPrénom : ${formData.prenom}\n\n`;
-      doc.text(nomPrenom, 10, 100);
-    
-      const textePresentation = "Veuillez vous présenter à l'entrée muni de votre QRCode";
-      doc.text(textePresentation, 10, 130);
-    
-      doc.addImage(qrCodeDataURL, 'PNG', 10, 150, 50, 50);
-      
-      doc.save('qrcode.pdf');
-      console.log('QR code sauvegardé en PDF');
-    } catch (error) {
-      console.error('Erreur lors de la sauvegarde du QR code en PDF:', error);
+  const handleHeureInputChange = (e) => {
+    setHeureFiltre(e.target.value);
+  };
+
+  const handleTriParDateChange = (e) => {
+    if (dateFiltre) {
+      setTriParDate(e.target.value);
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const selectedExpo = expositions.find(expo =>
-        new Date(expo.date_debut) <= new Date(formData.date_debut) &&
-        new Date(expo.date_fin) >= new Date(formData.date_debut) &&
-        formData.heure >= expo.heure_debut && // Vérification de l'heure de début
-        formData.heure <= expo.heure_fin // Vérification de l'heure de fin
-      );
-      if (!selectedExpo) {
-        alert('Aucune exposition correspondante trouvée pour la date et l\'heure sélectionnées.');
-        return;
-      }
-
-      await axios.post('/api/register_user', formData);
-      console.log('Données soumises avec succès.');
-
-      const qrCodeDataURL = await generateQRCode();
-
-      await handleSaveQRCodeAsPDF(qrCodeDataURL);
-      
-      await sendEmailWithQRCode(formData.mail, qrCodeDataURL);
-
-    } catch (error) {
-      console.error('Erreur lors de la soumission du formulaire:', error);
-    }
+  const handleVoirPlusClick = (expo) => {
+    setExpositionSelectionnee(expo);
   };
 
-  const sendEmailWithQRCode = async (email, qrCodeDataURL) => {
-    try {
-      const response = await axios.post('/api/send_email', {
-        email: email,
-        qrCodeDataURL: qrCodeDataURL,
-      });
-      console.log('E-mail envoyé avec succès:', response.data);
-    } catch (error) {
-      console.error('Erreur lors de l\'envoi de l\'e-mail:', error);
-      throw error;
-    }
+  const handleFermerDetails = () => {
+    setExpositionSelectionnee(null);
   };
-  
+
+  const handleVilleInputChange = (e) => {
+    setVilleFiltre(e.target.value);
+  };
 
   return (
-    <div>
-      <Header />
-      <div className='container'>
-        <div className='img'></div>
-        <div className='form'>
-          <center><p className='title'>Enregistrement Utilisateur</p></center>
-          <form onSubmit={handleSubmit}>
-            <div className='form-block'>
-              <div className='form-name'>
-                <p className='label'>Prénom</p>
-                <p className='label'>Nom</p>
-                <p className='label'>Mail</p>
-                <p className='label'>Date d'entrée</p>
-                <p className='label'>Heure d'entrée</p> 
-                <p className='label'>Expositions</p>
-              </div>
-              <div className='form-input'>
-                <div className='div-input'>
-                  <input
-                    className='prenom'
-                    type="text"
-                    placeholder="Axel"
-                    name="prenom"
-                    value={formData.prenom}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className='div-input'>
-                  <input
-                    className='nom'
-                    type="text"
-                    placeholder="Air"
-                    name="nom"
-                    value={formData.nom}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className='div-input'>
-                  <input
-                    className='mail'
-                    type="text"
-                    placeholder="mail"
-                    name="mail"
-                    value={formData.mail}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className='div-input'>
-                  <input
-                    className='date_debut'
-                    type="date"
-                    placeholder="21/02/2003"
-                    name="date_debut"
-                    value={formData.date_debut}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className='div-input'> 
-                  <input
-                    className='heure'
-                    type="time"
-                    placeholder="21:30"
-                    name="heure"
-                    value={formData.heure}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-              
-                <select  className='select-exposition' value={formData.id_expo} onChange={handleExpoChange}>
-                  <option value=""></option>
-                  {expositions.map((expo, index) => (
-                    <option key={index} value={expo.id} disabled={new Date(formData.date_debut) < new Date(expo.date_debut) || new Date(formData.date_debut) > new Date(expo.date_fin) || formData.heure < expo.heure_debut || formData.heure > expo.heure_fin}>
-                      {expo.nom}
-                    </option>
-                  ))}
-                </select>
-              
-              </div>
-            </div>
-            <center className='button-reserved-registeruser'>
-              <button type="submit" className='button-text' >  <img src alt="button"></img></button>
-            </center>
-          </form>
+    <div className='1container'>
+      <Header></Header>
+      <center>
+        <div className='div-titre'><p className='titre'>Listes des expositions</p></div>
+      </center>
+
+      <div className='search'>
+        <div className='div-inputt'>
+          <p>Filtrer par ville</p>
+          <input
+            className='input'
+            type="text"
+            placeholder="Paris"
+            value={villeFiltre}
+            onChange={handleVilleInputChange}
+          />
+        </div>
+
+        <div className='div-inputt'>
+          <p>Filtrer par date</p>
+          <input
+            className='input'
+            type="date"
+            placeholder="mm/dd/yyyy"
+            value={dateFiltre}
+            onChange={handleDateInputChange}
+          />
+          {dateError && <p className="error-message">{dateError}</p>}
+        </div>
+
+        <div className='div-inputt'>
+          <p>Filtrer par heure</p>
+          <input
+            className='input'
+            type="text"
+            placeholder="15:30"
+            value={heureFiltre}
+            onChange={handleHeureInputChange}
+          />
         </div>
       </div>
+      <center>
+        <div className='content'>
+          {expositionsFiltrees.map((expo, index) => (
+            <div key={index} className='expo'>
+              <center><p className='text-expo'>{expo.nom}</p></center>
+              <div className='expo-content'>
+                <div className='expo-text'>
+                  <p className='label-type'>Type: {expo.type}</p>
+                  <p className='label-quota'>Quota: {expo.quota}</p>
+                  <p className='label-date'>Date: {expo.date_debut} - {expo.date_fin}</p>
+                  <p className='label-ville'>Ville: {expo.ville}</p>
+                  <p className='label-heure'>Horaire: {expo.heure_debut} - {expo.heure_fin}</p>
+                </div>
+                <div className='spacer'></div>
+                <div className='reserver' onClick={() => handleVoirPlusClick(expo)}>
+                  <center><p className='label-reserver'>Voir plus</p></center>
+                </div>
+
+                {expositionSelectionnee && expositionSelectionnee.id === expo.id && (
+                  <div className='overlay'>
+                    <div className='details'>
+                      <button onClick={handleFermerDetails}>Fermer</button>
+                      <center>
+                        <p className='labell'>Nom: {expo.nom}</p>
+                        <p className='labell'>Type: {expo.type}</p>
+                        <p className='labella'>Quota: {expo.quota}</p>
+                        <p className='labell'>Date: {expo.date_debut} - {expo.date_fin}</p>
+                        <p className='labell'>Horaire: {expo.heure_debut} - {expo.heure_fin}</p>
+                        <p className='labell'>Adresse: {expo.numero} {expo.rue} {expo.ville} {expo.cp}</p>
+                        <p className='labell'>Coordonnee: {expo.latitude} {expo.longitude}</p>
+                        <Link to="/register_user">
+                          <div className='reserver' >
+                            <center><p className='label-reserver'>Voir plus</p></center>
+                          </div>
+                        </Link>
+                      </center>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </center>
     </div>
   );
 };
 
-export default FormEnregistrements;
+export default ListesExpos;
