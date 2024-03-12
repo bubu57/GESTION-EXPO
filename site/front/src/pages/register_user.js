@@ -211,7 +211,7 @@ const FormEnregistrements = () => {
                   <option value=""></option>
                   {expositions.map((expo, index) => (
                     <option key={index} value={expo.id} disabled={new Date(formData.date_debut) < new Date(expo.date_debut) || new Date(formData.date_debut) > new Date(expo.date_fin) || (formData.heure < expo.heure_debut || formData.heure > expo.heure_fin)}>
-                      {expo.nom} de {expo.heure_debut.slice(0, -3)} a {expo.heure_fin.slice(0, -3)} du {expo.date_debut.slice(5, 9)} {expo.date_fin.slice(5, 9)}
+                      {expo.nom} de {expo.heure_debut.slice(0, -3)} a {expo.heure_fin.slice(0, -3)} du {new Date(expo.date_debut).toLocaleDateString('fr-FR', { month: 'numeric', day: 'numeric' })} au {new Date(expo.date_fin).toLocaleDateString('fr-FR', { month: 'numeric', day: 'numeric' })}
                     </option>
                   ))}
                 </select>
