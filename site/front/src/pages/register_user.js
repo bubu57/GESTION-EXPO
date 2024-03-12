@@ -207,11 +207,11 @@ const FormEnregistrements = () => {
                     required
                   />
                 </div>
-                <select  className='select-exposition' value={formData.id_expo} onChange={handleExpoChange}>
+                <select className='select-exposition' value={formData.id_expo} onChange={handleExpoChange}>
                   <option value=""></option>
                   {expositions.map((expo, index) => (
                     <option key={index} value={expo.id} disabled={new Date(formData.date_debut) < new Date(expo.date_debut) || new Date(formData.date_debut) > new Date(expo.date_fin) || (formData.heure < expo.heure_debut || formData.heure > expo.heure_fin)}>
-                      {expo.nom}
+                      {expo.nom} - {expo.heure_debut} à {expo.heure_fin} - {expo.date_debut} à {expo.date_fin}
                     </option>
                   ))}
                 </select>
