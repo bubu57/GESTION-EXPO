@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import QRCode from 'qrcode';
 import jsPDF from 'jspdf';
-
+import ButtonRegister from '../img/Button-reserved.svg';
 import Header from './header.js';
 
 const FormEnregistrements = () => {
@@ -12,6 +12,7 @@ const FormEnregistrements = () => {
     nom: '',
     mail: '',
     date_debut: '',
+    heure: '',
     id_expo: '',
   });
 
@@ -43,7 +44,7 @@ const FormEnregistrements = () => {
 
   const generateQRCode = async () => {
     try {
-      const qrCodeData = `${formData.prenom} ${formData.nom} ${formData.date_debut} ${formData.id_expo}`;
+      const qrCodeData = `${formData.prenom} ${formData.nom} ${formData.date_debut} ${formData.heure} ${formData.id_expo}`;
       const qrCodeDataURL = await QRCode.toDataURL(qrCodeData);
       return qrCodeDataURL;
     } catch (error) {
@@ -54,15 +55,13 @@ const FormEnregistrements = () => {
 
   const handleSaveQRCodeAsPDF = async (qrCodeDataURL) => {
     try {
-      // Vérifier si les données des expositions sont disponibles
       if (expositions.length === 0) {
         console.error('Aucune donnée d exposition disponible.');
         return;
       }
-    
+
       const doc = new jsPDF();
-      
-      // Récupérer le nom de l'exposition en fonction de son ID
+
       const selectedExpo = expositions.find(expo => expo.id === formData.id_expo);
       if (selectedExpo) {
         const nomExposition = `Nom de l'exposition : ${selectedExpo.nom}\n`;
@@ -70,25 +69,22 @@ const FormEnregistrements = () => {
         const dateFin = `Date de fin : ${selectedExpo.date_fin}\n`;
         const lieu = `Lieu : ${selectedExpo.lieu}\n\n`;
         const descriptionText = nomExposition + dateDebut + dateFin + lieu;
-        doc.text(descriptionText, 10, 20); // Ajouter la description à partir de la position (10, 20)
+        doc.text(descriptionText, 10, 20);
       }
-    
-      // Ajouter la date sélectionnée par l'utilisateur
-      const dateSelectionnee = `Date sélectionnée : ${formData.date_debut}\n\n`;
+
+      const dateSelectionnee = `Date sélectionnée : ${formData.date_debut}\n`;
+      const heureSelectionnee = `Heure sélectionnée : ${formData.heure}\n\n`;
       doc.text(dateSelectionnee, 10, 70);
-    
-      // Ajouter le nom et prénom de l'utilisateur
+      doc.text(heureSelectionnee, 10, 80);
+
       const nomPrenom = `Nom : ${formData.nom}\nPrénom : ${formData.prenom}\n\n`;
-      doc.text(nomPrenom, 10, 90);
-    
-      // Ajouter le texte "Veuillez vous présenter à l'entrée muni de votre QRCode"
+      doc.text(nomPrenom, 10, 100);
+
       const textePresentation = "Veuillez vous présenter à l'entrée muni de votre QRCode";
-      doc.text(textePresentation, 10, 120);
-    
-      // Ajouter l'image du QR code
-      doc.addImage(qrCodeDataURL, 'PNG', 10, 140, 50, 50);
-      
-      // Sauvegarder le document PDF
+      doc.text(textePresentation, 10, 130);
+
+      doc.addImage(qrCodeDataURL, 'PNG', 10, 150, 50, 50);
+
       doc.save('qrcode.pdf');
       console.log('QR code sauvegardé en PDF');
     } catch (error) {
@@ -101,24 +97,22 @@ const FormEnregistrements = () => {
     try {
       const selectedExpo = expositions.find(expo =>
         new Date(expo.date_debut) <= new Date(formData.date_debut) &&
-        new Date(expo.date_fin) >= new Date(formData.date_debut)
+        new Date(expo.date_fin) >= new Date(formData.date_debut) &&
+        formData.heure >= expo.heure_debut &&
+        formData.heure <= expo.heure_fin
       );
       if (!selectedExpo) {
-        alert('Aucune exposition correspondante trouvée pour la date sélectionnée.');
+        alert('Aucune exposition correspondante trouvée pour la date et l\'heure sélectionnées.');
         return;
       }
 
-      // Soumettre le formulaire et enregistrer l'utilisateur
       await axios.post('/api/register_user', formData);
       console.log('Données soumises avec succès.');
 
-      // Générer le QR code
       const qrCodeDataURL = await generateQRCode();
 
-      // Sauvegarder le QR code en tant que PDF
       await handleSaveQRCodeAsPDF(qrCodeDataURL);
-      
-      // Envoyer l'e-mail avec le QR code
+
       await sendEmailWithQRCode(formData.mail, qrCodeDataURL);
 
     } catch (error) {
@@ -138,7 +132,7 @@ const FormEnregistrements = () => {
       throw error;
     }
   };
-  
+
 
   return (
     <div>
@@ -154,6 +148,7 @@ const FormEnregistrements = () => {
                 <p className='label'>Nom</p>
                 <p className='label'>Mail</p>
                 <p className='label'>Date d'entrée</p>
+                <p className='label'>Heure d'entrée</p>
                 <p className='label'>Expositions</p>
               </div>
               <div className='form-input'>
@@ -201,20 +196,29 @@ const FormEnregistrements = () => {
                     required
                   />
                 </div>
-              
+                <div className='div-input'>
+                  <input
+                    className='heure'
+                    type="time"
+                    placeholder="21:30"
+                    name="heure"
+                    value={formData.heure}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
                 <select  className='select-exposition' value={formData.id_expo} onChange={handleExpoChange}>
                   <option value=""></option>
                   {expositions.map((expo, index) => (
-                    <option key={index} value={expo.id} disabled={new Date(formData.date_debut) < new Date(expo.date_debut) || new Date(formData.date_debut) > new Date(expo.date_fin)}>
+                    <option key={index} value={expo.id} disabled={new Date(formData.date_debut) < new Date(expo.date_debut) || new Date(formData.date_debut) > new Date(expo.date_fin) || (formData.heure < expo.heure_debut || formData.heure > expo.heure_fin)}>
                       {expo.nom}
                     </option>
                   ))}
                 </select>
-              
               </div>
             </div>
             <center className='button-reserved-registeruser'>
-              <button type="submit" className='button-text' >  <img src alt="button"></img></button>
+              <button type="submit" className='button-text' >  <img src={ButtonRegister} alt="button"></img></button>
             </center>
           </form>
         </div>
