@@ -43,17 +43,23 @@ const ListesExpos = () => {
 
   // filtrer par date
   useEffect(() => {
-    // Filtrer les expositions en fonction de la date
-    const expositionsFiltrees = expositions.filter(expo => {
-      const dateFiltreLowerCase = dateFiltre.toLowerCase();
-      const dateDebutLowerCase = expo.date_debut.toLowerCase();
-      const dateFinLowerCase = expo.date_fin.toLowerCase();
-      
-      // Vérifier si la date filtrée est comprise entre la date de début et la date de fin de chaque exposition
-      return dateDebutLowerCase <= dateFiltreLowerCase && dateFiltreLowerCase <= dateFinLowerCase;
-    });
-  
-    setExpositionsFiltrees(expositionsFiltrees);
+    // Vérifier si le champ de filtrage contient du texte
+    if (dateFiltre.trim() === '') {
+      // Si le champ de filtrage est vide, ne pas filtrer les expositions
+      setExpositionsFiltrees(expositions);
+    } else {
+      // Filtrer les expositions en fonction de la date
+      const expositionsFiltrees = expositions.filter(expo => {
+        const dateFiltreLowerCase = dateFiltre.toLowerCase();
+        const dateDebutLowerCase = expo.date_debut.toLowerCase();
+        const dateFinLowerCase = expo.date_fin.toLowerCase();
+        
+        // Vérifier si la date filtrée est comprise entre la date de début et la date de fin de chaque exposition
+        return dateDebutLowerCase <= dateFiltreLowerCase && dateFiltreLowerCase <= dateFinLowerCase;
+      });
+    
+      setExpositionsFiltrees(expositionsFiltrees);
+    }
   }, [dateFiltre, expositions]);
 
   const handleDateInputChange = (e) => {
