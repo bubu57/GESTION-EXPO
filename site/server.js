@@ -27,7 +27,8 @@ app.use(express.json())
 app.use(express.static('front/build'))
 
 app.get('/api/app', (req, res) => {
-  const expositionQuery = 'SELECT * FROM Exposition';
+  const today = new Date().toISOString().split('T')[0];
+  const expositionQuery = `SELECT * FROM Exposition WHERE date_debut > '${today}'`;
   const lieuQuery = 'SELECT * FROM Lieu';
 
   connection.query(expositionQuery, (expositionErr, expositionResults) => {

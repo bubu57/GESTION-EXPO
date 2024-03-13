@@ -8,10 +8,8 @@ const ListesExpos = () => {
   const [villeFiltre, setVilleFiltre] = useState('');
   const [dateFiltre, setDateFiltre] = useState('');
   const [heureFiltre, setHeureFiltre] = useState('');
-  const [triParDate, setTriParDate] = useState('asc');
   const [expositionsFiltrees, setExpositionsFiltrees] = useState([]);
   const [expositionSelectionnee, setExpositionSelectionnee] = useState(null);
-  const [dateError, setDateError] = useState('');
 
   useEffect(() => {
     // Charger les données des expositions depuis le serveur
@@ -20,8 +18,8 @@ const ListesExpos = () => {
         // Convertir les dates au format américain (mm/dd/yyyy)
         const expositionsFormattedDates = response.data.map(expo => ({
           ...expo,
-          date_debut: new Date(expo.date_debut).toLocaleDateString('en-US'),
-          date_fin: new Date(expo.date_fin).toLocaleDateString('en-US'),
+          date_debut: new Date(expo.date_debut).toLocaleDateString('fr-FR'),
+          date_fin: new Date(expo.date_fin).toLocaleDateString('fr-FR'),
         }));
         setExpositions(expositionsFormattedDates);
       })
@@ -30,83 +28,62 @@ const ListesExpos = () => {
       });
   }, []);
 
-  // Filtrer par ville
+  // filtrer par ville
   useEffect(() => {
+    // Filtrer les expositions en fonction de la ville
     const expositionsFiltrees = expositions.filter(expo =>
       expo.ville.toLowerCase().includes(villeFiltre.toLowerCase())
     );
     setExpositionsFiltrees(expositionsFiltrees);
   }, [villeFiltre, expositions]);
 
-// Filtrer par date
-// Filtrer par date
-// Filtrer par date
-// Filtrer par date
-// Filtrer par date
-// Filtrer par date
-// Filtrer par date
-useEffect(() => {
-  const filteredExpositions = expositions.filter(expo => {
-    const selectedDate = new Date(dateFiltre);
-    const currentDate = new Date();
-    // Vérifier si la date sélectionnée est inférieure à la date actuelle
-    if (selectedDate < currentDate) {
-      alert("Vous ne pouvez pas sélectionner une date antérieure à la date actuelle.");
-      return false;
-    }
-    const expoStartDate = new Date(expo.date_debut);
-    const expoEndDate = new Date(expo.date_fin);
-    // Comparaison des dates pour vérifier si la date sélectionnée est entre la date de début et la date de fin de l'exposition
-    return selectedDate >= expoStartDate && selectedDate <= expoEndDate;
-  });
-  setExpositionsFiltrees(filteredExpositions);
-}, [dateFiltre, expositions]);
+  const handleVilleInputChange = (e) => {
+    setVilleFiltre(e.target.value);
+  };
 
-  // Filtrer par heure
+  // filtrer par date
   useEffect(() => {
+    // Filtrer les expositions en fonction de la date
+    const expositionsFiltrees = expositions.filter(expo => {
+      const dateFiltreLowerCase = dateFiltre.toLowerCase();
+      const dateDebutLowerCase = expo.date_debut.toLowerCase();
+      const dateFinLowerCase = expo.date_fin.toLowerCase();
+      
+      // Vérifier si la date filtrée est comprise entre la date de début et la date de fin de chaque exposition
+      return dateDebutLowerCase <= dateFiltreLowerCase && dateFiltreLowerCase <= dateFinLowerCase;
+    });
+  
+    setExpositionsFiltrees(expositionsFiltrees);
+  }, [dateFiltre, expositions]);
+
+  const handleDateInputChange = (e) => {
+    setDateFiltre(e.target.value);
+  };
+
+  // filtrer par heure
+  useEffect(() => {
+    // Filtrer les expositions en fonction de la ville
     const expositionsFiltrees = expositions.filter(expo =>
       expo.heure_debut.toLowerCase().includes(heureFiltre.toLowerCase())
     );
     setExpositionsFiltrees(expositionsFiltrees);
   }, [heureFiltre, expositions]);
 
-  const handleDateInputChange = (e) => {
-    const selectedDate = e.target.value;
-    const currentDate = new Date().toISOString().split('T')[0];
-
-    if (selectedDate >= currentDate) {
-      setDateError('');
-      setDateFiltre(selectedDate);
-      // Déclencher le tri par date à chaque changement de date
-      setTriParDate('asc'); // Tri par défaut croissant
-    } else {
-      alert("Vous ne pouvez pas sélectionner une date antérieure à la date actuelle.");
-      setDateError('Attention: Vous ne pouvez pas sélectionner une date antérieure à la date actuelle.');
-      setDateFiltre('');
-    }
-  };
-
   const handleHeureInputChange = (e) => {
     setHeureFiltre(e.target.value);
   };
 
-  const handleTriParDateChange = (e) => {
-    if (dateFiltre) {
-      setTriParDate(e.target.value);
-    }
-  };
 
+  // Fonction pour afficher les détails
   const handleVoirPlusClick = (expo) => {
     setExpositionSelectionnee(expo);
   };
 
+  // Fonction pour cacher les détails
   const handleFermerDetails = () => {
     setExpositionSelectionnee(null);
   };
-
-  const handleVilleInputChange = (e) => {
-    setVilleFiltre(e.target.value);
-  };
+  
 
   return (
     <div className='1container'>
@@ -131,12 +108,11 @@ useEffect(() => {
           <p>Filtrer par date</p>
           <input
             className='input'
-            type="date"
-            placeholder="mm/dd/yyyy"
+            type="text"
+            placeholder="jj/mm/aaaa"
             value={dateFiltre}
             onChange={handleDateInputChange}
           />
-          {dateError && <p className="error-message">{dateError}</p>}
         </div>
 
         <div className='div-inputt'>
