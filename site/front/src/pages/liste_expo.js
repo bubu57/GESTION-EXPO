@@ -21,7 +21,7 @@ const ListesExpos = () => {
       })
       .catch(error => {
         console.error('Erreur lors de la récupération des expositions:', error);
-      });
+      }); 
   }, []);
 
   // filtrer par ville
