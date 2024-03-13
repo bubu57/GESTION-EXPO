@@ -45,7 +45,7 @@ const ListesExpos = () => {
   useEffect(() => {
     // Vérifier si le champ de filtrage contient du texte
     if (dateFiltre.trim() === '') {
-      // Si le champ de filtrage est vide, ne pas filtrer les expositions
+      // Afficher toutes les expositions
       setExpositionsFiltrees(expositions);
     } else {
       // Filtrer les expositions en fonction de la date
