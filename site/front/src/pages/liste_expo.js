@@ -13,15 +13,11 @@ const ListesExpos = () => {
 
   useEffect(() => {
     // Charger les données des expositions depuis le serveur
-    axios.get('/api/app')
+    axios.get('/api/app') // Assurez-vous d'avoir une route '/api/expositions' sur votre serveur
       .then(response => {
-        // Convertir les dates au format américain (mm/dd/yyyy)
-        const expositionsFormattedDates = response.data.map(expo => ({
-          ...expo,
-          date_debut: new Date(expo.date_debut).toLocaleDateString('fr-FR'),
-          date_fin: new Date(expo.date_fin).toLocaleDateString('fr-FR'),
-        }));
-        setExpositions(expositionsFormattedDates);
+
+        setExpositions(response.data);
+        console.log(response.data);
       })
       .catch(error => {
         console.error('Erreur lors de la récupération des expositions:', error);
