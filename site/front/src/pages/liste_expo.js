@@ -38,17 +38,29 @@ const ListesExpos = () => {
     setExpositionsFiltrees(expositionsFiltrees);
   }, [villeFiltre, expositions]);
 
-  // Filtrer par date
-  useEffect(() => {
-    const expositionsFiltrees = expositions.filter(expo => {
-      if (!dateFiltre) return true; // Si aucune date sélectionnée, afficher toutes les expositions
-      const selectedDate = new Date(dateFiltre);
-      const expoStartDate = new Date(expo.date_debut);
-      const expoEndDate = new Date(expo.date_fin);
-      return selectedDate >= expoStartDate && selectedDate <= expoEndDate;
-    });
-    setExpositionsFiltrees(expositionsFiltrees);
-  }, [dateFiltre, expositions]);
+// Filtrer par date
+// Filtrer par date
+// Filtrer par date
+// Filtrer par date
+// Filtrer par date
+// Filtrer par date
+// Filtrer par date
+useEffect(() => {
+  const filteredExpositions = expositions.filter(expo => {
+    const selectedDate = new Date(dateFiltre);
+    const currentDate = new Date();
+    // Vérifier si la date sélectionnée est inférieure à la date actuelle
+    if (selectedDate < currentDate) {
+      alert("Vous ne pouvez pas sélectionner une date antérieure à la date actuelle.");
+      return false;
+    }
+    const expoStartDate = new Date(expo.date_debut);
+    const expoEndDate = new Date(expo.date_fin);
+    // Comparaison des dates pour vérifier si la date sélectionnée est entre la date de début et la date de fin de l'exposition
+    return selectedDate >= expoStartDate && selectedDate <= expoEndDate;
+  });
+  setExpositionsFiltrees(filteredExpositions);
+}, [dateFiltre, expositions]);
 
   // Filtrer par heure
   useEffect(() => {
@@ -68,6 +80,7 @@ const ListesExpos = () => {
       // Déclencher le tri par date à chaque changement de date
       setTriParDate('asc'); // Tri par défaut croissant
     } else {
+      alert("Vous ne pouvez pas sélectionner une date antérieure à la date actuelle.");
       setDateError('Attention: Vous ne pouvez pas sélectionner une date antérieure à la date actuelle.');
       setDateFiltre('');
     }
