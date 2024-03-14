@@ -4,6 +4,9 @@ import QRCode from 'qrcode';
 import jsPDF from 'jspdf';
 import ButtonRegister from '../img/Button-reserved.svg';
 import Header from './header.js';
+import DateTime from 'react-datetime';
+import 'react-datetime/css/react-datetime.css';
+import dayjs from 'dayjs';
 
 const FormEnregistrements = () => {
   const [expositions, setExpositions] = useState([]);
@@ -11,7 +14,7 @@ const FormEnregistrements = () => {
     prenom: '',
     nom: '',
     mail: '',
-    date_debut: '',
+    date_debut: null,
     heure: '',
     id_expo: '',
   });
@@ -42,9 +45,16 @@ const FormEnregistrements = () => {
     });
   };
 
+  const handleDateChange = (date) => {
+    setFormData({
+      ...formData,
+      date_debut: date,
+    });
+  };
+
   const generateQRCode = async () => {
     try {
-      const qrCodeData = `${formData.prenom} ${formData.nom} ${formData.date_debut} ${formData.heure} ${formData.id_expo}`;
+      const qrCodeData = `${formData.prenom} ${formData.nom} ${dayjs(formData.date_debut).format('DD/MM/YYYY')} ${formData.heure} ${formData.id_expo}`;
       const qrCodeDataURL = await QRCode.toDataURL(qrCodeData);
       return qrCodeDataURL;
     } catch (error) {
@@ -59,9 +69,7 @@ const FormEnregistrements = () => {
         console.error('Aucune donnée d exposition disponible.');
         return;
       }
-
       const doc = new jsPDF();
-
       const selectedExpo = expositions.find(expo => expo.id === formData.id_expo);
       if (selectedExpo) {
         const nomExposition = `Nom de l'exposition : ${selectedExpo.nom}\n`;
@@ -71,20 +79,15 @@ const FormEnregistrements = () => {
         const descriptionText = nomExposition + dateDebut + dateFin + lieu;
         doc.text(descriptionText, 10, 20);
       }
-
-      const dateSelectionnee = `Date sélectionnée : ${formData.date_debut}\n`;
+      const dateSelectionnee = `Date sélectionnée : ${dayjs(formData.date_debut).format('DD/MM/YYYY')}\n`;
       const heureSelectionnee = `Heure sélectionnée : ${formData.heure}\n\n`;
       doc.text(dateSelectionnee, 10, 70);
       doc.text(heureSelectionnee, 10, 80);
-
       const nomPrenom = `Nom : ${formData.nom}\nPrénom : ${formData.prenom}\n\n`;
       doc.text(nomPrenom, 10, 100);
-
       const textePresentation = "Veuillez vous présenter à l'entrée muni de votre QRCode";
       doc.text(textePresentation, 10, 130);
-
       doc.addImage(qrCodeDataURL, 'PNG', 10, 150, 50, 50);
-
       doc.save('qrcode.pdf');
       console.log('QR code sauvegardé en PDF');
     } catch (error) {
@@ -105,34 +108,14 @@ const FormEnregistrements = () => {
         alert('Aucune exposition correspondante trouvée pour la date et l\'heure sélectionnées.');
         return;
       }
-
       await axios.post('/api/register_user', formData);
       console.log('Données soumises avec succès.');
-
       const qrCodeDataURL = await generateQRCode();
-
       await handleSaveQRCodeAsPDF(qrCodeDataURL);
-
-      await sendEmailWithQRCode(formData.mail, qrCodeDataURL);
-
     } catch (error) {
       console.error('Erreur lors de la soumission du formulaire:', error);
     }
   };
-
-  const sendEmailWithQRCode = async (email, qrCodeDataURL) => {
-    try {
-      const response = await axios.post('/api/send_email', {
-        email: email,
-        qrCodeDataURL: qrCodeDataURL,
-      });
-      console.log('E-mail envoyé avec succès:', response.data);
-    } catch (error) {
-      console.error('Erreur lors de l\'envoi de l\'e-mail:', error);
-      throw error;
-    }
-  };
-
 
   return (
     <div>
@@ -186,13 +169,12 @@ const FormEnregistrements = () => {
                   />
                 </div>
                 <div className='div-input'>
-                  <input
+                  <DateTime
                     className='date_debut'
-                    type="date"
-                    placeholder="21/02/2003"
-                    name="date_debut"
+                    dateFormat="DD/MM/YYYY"
+                    timeFormat={false}
                     value={formData.date_debut}
-                    onChange={handleChange}
+                    onChange={handleDateChange}
                     required
                   />
                 </div>
@@ -211,7 +193,8 @@ const FormEnregistrements = () => {
                   <option value=""></option>
                   {expositions.map((expo, index) => (
                     <option key={index} value={expo.id} disabled={new Date(formData.date_debut) < new Date(expo.date_debut) || new Date(formData.date_debut) > new Date(expo.date_fin) || (formData.heure < expo.heure_debut || formData.heure > expo.heure_fin)}>
-                      {expo.nom} de {expo.heure_debut.slice(0, -3)} a {expo.heure_fin.slice(0, -3)} du {expo.date_debut} au {expo.date_fin}
+                      {expo.nom}
+                      {expo.nom} - {expo.heure_debut} à {expo.heure_fin} - {expo.date_debut} à {expo.date_fin}
                     </option>
                   ))}
                 </select>
@@ -226,6 +209,5 @@ const FormEnregistrements = () => {
     </div>
   );
 };
-
 
 export default FormEnregistrements;
