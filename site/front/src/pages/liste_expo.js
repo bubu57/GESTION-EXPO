@@ -16,6 +16,7 @@ const ListesExpos = () => {
     fetch('/api/app') // Assurez-vous d'avoir une route '/api/expositions' sur votre serveur
       .then(response => {
         if (!response.ok) {
+          console.log(response);
           throw new Error('Erreur lors de la récupération des expositions');
         }
         return response.json();

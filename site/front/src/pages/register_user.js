@@ -4,8 +4,6 @@ import QRCode from 'qrcode';
 import jsPDF from 'jspdf';
 import ButtonRegister from '../img/Button-reserved.svg';
 import Header from './header.js';
-import DateTime from 'react-datetime';
-import 'react-datetime/css/react-datetime.css';
 import dayjs from 'dayjs';
 
 const FormEnregistrements = () => {
@@ -97,10 +95,14 @@ const FormEnregistrements = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const convertirEnDate = (dateString) => {
+      const [jour, mois, annee] = dateString.split('/');
+      return new Date(annee, mois - 1, jour);
+    };
     try {
       const selectedExpo = expositions.find(expo =>
-        new Date(expo.date_debut) <= new Date(formData.date_debut) &&
-        new Date(expo.date_fin) >= new Date(formData.date_debut) &&
+        convertirEnDate(expo.date_debut) <= convertirEnDate(formData.date_debut) &&
+        convertirEnDate(expo.date_fin) >= convertirEnDate(formData.date_debut) &&
         formData.heure >= expo.heure_debut &&
         formData.heure <= expo.heure_fin
       );
@@ -169,13 +171,12 @@ const FormEnregistrements = () => {
                   />
                 </div>
                 <div className='div-input'>
-                  <DateTime
-                    className='date_debut'
-                    dateFormat="DD/MM/YYYY"
-                    timeFormat={false}
+                  <input
+                    className='date_fin'
+                    type="text"
+                    placeholder="jj/mm/aaaa"
                     value={formData.date_debut}
-                    onChange={handleDateChange}
-                    required
+                    onChange={handleChange}
                   />
                 </div>
                 <div className='div-input'>
