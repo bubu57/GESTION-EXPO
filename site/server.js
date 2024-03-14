@@ -7,21 +7,29 @@ const app = express();
 // recuperation du port via .env sinon utilise le port 5000
 const PORT = process.env.PORT || 5000;
 
-const connection = mysql.createConnection({
+const connecterBaseDonnees = () => {
+  const connection = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     port: process.env.DB_PORT,
-});
+  });
 
-connection.connect((err) => {
+  connection.connect((err) => {
     if (err) {
       console.error('Erreur de connexion à la base de données:', err);
+      // Réessayer la connexion après un délai
+      setTimeout(connecterBaseDonnees, 5000); // Réessayer la connexion après 5 secondes
     } else {
       console.log('Connexion à la base de données réussie');
     }
-});
+  });
+
+  return connection;
+};
+
+let connection = connecterBaseDonnees();
 
 app.use(express.json())
 app.use(express.static('front/build'))
