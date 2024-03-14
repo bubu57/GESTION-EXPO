@@ -13,16 +13,22 @@ const ListesExpos = () => {
 
   useEffect(() => {
     // Charger les données des expositions depuis le serveur
-    axios.get('/api/app') // Assurez-vous d'avoir une route '/api/expositions' sur votre serveur
+    fetch('/api/app') // Assurez-vous d'avoir une route '/api/expositions' sur votre serveur
       .then(response => {
-
-        setExpositions(response.data);
-        console.log(response.data);
+        if (!response.ok) {
+          throw new Error('Erreur lors de la récupération des expositions');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setExpositions(data);
+        console.log(data);
       })
       .catch(error => {
         console.error('Erreur lors de la récupération des expositions:', error);
-      }); 
+      });
   }, []);
+  
 
   // filtrer par ville
   useEffect(() => {
