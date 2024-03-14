@@ -35,6 +35,7 @@ app.use(express.json())
 app.use(express.static('front/build'))
 
 app.get('/api/app', (req, res) => {
+  let connection = connecterBaseDonnees();
   const today = new Date().toISOString().split('T')[0];
   const expositionQuery = `SELECT *, DATE_FORMAT(date_debut, '%d/%m/%Y') AS date_debut, DATE_FORMAT(date_fin, '%d/%m/%Y') AS date_fin FROM Exposition WHERE date_debut > '${today}'`;
   const lieuQuery = 'SELECT * FROM Lieu';
@@ -66,6 +67,7 @@ app.get('/api/app', (req, res) => {
 
 app.post('/api/enregistrement', (req, res) => {
 
+  let connection = connecterBaseDonnees();
   const lieuQuery = `
   INSERT INTO Lieu (numero, rue, code_postal, ville, latitude, longitude)
   VALUES ("${req.body.numero}", "${req.body.rue}", "${req.body.code_postale}", "${req.body.ville}", "${req.body.latitude}", "${req.body.longitude}");
@@ -124,6 +126,7 @@ app.post('/api/enregistrement', (req, res) => {
 
 app.post('/api/register_user', (req, res) => {
 
+  let connection = connecterBaseDonnees();
   const lieuQuery = `
   INSERT INTO Visiteur (nom, prenom, email, id_expo, date_entree)
   VALUES ("${req.body.nom}", "${req.body.prenom}", "${req.body.mail}", "${req.body.id_expo}", "${req.body.date_debut}");
