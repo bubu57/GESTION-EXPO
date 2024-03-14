@@ -68,19 +68,37 @@ const ListesExpos = () => {
     setDateFiltre(e.target.value);
   };
 
-  // filtrer par heure
+  // Filtrer par heure
   useEffect(() => {
-    // Filtrer les expositions en fonction de la ville
-    const expositionsFiltrees = expositions.filter(expo =>
-      expo.heure_debut.toLowerCase().includes(heureFiltre.toLowerCase())
-    );
+    // Si l'heure de filtrage est vide, afficher toutes les expositions
+    if (!heureFiltre.trim()) {
+      setExpositionsFiltrees(expositions);
+      return;
+    }
+
+    // Ajouter la date actuelle à l'heure de filtrage
+    const heureFiltreAvecDate = `01/01/1970 ${heureFiltre}`;
+
+    // Convertir l'heure de filtrage en millisecondes
+    const heureFiltreMillisecondes = Date.parse(heureFiltreAvecDate);
+
+    // Filtrer les expositions en fonction de l'heure de début et de fin
+    const expositionsFiltrees = expositions.filter(expo => {
+      // Convertir les heures de début et de fin en millisecondes
+      const heureDebutMillisecondes = Date.parse(`01/01/1970 ${expo.heure_debut}`);
+      const heureFinMillisecondes = Date.parse(`01/01/1970 ${expo.heure_fin}`);
+      
+      // Vérifier si l'heure de filtrage se situe entre l'heure de début et de fin de chaque exposition
+      return heureDebutMillisecondes <= heureFiltreMillisecondes && heureFiltreMillisecondes <= heureFinMillisecondes;
+    });
+
+    // Mettre à jour les expositions filtrées
     setExpositionsFiltrees(expositionsFiltrees);
   }, [heureFiltre, expositions]);
 
   const handleHeureInputChange = (e) => {
     setHeureFiltre(e.target.value);
   };
-
 
   // Fonction pour afficher les détails
   const handleVoirPlusClick = (expo) => {
