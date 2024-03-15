@@ -164,7 +164,7 @@ const ListesExpos = () => {
                   <p className='label-quota'>Quota: {expo.quota}</p>
                   <p className='label-date'>Date: {expo.date_debut} - {expo.date_fin}</p>
                   <p className='label-ville'>Ville: {expo.ville}</p>
-                  <p className='label-heure'>Horaire: {expo.heure_debut} - {expo.heure_fin}</p>
+                  <p className='label-heure'>Horaire: {expo.heure_debut.slice(0, -3)} - {expo.heure_fin.slice(0, -3)}</p>
                 </div>
                 <div className='spacer'></div>
                 <div className='reserver' onClick={() => handleVoirPlusClick(expo)}>
