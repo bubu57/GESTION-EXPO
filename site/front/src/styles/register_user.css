@@ -2,6 +2,10 @@ body {
     background-color: #F0F0F0F0;
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 1;
+}
+
 .container {
     display: flex;
     background-color: #FFFFFF;
