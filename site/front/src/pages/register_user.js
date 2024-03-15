@@ -114,6 +114,8 @@ const FormEnregistrements = () => {
     }
   };
 
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

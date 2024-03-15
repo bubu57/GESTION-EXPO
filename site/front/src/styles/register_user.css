@@ -2,10 +2,6 @@ body {
     background-color: #F0F0F0F0;
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
-    opacity: 1;
-}
-
 .container {
     display: flex;
     background-color: #FFFFFF;
@@ -119,6 +115,12 @@ input {
 }
 */
 
+input[type="date"] {
+    min-width:95.6%;
+    -webkit-appearance : none;
+    min-height: calc(var(--lwc-heightInput,1.875rem) + (1px * 2) + 24px) !important;
+}
+
 @media screen and (max-width: 1350px) {
     .container {
         margin-left: 10%;
@@ -153,5 +155,6 @@ input {
     .container {
         margin-left: 5%;
         margin-right: 5%;
-    }  
+    }
+
 }
