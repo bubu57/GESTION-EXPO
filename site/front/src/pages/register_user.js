@@ -8,12 +8,15 @@ import dayjs from 'dayjs';
 
 const FormEnregistrements = () => {
   const [expositions, setExpositions] = useState([]);
+
+  let [dateDebut, setdateDebut] = useState(["2024/01/01"]);
+  let [dateFin, setdateFin] = useState(["2024/01/02"]);
+
   const [formData, setFormData] = useState({
     prenom: '',
     nom: '',
     mail: '',
-    date_debut: null,
-    heure: '',
+    date_debut: '',
     id_expo: '',
   });
 
@@ -36,6 +39,20 @@ const FormEnregistrements = () => {
     });
   };
 
+  const handleDateChange = (e) => {
+    setFormData({
+      ...formData,
+      date_debut: e.target.value,
+    });
+  };
+
+  function convertDateToISO(dateInput) {
+    const parts = dateInput.split("/"); 
+    const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+    return formattedDate;
+  }
+
+
   const handleExpoChange = (e) => {
     let selectedExpoId = e.target.value;
     let selectedExpo;
@@ -45,23 +62,66 @@ const FormEnregistrements = () => {
         break;
       }
     }
-    console.log("Exposition trouvée :", selectedExpo);
     if (selectedExpo) {
-      const dateDebut = selectedExpo.date_debut;
-      const dateFin = selectedExpo.date_fin;
-      document.getElementById("dateInput").min = dateDebut;
-      document.getElementById("dateInput").max = dateFin;
+      setdateDebut(selectedExpo.date_debut);
+      setdateFin(selectedExpo.date_fin);
+      setFormData({
+        ...formData,
+        id_expo: selectedExpoId,
+      });
     }
   };
   
 
-  
-  
+  const generateQRCode = async () => {
+    try {
+      const qrCodeData = `${formData.prenom} ${formData.nom} ${dayjs(formData.date_debut).format('DD/MM/YYYY')} ${formData.id_expo}`;
+      const qrCodeDataURL = await QRCode.toDataURL(qrCodeData);
+      return qrCodeDataURL;
+    } catch (error) {
+      console.error('Erreur lors de la génération du QR code:', error);
+      throw error;
+    }
+  };
+
+  const handleSaveQRCodeAsPDF = async (qrCodeDataURL) => {
+    try {
+      if (expositions.length === 0) {
+        console.error('Aucune donnée d exposition disponible.');
+        return;
+      }
+      const doc = new jsPDF();
+      const selectedExpo = expositions.find(expo => expo.id === formData.id_expo);
+      if (selectedExpo) {
+        const nomExposition = `Nom de l'exposition : ${selectedExpo.nom}\n`;
+        const dateDebut = `Date de début : ${selectedExpo.date_debut}\n`;
+        const dateFin = `Date de fin : ${selectedExpo.date_fin}\n`;
+        const lieu = `Lieu : ${selectedExpo.lieu}\n\n`;
+        const descriptionText = nomExposition + dateDebut + dateFin + lieu;
+        doc.text(descriptionText, 10, 20);
+      }
+      const dateSelectionnee = `Date sélectionnée : ${dayjs(formData.date_debut).format('DD/MM/YYYY')}\n`;
+      doc.text(dateSelectionnee, 10, 70);
+      const nomPrenom = `Nom : ${formData.nom}\nPrénom : ${formData.prenom}\n\n`;
+      doc.text(nomPrenom, 10, 100);
+      const textePresentation = "Veuillez vous présenter à l'entrée muni de votre QRCode";
+      doc.text(textePresentation, 10, 130);
+      doc.addImage(qrCodeDataURL, 'PNG', 10, 150, 50, 50);
+      doc.save('gestion-exposition.pdf');
+      console.log('QR code sauvegardé en PDF');
+    } catch (error) {
+      console.error('Erreur lors de la sauvegarde du QR code en PDF:', error);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       console.log(formData);
+      await axios.post('/api/register_user', formData);
+      console.log('Données soumises avec succès.');
+      const qrCodeDataURL = await generateQRCode();
+      await handleSaveQRCodeAsPDF(qrCodeDataURL);
     } catch (error) {
       console.error('Erreur lors de la soumission du formulaire:', error);
     }
@@ -129,11 +189,12 @@ const FormEnregistrements = () => {
                 <div className='div-input'>
                   <input
                     className='date_fin'
-                    type="text"
+                    type="date"
                     placeholder="jj/mm/aaaa"
                     value={formData.date_debut}
-                    onChange={handleChange}
-                    id="dateInput"
+                    onChange={handleDateChange}
+                    min = {convertDateToISO(`${dateDebut}`)}
+                    max = {convertDateToISO(`${dateFin}`)}
                   />
                 </div>
               </div>
