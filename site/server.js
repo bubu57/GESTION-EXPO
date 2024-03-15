@@ -37,7 +37,7 @@ app.use(express.static('front/build'))
 app.get('/api/app', (req, res) => {
   let connection = connecterBaseDonnees();
   const today = new Date().toISOString().split('T')[0];
-  const expositionQuery = `SELECT *, DATE_FORMAT(date_debut, '%d/%m/%Y') AS date_debut, DATE_FORMAT(date_fin, '%d/%m/%Y') AS date_fin FROM Exposition WHERE date_debut > '${today}'`;
+  const expositionQuery = `SELECT *, DATE_FORMAT(date_debut, '%d/%m/%Y') AS date_debut, DATE_FORMAT(date_fin, '%d/%m/%Y') AS date_fin FROM Exposition WHERE date_fin >= '${today}'`;
   const lieuQuery = 'SELECT * FROM Lieu';
 
   connection.query(expositionQuery, (expositionErr, expositionResults) => {
