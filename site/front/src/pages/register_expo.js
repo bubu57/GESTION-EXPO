@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Header from './header';
-
+import dayjs from 'dayjs';
 
 const EnregistrementExpo = () => {
   const [formData, setFormData] = useState({
@@ -22,6 +22,15 @@ const EnregistrementExpo = () => {
     lieu: ''
   });
   const [suggestions, setSuggestions] = useState([]);
+
+  function convertDateToISO(dateInput) {
+    const parts = dateInput.split("/"); 
+    const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+    console.log(formattedDate);
+    return formattedDate;
+  }
+
+  let [datenow, setdatenow] = useState([`${dayjs().format('DD/MM/YYYY')}`]);
 
 
   const handleChange = (e) => {
@@ -75,8 +84,6 @@ const EnregistrementExpo = () => {
       const location = response.data.results[0].geometry.location;
       const splitedadresse = response.data.results[0].address_components;
 
-
-
       // Mettre à jour les champs 'latitude' et 'longitude' dans l'état local
       setFormData({
         ...formData,
@@ -93,59 +100,32 @@ const EnregistrementExpo = () => {
       console.error('Erreur lors de la récupération de la latitude et de la longitude:', error);
     }
   };
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     
     let check = true;
     const currentDate = new Date();
-  
-   
     const selectedStartDate = new Date(`${formData.date_debut}T00:00:00Z`);
-    
-  
     const selectedEndDate = new Date(`${formData.date_fin}T00:00:00Z`);
-  
-   
     const selectedStartTime = new Date(`01/01/1970 ${formData.heure_debut}`);
-  
-   
-    const currentUTCDate = new Date(Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()));
-  
-
-    if (selectedStartDate < currentUTCDate) {
-      alert('La date de début doit être supérieure ou égale à la date actuelle.');
-      check = false;
-    }
-  
-
-    if (selectedEndDate < currentUTCDate) {
-      alert('La date de fin doit être supérieure ou égale à la date actuelle.');
-      check = false;
-    }
-  
 
     if (selectedEndDate < selectedStartDate) {
       alert('La date de fin doit être supérieure ou égale à la date de début.');
       check = false;
     }
-  
 
     if (selectedStartDate.toDateString() === currentDate.toDateString()) {
-    
       const selectedHours = selectedStartTime.getHours();
       const selectedMinutes = selectedStartTime.getMinutes();
       const currentHours = currentDate.getHours();
       const currentMinutes = currentDate.getMinutes();
-  
-
       if (selectedHours < currentHours || (selectedHours === currentHours && selectedMinutes <= currentMinutes)) {
         alert('L\'heure de début doit être supérieure ou égale à l\'heure actuelle.');
         check = false;
       }
     }
-  
-  
-  
 
     if (check) {
       fetch('/api/enregistrement', {
@@ -158,6 +138,7 @@ const EnregistrementExpo = () => {
       .then(response => response.json())
       .then(data => {
         console.log('Réponse du serveur:', data);
+        alert('L\'exposition a bien été enregistree');
       })
       .catch(error => {
         console.error('Erreur lors de la requête:', error);
@@ -206,6 +187,7 @@ const EnregistrementExpo = () => {
                   name="date_debut"
                   value={formData.date_debut}
                   onChange={handleChange}
+                  min = {convertDateToISO(`${datenow}`)}
                   required
                 />
               </div>
@@ -217,6 +199,7 @@ const EnregistrementExpo = () => {
                   name="date_fin"
                   value={formData.date_fin}
                   onChange={handleChange}
+                  min = {convertDateToISO(`${datenow}`)}
                   required
                 />
               </div>
