@@ -8,6 +8,8 @@ import dayjs from 'dayjs';
 
 const FormEnregistrements = () => {
   const [expositions, setExpositions] = useState([]);
+  const [quota, setquota] = useState([]);
+  const [quotar, setquotar] = useState([]);
 
   let [dateDebut, setdateDebut] = useState(["2024/01/01"]);
   let [dateFin, setdateFin] = useState(["2024/01/02"]);
@@ -16,6 +18,11 @@ const FormEnregistrements = () => {
     prenom: '',
     nom: '',
     mail: '',
+    date_debut: '',
+    id_expo: '',
+  });
+
+  const [reqData, setreqData] = useState({
     date_debut: '',
     id_expo: '',
   });
@@ -56,6 +63,7 @@ const FormEnregistrements = () => {
   const handleExpoChange = (e) => {
     let selectedExpoId = e.target.value;
     let selectedExpo;
+
     for (let i = 0; i < expositions.length; i++) {
       if (expositions[i].id == selectedExpoId) {
         selectedExpo = expositions[i];
@@ -63,8 +71,13 @@ const FormEnregistrements = () => {
       }
     }
     if (selectedExpo) {
+      setquota(selectedExpo.quota);
       setdateDebut(selectedExpo.date_debut);
       setdateFin(selectedExpo.date_fin);
+      setreqData({
+        date_debut: selectedExpo.date_debut,
+        id_expo: selectedExpo.id
+      })
       setFormData({
         ...formData,
         id_expo: selectedExpoId,
@@ -114,18 +127,39 @@ const FormEnregistrements = () => {
     }
   };
 
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let check = false;
     try {
-      console.log(formData);
-      await axios.post('/api/register_user', formData);
-      console.log('Données soumises avec succès.');
-      const qrCodeDataURL = await generateQRCode();
-      await handleSaveQRCodeAsPDF(qrCodeDataURL);
+      await axios.post('/api/quota', { id_expo: reqData.id_expo, date_debut: formData.date_debut });
+
+      await axios.get('/api/quotanb')
+      .then(response => {
+        console.log(response.data.quotanb, quota);
+        if (response.data.quotanb >= quota) {
+          alert('Ce jour est déjà complet, veuillez choisir un autre jour.');
+          return;
+        } else {
+          check = true;
+        }
+      })
+      .catch(error => {
+        console.error('Erreur lors de la récupération des expositions:', error);
+      });  
+      if (check) {
+        try {
+          console.log(formData);
+          await axios.post('/api/register_user', formData);
+          console.log('Données soumises avec succès.');
+          const qrCodeDataURL = await generateQRCode();
+          await handleSaveQRCodeAsPDF(qrCodeDataURL);
+        } catch (error) {
+          console.error('Erreur lors de la soumission du formulaire:', error);
+        }
+      }    
     } catch (error) {
-      console.error('Erreur lors de la soumission du formulaire:', error);
+      console.error('Erreur lors de la requête vers le serveur :', error);
     }
   };
 
@@ -144,7 +178,6 @@ const FormEnregistrements = () => {
                 <p className='label'>Mail</p>
                 <p className='label'>Expositions</p>
                 <p className='label'>Date d'entrée</p>
-                <p className='label'>Heure d'entrée</p>
               </div>
               <div className='form-input'>
                 <div className='div-input'>
