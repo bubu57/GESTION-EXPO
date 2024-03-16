@@ -106,26 +106,20 @@ const EnregistrementExpo = () => {
     e.preventDefault();
     
     let check = true;
-    const currentDate = new Date();
-    const selectedStartDate = new Date(`${formData.date_debut}T00:00:00Z`);
-    const selectedEndDate = new Date(`${formData.date_fin}T00:00:00Z`);
-    const selectedStartTime = new Date(`01/01/1970 ${formData.heure_debut}`);
 
-    if (selectedEndDate < selectedStartDate) {
-      alert('La date de fin doit être supérieure ou égale à la date de début.');
+    if (formData.date_debut > formData.date_fin) {
+      alert('La date de fin doit être supérieure ou égale à la date de depart.');
       check = false;
     }
 
-    if (selectedStartDate.toDateString() === currentDate.toDateString()) {
-      const selectedHours = selectedStartTime.getHours();
-      const selectedMinutes = selectedStartTime.getMinutes();
-      const currentHours = currentDate.getHours();
-      const currentMinutes = currentDate.getMinutes();
-      if (selectedHours < currentHours || (selectedHours === currentHours && selectedMinutes <= currentMinutes)) {
-        alert('L\'heure de début doit être supérieure ou égale à l\'heure actuelle.');
-        check = false;
-      }
+    if (formData.heure_debut > formData.heure_fin) {
+      alert('L\'heure de fin doit être supérieure ou égale à l\'heure de depart.');
+      check = false;
     }
+
+
+
+
 
     if (check) {
       fetch('/api/enregistrement', {
