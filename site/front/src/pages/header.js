@@ -11,7 +11,7 @@ const Header = () =>  {
         <div className='logo'><img src={logo} alt="Logo"></img> </div>
         <Link to="/"><p className='navlabel'>Accueil</p></Link>
         <Link to="/"><p className='navlabel'>Historique</p></Link>
-        <Link to="/"><Button variant="contained">Mon profil</Button></Link>
+        <Link to="/login"><Button variant="contained">Mon profil</Button></Link>
     </header>
   );
 };
