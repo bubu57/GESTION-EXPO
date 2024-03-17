@@ -172,6 +172,7 @@ const FormEnregistrements = () => {
         <form onSubmit={handleSubmit}>
           <div className='form-block'>
             <div className='div-input'>
+              <p>Votre nom</p>
               <input
                 type="text"
                 placeholder="Prénom"
@@ -182,6 +183,7 @@ const FormEnregistrements = () => {
               />
             </div>
             <div className='div-input'>
+              <p>Votre prenom</p>
               <input
                 type="text"
                 placeholder="Nom"
@@ -192,6 +194,7 @@ const FormEnregistrements = () => {
               />
             </div>
             <div className='div-input'>
+              <p>Votre email</p>
               <input
                 type="text"
                 placeholder="Mail"
@@ -210,6 +213,7 @@ const FormEnregistrements = () => {
               ))}
             </select>
             <div className='div-input'>
+              <p>Date d'entrée</p>
               <input
                 type="date"
                 placeholder="Date d'entrée"
