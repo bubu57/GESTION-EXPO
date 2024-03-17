@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import Header from './header.js'
+import Button from '@mui/material/Button';
+import ButtonRegister from '../img/Button-reserved.svg';
+import "../styles/liste_expo.css";
 
 const ListesExpos = () => {
   const [expositions, setExpositions] = useState([]);
@@ -165,10 +168,9 @@ const ListesExpos = () => {
                   <p className='label-date'>Date: {expo.date_debut} - {expo.date_fin}</p>
                   <p className='label-ville'>Ville: {expo.ville}</p>
                   <p className='label-heure'>Horaire: {expo.heure_debut.slice(0, -3)} - {expo.heure_fin.slice(0, -3)}</p>
-                </div>
-                <div className='spacer'></div>
-                <div className='reserver' onClick={() => handleVoirPlusClick(expo)}>
-                  <center><p className='label-reserver'>Voir plus</p></center>
+                  <div className='reserver' onClick={() => handleVoirPlusClick(expo)}>
+                    <Button variant="contained" onClick={() => handleVoirPlusClick(expo)}>Réserver</Button>
+                  </div>  
                 </div>
 
                 {expositionSelectionnee && expositionSelectionnee.id === expo.id && (
@@ -184,9 +186,7 @@ const ListesExpos = () => {
                         <p className='labell'>Adresse: {expo.numero} {expo.rue} {expo.ville} {expo.cp}</p>
                         <p className='labell'>Coordonnee: {expo.latitude} {expo.longitude}</p>
                         <Link to="/register_user">
-                          <div className='reserver' >
-                            <center><p className='label-reserver'>Voir plus</p></center>
-                          </div>
+                          <Button variant="contained">Réserver</Button>
                         </Link>
                       </center>
                     </div>

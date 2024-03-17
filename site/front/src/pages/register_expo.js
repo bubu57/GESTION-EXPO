@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Header from './header';
 import dayjs from 'dayjs';
+import "../styles/register_expo.css";
+import Button from '@mui/material/Button';
 
 const EnregistrementExpo = () => {
   const [formData, setFormData] = useState({
@@ -141,28 +143,16 @@ const EnregistrementExpo = () => {
   };
   
   
-  return(<div>
-    <Header></Header>
-    <div className='container'>
-      <div className='img'></div>
+  return (
+    <div>
+      <Header />
       <div className='form'>
         <center><p className='title'>Enregistrement exposition</p></center>
         <form onSubmit={handleSubmit}>
           <div className='form-block'>
-            <div className='form-name'>
-              <p className='label'>Nom exposition</p>
-              <p className='label'>Date debut</p>
-              <p className='label'>Date fin</p>
-              <p className='label'>heure debut</p>
-              <p className='label'>heure fin</p>
-              <p className='label'>Quota</p>
-              <p className='label'>Genre</p>
-              <p className='label'>Adresse</p>
-              <p className='label'>Lattitude</p>
-              <p className='label'>Longitude</p>
-            </div>
             <div className='form-input'>
               <div className='div-input'>
+                <p className='label'>Nom exposition</p>
                 <input
                   className='nom'
                   type="text"
@@ -174,6 +164,7 @@ const EnregistrementExpo = () => {
                 />
               </div>
               <div className='div-input'>
+                <p className='label'>Date debut</p>
                 <input
                   className='date_debut'
                   type="date"
@@ -186,6 +177,7 @@ const EnregistrementExpo = () => {
                 />
               </div>
               <div className='div-input'>
+                <p className='label'>Date fin</p>
                 <input
                   className='date_fin'
                   type="date"
@@ -198,6 +190,7 @@ const EnregistrementExpo = () => {
                 />
               </div>
               <div className='div-input'>
+                <p className='label'>heure debut</p>
                 <input
                   className='heure_debut'
                   type="time"
@@ -209,6 +202,7 @@ const EnregistrementExpo = () => {
                 />
               </div>
               <div className='div-input'>
+                <p className='label'>heure fin</p>
                 <input
                   className='heure_fin'
                   type="time"
@@ -220,6 +214,7 @@ const EnregistrementExpo = () => {
                 />
               </div>
               <div className='div-input'>
+                <p className='label'>quota</p>
                 <input
                   className='quota'
                   type="text"
@@ -231,6 +226,7 @@ const EnregistrementExpo = () => {
                 />
               </div>
               <div className='div-input'>
+                <p className='label'>type</p>
                 <input
                   className='type'
                   type="text"
@@ -242,6 +238,7 @@ const EnregistrementExpo = () => {
                 />
               </div>
               <div className='div-input'>
+                <p className='label'>Adresse</p>
                 <input
                   id='lieuInput'
                   className='lieu'
@@ -263,6 +260,7 @@ const EnregistrementExpo = () => {
                 )}
               </div>
               <div className='div-input'>
+                <p className='label'>Lattitude</p>
                 <input
                   className='Lattitude'
                   type="text"
@@ -274,6 +272,7 @@ const EnregistrementExpo = () => {
                 />
               </div>
               <div className='div-input'>
+                <p className='label'>Longitude</p>
                 <input
                   className='Longitude'
                   type="text"
@@ -288,11 +287,12 @@ const EnregistrementExpo = () => {
             </div>
           </div>
           <center>
-              <button type="submit" className='button-text'>Enregistrer</button>
+            <div className='but'>
+              <Button variant="contained" type="submit" >Enregistrer</Button>
+            </div>
           </center>
         </form>
       </div>
-    </div>
     </div>
   );
 };

@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import QRCode from 'qrcode';
 import jsPDF from 'jspdf';
-import ButtonRegister from '../img/Button-reserved.svg';
+import Button from '@mui/material/Button';
 import Header from './header.js';
 import dayjs from 'dayjs';
+import "../styles/register_user.css"
 
 const FormEnregistrements = () => {
   const [expositions, setExpositions] = useState([]);
@@ -166,79 +167,63 @@ const FormEnregistrements = () => {
   return (
     <div>
       <Header />
-      <div className='container'>
-        <div className='img'></div>
-        <div className='form'>
-          <center><p className='title'>Enregistrement Utilisateur</p></center>
-          <form onSubmit={handleSubmit}>
-            <div className='form-block'>
-              <div className='form-name'>
-                <p className='label'>Prénom</p>
-                <p className='label'>Nom</p>
-                <p className='label'>Mail</p>
-                <p className='label'>Expositions</p>
-                <p className='label'>Date d'entrée</p>
-              </div>
-              <div className='form-input'>
-                <div className='div-input'>
-                  <input
-                    className='prenom'
-                    type="text"
-                    placeholder="Axel"
-                    name="prenom"
-                    value={formData.prenom}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className='div-input'>
-                  <input
-                    className='nom'
-                    type="text"
-                    placeholder="Air"
-                    name="nom"
-                    value={formData.nom}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div className='div-input'>
-                  <input
-                    className='mail'
-                    type="text"
-                    placeholder="mail"
-                    name="mail"
-                    value={formData.mail}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <select className='select-exposition' value={formData.id_expo} onChange={handleExpoChange}>
-                  <option value=""></option>
-                  {expositions.map((expo) => (
-                    <option key={expo.id} value={expo.id}>
-                      {expo.nom} - {expo.heure_debut.slice(0, -3)} à {expo.heure_fin.slice(0, -3)} - {expo.date_debut} à {expo.date_fin}
-                    </option>
-                  ))}
-                </select>
-                <div className='div-input'>
-                  <input
-                    className='date_fin'
-                    type="date"
-                    placeholder="jj/mm/aaaa"
-                    value={formData.date_debut}
-                    onChange={handleDateChange}
-                    min = {convertDateToISO(`${dateDebut}`)}
-                    max = {convertDateToISO(`${dateFin}`)}
-                  />
-                </div>
-              </div>
+      <div className='form'>
+        <center><p className='title'>Enregistrement Utilisateur</p></center>
+        <form onSubmit={handleSubmit}>
+          <div className='form-block'>
+            <div className='div-input'>
+              <input
+                type="text"
+                placeholder="Prénom"
+                name="prenom"
+                value={formData.prenom}
+                onChange={handleChange}
+                required
+              />
             </div>
-            <center className='button-reserved-registeruser'>
-              <button type="submit" className='button-text' >  <img src={ButtonRegister} alt="button"></img></button>
-            </center>
-          </form>
-        </div>
+            <div className='div-input'>
+              <input
+                type="text"
+                placeholder="Nom"
+                name="nom"
+                value={formData.nom}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className='div-input'>
+              <input
+                type="text"
+                placeholder="Mail"
+                name="mail"
+                value={formData.mail}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <select className='select-exposition' value={formData.id_expo} onChange={handleExpoChange} name="id_expo">
+              <option value="">Sélectionner une exposition</option>
+              {expositions.map((expo) => (
+                <option key={expo.id} value={expo.id}>
+                  {expo.nom} - {expo.heure_debut.slice(0, -3)} à {expo.heure_fin.slice(0, -3)} - {expo.date_debut} à {expo.date_fin}
+                </option>
+              ))}
+            </select>
+            <div className='div-input'>
+              <input
+                type="date"
+                placeholder="Date d'entrée"
+                value={formData.date_debut}
+                onChange={handleDateChange}
+                min = {convertDateToISO(`${dateDebut}`)}
+                max = {convertDateToISO(`${dateFin}`)}
+              />
+            </div>
+          </div>
+          <center className='button-reserved-registeruser'>
+            <Button variant="contained" type="submit" >Réserver</Button>
+          </center>
+        </form>
       </div>
     </div>
   );

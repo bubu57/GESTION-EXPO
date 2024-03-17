@@ -1,162 +1,61 @@
-body {
-    background-color: #F0F0F0F0;
-}
-
-.container {
-    display: flex;
-    background-color: #FFFFFF;
-    margin-top: 100px;
-    margin-left: 20%;
-    margin-right: 20%;
-    height: 800px;
-}
-
-.img {
-    width: 30%;
-    height: 100%;
-    background-image: url("../img/bg_form.PNG");
-}
+/* register_user.css */
 
 .form {
-    width: 70%;
-    height: 100%;
-}
-
-
-.title {
-    font-size: 30px;
-    font-weight: bold;
-}
-
-.form-block {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+  }
+  
+  .title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .form-block {
     display: flex;
-    height: 80%;
-}
-
-.form-name {
-    width: 30%;
-    height: 90%;
-}
-.select-exposition{
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-color: #fff;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .div-input {
+    width: 100%;
+  }
+  
+  input,
+  select {
+    width: 100%;
+    padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    color: #555;
-    cursor: pointer;
+    border-radius: 5px;
+    outline: none;
     font-size: 16px;
-    margin-left: 3vh;
-    margin-top: 2vh;
-    padding: 2vh 10vh;
-    width: 80%;
-}
-.colonne-col3{
-    display: flex;
-    margin-top: 40rem;
-    position: absolute;
-}
-.button-reserved-registeruser{
-    margin-top: 7vh;
-}
-.colonne-col4{
-    position: absolute;
-    margin-top: 40rem;
-    margin-left: 95rem;
-    display: flex;
-}
-
-.colonne-col5{
-    margin-top: 16rem;
-    position: absolute;
-    display: flex;
-}
-
-.colonne-col6{
-    margin-top: 16rem;
-    margin-left: 95rem;
-    position: absolute;
-    display: flex;
-}
-
-.label {
-    font-size: 15px;
-    padding-top: 45px;
-    padding-right: 50px;
-    text-align: right;
-}
-
-.form-input {
-    width: 80%;
-    height: 90%;
-}
-
-.div-input {
-    padding-top: 40px;
-    border-bottom: 2px solid #000000;
-    margin-left: 30px;
-    width: 80%;
-}
-
-input {
-    border: 0;
-    outline: 0;
-    background: transparent;
-    font-size: 15px;
-    width: 80%;
-}
-
-/*button {
-    background-color: #31BB4F;
-    width: 200px;
-    height: 30px;
-    border: 0;
-    cursor: pointer;
-    margin-top: 30px;
-}
-*/
-
-input[type="date"] {
-    min-width:95.6%;
-    -webkit-appearance : none;
-    min-height: calc(var(--lwc-heightInput,1.875rem) + (1px * 2) + 24px) !important;
-}
-
-@media screen and (max-width: 1350px) {
-    .container {
-        margin-left: 10%;
-        margin-right: 10%;
-    }
-}
-
-@media screen and (max-width: 1050px) {
-    .img {
-        display: none;
-    }
-    .form {
-        width: 100%;
-    }
-}
-
-
-@media screen and (max-width: 800px) {
-    .form-input {
-        width: 70%;
-    }
-    .form-name {
-        width: 30%;
-    }
-
-    .label {
-        padding-right: 10px;
-    }
-}
-
-@media screen and (max-width: 600px) {
-    .container {
-        margin-left: 5%;
-        margin-right: 5%;
-    }
-
-}
+  }
+  
+  .select-exposition {
+    background-color: #ffffff;
+  }
+  
+  .button-reserved-registeruser {
+    margin-top: 20px;
+    text-align: center; /* Center align button */
+  }
+  
+  /* Styles for Material-UI Button */
+  .MuiButton-contained {
+    background-color: #1976d2; /* Primary color */
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 12px 24px;
+    text-transform: uppercase;
+    transition: background-color 0.3s;
+  }
+  
+  .MuiButton-contained:hover {
+    background-color: #1565c0; /* Darker shade of primary color on hover */
+  }
+  
