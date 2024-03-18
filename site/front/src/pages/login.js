@@ -21,8 +21,9 @@ const Login = () => {
     try {
       const response = await axios.post('/api/login', formData);
       localStorage.setItem('token', response.data.token);
-      history.push('/liste-expo');
+      history('/');
     } catch (error) {
+      console.log(error);
       setError('Nom d\'utilisateur ou mot de passe incorrect');
     }
   };
