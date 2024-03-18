@@ -210,6 +210,28 @@ app.post('/api/register_user', (req, res) => {
   });
 });
 
+
+
+
+
+app.post('/api/admins', (req, res) => {
+  let connection = connecterBaseDonnees();
+  const expositionQuery = `SELECT * FROM Admin;`;
+  console.log("Admin");
+
+  connection.query(expositionQuery, (expositionErr, expositionResults) => {
+    if (expositionErr) {
+      console.error('Erreur lors de la récupération des données de la table admin:', expositionErr);
+      res.status(500).json({ error: 'Erreur interne du serveur' });
+    } else {
+      console.log(expositionResults)
+      res.json(expositionResults);
+    }
+  });
+})
+
+
+
 app.get('/*', (_, res) => {
   res.sendFile(path.join(__dirname, '/front/build/index.html'));
 })

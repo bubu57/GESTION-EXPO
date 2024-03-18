@@ -6,6 +6,7 @@ import HistoExpo from "./pages/historique.js";
 import FormEnregistrement from './pages/register_user.js'
 import Header from './pages/header.js'
 import Login from './pages/login.js'
+import Admin from './pages/admin.js'
 import EmailRestAPI from "./pages/EmailRestAPI.jsx"
 const App = () => {
     return (
@@ -18,6 +19,7 @@ const App = () => {
                 <Route path="/header" element={<Header />} />
                 <Route path="/email" element={<EmailRestAPI />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/admin" element={<Admin />} />
             </Routes>
         </BrowserRouter>
     );
