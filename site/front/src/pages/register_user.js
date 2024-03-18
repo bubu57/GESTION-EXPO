@@ -10,7 +10,6 @@ import "../styles/register_user.css"
 const FormEnregistrements = () => {
   const [expositions, setExpositions] = useState([]);
   const [quota, setquota] = useState([]);
-  const [quotar, setquotar] = useState([]);
 
   let [dateDebut, setdateDebut] = useState(["2024/01/01"]);
   let [dateFin, setdateFin] = useState(["2024/01/02"]);

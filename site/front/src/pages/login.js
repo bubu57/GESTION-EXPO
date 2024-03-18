@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Header from './header.js';
 import "../styles/login.css";
+import { useNavigate  } from 'react-router-dom';
 import Button from '@mui/material/Button';
 
 const Login = () => {
+
   const [formData, setFormData] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
+  const history = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,6 +18,13 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await axios.post('/api/login', formData);
+      localStorage.setItem('token', response.data.token);
+      history.push('/liste-expo');
+    } catch (error) {
+      setError('Nom d\'utilisateur ou mot de passe incorrect');
+    }
   };
 
   return (

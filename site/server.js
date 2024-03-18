@@ -3,9 +3,12 @@ const path = require('path');
 const mysql = require('mysql2');  // Ajout du module mysql2
 require('dotenv').config()
 const app = express();
+const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
 
 // recuperation du port via .env sinon utilise le port 5000
 const PORT = process.env.PORT || 5000;
+const SECRET_KEY = 'secretkey123';
 
 const connecterBaseDonnees = () => {
   const connection = mysql.createConnection({
@@ -33,6 +36,26 @@ let connection = connecterBaseDonnees();
 
 app.use(express.json())
 app.use(express.static('front/build'))
+app.use(bodyParser.json());
+
+app.post('/api/login', (req, res) => {
+  const { username, password } = req.body;
+  const sql = 'SELECT * FROM Admin WHERE User = ? AND Password = ?';
+  connection.query(sql, [username, password], (err, results) => {
+    if (err) {
+      console.error('Erreur lors de la recherche de l\'utilisateur dans la base de données :', err);
+      res.status(500).json({ error: 'Erreur interne du serveur' });
+      return;
+    }
+    if (results.length > 0) {
+      const user = results[0];
+      const token = jwt.sign({ username: user.username, id: user.id }, SECRET_KEY);
+      res.json({ token });
+    } else {
+      res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
+    }
+  });
+});
 
 app.get('/api/app', (req, res) => {
   let connection = connecterBaseDonnees();
