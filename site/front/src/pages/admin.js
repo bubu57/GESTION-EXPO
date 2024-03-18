@@ -6,30 +6,63 @@ import Button from '@mui/material/Button';
 
 const Admin = () => {
   const [admins, setAdmins] = useState([]);
+  const [expositions, setExpositions] = useState([]);
   const [newAdminData, setNewAdminData] = useState({ username: '', password: '' });
 
   useEffect(() => {
-    fetch('/api/admins')
-      .then(data => {
-        setAdmins(data.data);
-        console.log(data.data);
-      })
-      .catch(error => {
-        console.error('Erreur lors de la récupération des admins:', error);
-      });
+    fetchAdmins();
+    fetchExpositions();
   }, []);
 
-  const handleDeleteAdmin = async (id) => {
+  const fetchAdmins = async () => {
+    try {
+      const response = await axios.get('/api/admins');
+      setAdmins(response.data);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des admins:', error);
+    }
+  };
 
+  const fetchExpositions = async () => {
+    try {
+      const response = await axios.get('/api/app');
+      setExpositions(response.data);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des expositions:', error);
+    }
+  };
+
+  const handleDeleteAdmin = async (id) => {
+    try {
+      await axios.post('/api/dadmins', { id: id});
+      fetchAdmins();
+    } catch (error) {
+      console.error('Erreur lors de la suppression de l\'admin:', error);
+    }
   };
 
   const handleAddAdmin = async () => {
-
+    try {
+      await axios.post('/api/admins', newAdminData);
+      fetchAdmins();
+      setNewAdminData({ username: '', password: '' });
+    } catch (error) {
+      console.error('Erreur lors de l\'ajout de l\'admin:', error);
+    }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewAdminData({ ...newAdminData, [name]: value });
+  };
+
+  const handleDeleteExpo = async (id) => {
+    try {
+      await axios.delete(`/api/expositions/${id}`);
+      fetchExpositions();
+    } catch (error) {
+      console.error('Erreur lors de la suppression de l\'exposition:', error);
+    }
   };
 
   return (
@@ -38,10 +71,19 @@ const Admin = () => {
       <div className='admin-container'>
         <h2>Liste des Admins</h2>
         <ul>
-          {admins.map((index, admin) => (
-            <li key={index}>
-              <span>{admin.username}</span>
-              <Button variant="contained" onClick={() => handleDeleteAdmin(admin.id)}>Supprimer</Button>
+          {admins.map(admin => (
+            <li key={admin.id}>
+              <span>{admin.User}</span>
+              <Button variant="outlined" size="small" color="error" onClick={() => handleDeleteAdmin(admin.id)}>Supprimer</Button>
+            </li>
+          ))}
+        </ul>
+        <h2>Liste des Expositions</h2>
+        <ul>
+          {expositions.map(expo => (
+            <li key={expo.id}>
+              <span>{expo.nom}</span>
+              <Button variant="outlined" size="small" color="error" onClick={() => handleDeleteExpo(expo.id)}>Supprimer</Button>
             </li>
           ))}
         </ul>

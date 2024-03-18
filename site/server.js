@@ -214,21 +214,41 @@ app.post('/api/register_user', (req, res) => {
 
 
 
-app.post('/api/admins', (req, res) => {
-  let connection = connecterBaseDonnees();
-  const expositionQuery = `SELECT * FROM Admin;`;
-  console.log("Admin");
-
-  connection.query(expositionQuery, (expositionErr, expositionResults) => {
-    if (expositionErr) {
-      console.error('Erreur lors de la récupération des données de la table admin:', expositionErr);
-      res.status(500).json({ error: 'Erreur interne du serveur' });
-    } else {
-      console.log(expositionResults)
-      res.json(expositionResults);
+app.get('/api/admins', (req, res) => {
+  const query = 'SELECT * FROM Admin';
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error('Erreur lors de la récupération des administrateurs :', error);
+      res.status(500).json({ error: 'Erreur lors de la récupération des administrateurs' });
+      return;
     }
+    res.json(results);
   });
-})
+});
+
+app.post('/api/admins', (req, res) => {
+  const query = `INSERT INTO Admin (User, Password) VALUES ('${req.body.username}', '${req.body.password}')`;
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error('Erreur lors de la creation de l\'administrateur :', error);
+      res.status(500).json({ error: 'Erreur lors de la creation de l\'administrateur :' });
+      return;
+    }
+    res.json({ success: true, message: 'Enregistrement réussi' });
+  });
+});
+
+app.post('/api/dadmins', (req, res) => {
+  const query = `DELETE FROM Admin WHERE id = ${req.body.id}`;
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error('Erreur lors de la suppression de l\'administrateur :', error);
+      res.status(500).json({ error: 'Erreur lors de la suppression de l\'administrateur :' });
+      return;
+    }
+    res.json({ success: true, message: 'Enregistrement réussi' });
+  });
+});
 
 
 
