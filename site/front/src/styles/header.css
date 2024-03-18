@@ -1,0 +1,43 @@
+/* header.css */
+
+.header {
+  background-color: #2196f3; /* Nouvelle couleur du header */
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Ombre légère */
+}
+
+/* Style pour le logo */
+.logo img {
+  width: 50px; /* Taille du logo */
+}
+
+/* Style pour les liens de navigation */
+.navlabel {
+  color: white; /* Couleur du texte */
+  text-decoration: none;
+  margin-right: 20px; /* Espacement entre les éléments */
+  font-size: 18px; /* Taille du texte */
+  font-weight: 500; /* Poids de la police */
+}
+
+/* Style pour le bouton de navigation */
+.buttonnav {
+  background-color: transparent; /* Couleur de fond transparente */
+  border: none;
+  cursor: pointer;
+}
+
+/* Style pour le texte à l'intérieur du bouton de navigation */
+.buttonnav .navlabel {
+  color: white; /* Couleur du texte */
+  font-size: 18px; /* Taille du texte */
+  font-weight: 500; /* Poids de la police */
+}
+
+/* Style au survol du bouton de navigation */
+.buttonnav:hover .navlabel {
+  text-decoration: underline; /* Soulignement au survol */
+}

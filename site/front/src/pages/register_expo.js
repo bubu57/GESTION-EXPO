@@ -1,8 +1,10 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-//import EnregistrementExpoForm from '../html/enregistrement_expo.js';
-
+import Header from './header';
+import dayjs from 'dayjs';
+import "../styles/register_expo.css";
+import Button from '@mui/material/Button';
 
 const EnregistrementExpo = () => {
   const [formData, setFormData] = useState({
@@ -11,11 +13,26 @@ const EnregistrementExpo = () => {
     date_fin: '',
     quota: '',
     type: '',
-    lieu: '',
     latitude: '',
-    longitude: ''
+    longitude: '',
+    numero: '',
+    rue: '',
+    ville: '',
+    code_postale: '',
+    heure_debut: '',
+    heure_fin: '',
+    lieu: ''
   });
   const [suggestions, setSuggestions] = useState([]);
+
+  function convertDateToISO(dateInput) {
+    const parts = dateInput.split("/"); 
+    const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+    console.log(formattedDate);
+    return formattedDate;
+  }
+
+  let [datenow, setdatenow] = useState([`${dayjs().format('DD/MM/YYYY')}`]);
 
 
   const handleChange = (e) => {
@@ -54,10 +71,9 @@ const EnregistrementExpo = () => {
       lieu: suggestion,
     });
 
-    await getLatitudeLongitude(suggestion);
-
     // Effacer les suggestions après la sélection
     setSuggestions([]);
+    await getLatitudeLongitude(suggestion);
   };
 
   const getLatitudeLongitude = async (adresse) => {
@@ -68,55 +84,75 @@ const EnregistrementExpo = () => {
     try {
       const response = await axios.get(apiUrl);
       const location = response.data.results[0].geometry.location;
+      const splitedadresse = response.data.results[0].address_components;
 
       // Mettre à jour les champs 'latitude' et 'longitude' dans l'état local
       setFormData({
         ...formData,
         latitude: location.lat,
         longitude: location.lng,
+        numero: splitedadresse[0].long_name,
+        rue: splitedadresse[1].long_name,
+        ville: splitedadresse[2].long_name,
+        code_postale: splitedadresse[6].long_name,
+        lieu: adresse,
       });
+
     } catch (error) {
       console.error('Erreur lors de la récupération de la latitude et de la longitude:', error);
     }
   };
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
-  
-    fetch('/api/enregistrement', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
+    
+    let check = true;
+
+    if (formData.date_debut > formData.date_fin) {
+      alert('La date de fin doit être supérieure ou égale à la date de depart.');
+      check = false;
+    }
+
+    if (formData.heure_debut > formData.heure_fin) {
+      alert('L\'heure de fin doit être supérieure ou égale à l\'heure de depart.');
+      check = false;
+    }
+
+
+
+
+
+    if (check) {
+      fetch('/api/enregistrement', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
       .then(response => response.json())
       .then(data => {
         console.log('Réponse du serveur:', data);
+        alert('L\'exposition a bien été enregistree');
       })
       .catch(error => {
         console.error('Erreur lors de la requête:', error);
       });
+    }
   };
-  return(
-    <div className='container'>
-      <div className='img'></div>
+  
+  
+  return (
+    <div>
+      <Header />
       <div className='form'>
         <center><p className='title'>Enregistrement exposition</p></center>
         <form onSubmit={handleSubmit}>
           <div className='form-block'>
-            <div className='form-name'>
-              <p className='label'>Nom exposition</p>
-              <p className='label'>Date debut</p>
-              <p className='label'>Date fin</p>
-              <p className='label'>Quota</p>
-              <p className='label'>Genre</p>
-              <p className='label'>Adresse</p>
-              <p className='label'>Lattitude</p>
-              <p className='label'>Longitude</p>
-            </div>
             <div className='form-input'>
               <div className='div-input'>
+                <p className='label'>Nom exposition</p>
                 <input
                   className='nom'
                   type="text"
@@ -124,29 +160,61 @@ const EnregistrementExpo = () => {
                   name="nom"
                   value={formData.nom}
                   onChange={handleChange}
+                  required
                 />
               </div>
               <div className='div-input'>
+                <p className='label'>Date debut</p>
                 <input
                   className='date_debut'
-                  type="text"
-                  placeholder="21/02/2024"
+                  type="date"
+                  placeholder="jj-mm-aaaa"
                   name="date_debut"
                   value={formData.date_debut}
                   onChange={handleChange}
+                  min = {convertDateToISO(`${datenow}`)}
+                  required
                 />
               </div>
               <div className='div-input'>
+                <p className='label'>Date fin</p>
                 <input
                   className='date_fin'
-                  type="text"
-                  placeholder="22/02/2024"
+                  type="date"
+                  placeholder="jj-mm-aaaa"
                   name="date_fin"
                   value={formData.date_fin}
                   onChange={handleChange}
+                  min = {convertDateToISO(`${datenow}`)}
+                  required
                 />
               </div>
               <div className='div-input'>
+                <p className='label'>heure debut</p>
+                <input
+                  className='heure_debut'
+                  type="time"
+                  placeholder="Time"
+                  name="heure_debut"
+                  value={formData.heure_debut}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className='div-input'>
+                <p className='label'>heure fin</p>
+                <input
+                  className='heure_fin'
+                  type="time"
+                  placeholder="15:00"
+                  name="heure_fin"
+                  value={formData.heure_fin}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className='div-input'>
+                <p className='label'>quota</p>
                 <input
                   className='quota'
                   type="text"
@@ -154,9 +222,11 @@ const EnregistrementExpo = () => {
                   name="quota"
                   value={formData.quota}
                   onChange={handleChange}
+                  required
                 />
               </div>
               <div className='div-input'>
+                <p className='label'>type</p>
                 <input
                   className='type'
                   type="text"
@@ -164,16 +234,20 @@ const EnregistrementExpo = () => {
                   name="type"
                   value={formData.type}
                   onChange={handleChange}
+                  required
                 />
               </div>
               <div className='div-input'>
+                <p className='label'>Adresse</p>
                 <input
+                  id='lieuInput'
                   className='lieu'
                   type="text"
                   placeholder="13 bis rue de paris 54000 paris"
                   name="lieu"
                   value={formData.lieu}
                   onChange={handleChange}
+                  required
                 />
                 {suggestions.length > 0 && (
                   <ul className="suggestions-list">
@@ -186,6 +260,7 @@ const EnregistrementExpo = () => {
                 )}
               </div>
               <div className='div-input'>
+                <p className='label'>Lattitude</p>
                 <input
                   className='Lattitude'
                   type="text"
@@ -197,6 +272,7 @@ const EnregistrementExpo = () => {
                 />
               </div>
               <div className='div-input'>
+                <p className='label'>Longitude</p>
                 <input
                   className='Longitude'
                   type="text"
@@ -211,7 +287,9 @@ const EnregistrementExpo = () => {
             </div>
           </div>
           <center>
-              <button type="submit" className='button-text'>Enregistrer</button>
+            <div className='but'>
+              <Button variant="contained" type="submit" >Enregistrer</Button>
+            </div>
           </center>
         </form>
       </div>

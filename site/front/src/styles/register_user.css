@@ -1,0 +1,61 @@
+/* register_user.css */
+
+.form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+  }
+  
+  .title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .form-block {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .div-input {
+    width: 100%;
+  }
+  
+  input,
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-size: 16px;
+  }
+  
+  .select-exposition {
+    background-color: #ffffff;
+  }
+  
+  .button-reserved-registeruser {
+    margin-top: 20px;
+    text-align: center; /* Center align button */
+  }
+  
+  /* Styles for Material-UI Button */
+  .MuiButton-contained {
+    background-color: #1976d2; /* Primary color */
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 12px 24px;
+    text-transform: uppercase;
+    transition: background-color 0.3s;
+  }
+  
+  .MuiButton-contained:hover {
+    background-color: #1565c0; /* Darker shade of primary color on hover */
+  }
+  

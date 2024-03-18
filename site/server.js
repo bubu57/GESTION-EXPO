@@ -7,68 +7,99 @@ const app = express();
 // recuperation du port via .env sinon utilise le port 5000
 const PORT = process.env.PORT || 5000;
 
-const connection = mysql.createConnection({
+const connecterBaseDonnees = () => {
+  const connection = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-});
-
-function get_id_expo() {
-  const requette = `
-    SELECT id from Exposition;
-  `;
-  connection.query(requette, (err, results) => {
-    if (err) {
-      console.error('Erreur lors de la récupération des données de la table exposition:', err);
-      res.status(500).json({ error: 'Erreur interne du serveur' });
-    } else {
-      return results;
-    }
+    port: process.env.DB_PORT,
   });
-}
 
-connection.connect((err) => {
+  connection.connect((err) => {
     if (err) {
       console.error('Erreur de connexion à la base de données:', err);
+      // Réessayer la connexion après un délai
+      setTimeout(connecterBaseDonnees, 5000); // Réessayer la connexion après 5 secondes
     } else {
       console.log('Connexion à la base de données réussie');
     }
-});
+  });
+
+  return connection;
+};
+
+let connection = connecterBaseDonnees();
 
 app.use(express.json())
 app.use(express.static('front/build'))
 
 app.get('/api/app', (req, res) => {
-    const requette = `
-      SELECT Exposition.*, Lieu.ville
-      FROM Exposition
-      JOIN Lieu ON Exposition.id_lieu = Lieu.id
-    `;
-    connection.query(requette, (err, results) => {
-      if (err) {
-        console.error('Erreur lors de la récupération des données de la table exposition:', err);
-        res.status(500).json({ error: 'Erreur interne du serveur' });
-      } else {
-        res.json(results)
-      }
-    });
+  let connection = connecterBaseDonnees();
+  const today = new Date().toISOString().split('T')[0];
+  const expositionQuery = `SELECT *, DATE_FORMAT(date_debut, '%d/%m/%Y') AS date_debut, DATE_FORMAT(date_fin, '%d/%m/%Y') AS date_fin FROM Exposition WHERE date_fin >= '${today}'`;
+  const lieuQuery = 'SELECT * FROM Lieu';
+
+  connection.query(expositionQuery, (expositionErr, expositionResults) => {
+    if (expositionErr) {
+      console.error('Erreur lors de la récupération des données de la table exposition:', expositionErr);
+      res.status(500).json({ error: 'Erreur interne du serveur' });
+    } else {
+      connection.query(lieuQuery, (lieuErr, lieuResults) => {
+        if (lieuErr) {
+          console.error('Erreur lors de la récupération des données de la table lieu:', lieuErr);
+          res.status(500).json({ error: 'Erreur interne du serveur' });
+        } else {
+          // Combine les données exposition et lieu
+          const combinedResults = expositionResults.map(exposition => {
+            const lieu = lieuResults.find(l => l.id === exposition.id);
+            return { ...exposition, ville: lieu.ville, numero: lieu.numero, rue: lieu.rue, cp: lieu.code_postale, latitude: lieu.latitude, longitude: lieu.longitude };
+          });
+
+          res.json(combinedResults);
+        }
+      });
+    }
+  });
+});
+
+let quotanb = 1;
+
+app.post('/api/quota', (req, res) => {
+  let connection = connecterBaseDonnees();
+  console.log(req.body);
+  const expositionQuery = `SELECT COUNT(*) AS nb FROM Visiteur WHERE id_expo = ${req.body.id_expo} AND date_entree = '${req.body.date_debut}';`;
+
+  connection.query(expositionQuery, (expositionErr, expositionResults) => {
+    if (expositionErr) {
+      console.error('Erreur lors de la récupération des données de la table Visiteur:', expositionErr);
+      res.status(500).json({ error: 'Erreur interne du serveur' });
+    } else {
+      console.log(expositionResults)
+      quotanb = expositionResults[0].nb;
+      res.json({ success: true, message: 'ok' });
+    }
+  });
+})
+
+app.get('/api/quotanb', (req, res) => {
+  console.log(quotanb);
+  res.json({ quotanb });
 });
 
 
 
 app.post('/api/enregistrement', (req, res) => {
-  console.log(req.body);
-  res.json({ success: true, message: 'Enregistrement réussi' });
 
+  let connection = connecterBaseDonnees();
   const lieuQuery = `
-  INSERT INTO Lieu (id, rue)
-  VALUES (5, "${req.body.lieu}");
+  INSERT INTO Lieu (numero, rue, code_postal, ville, latitude, longitude)
+  VALUES ("${req.body.numero}", "${req.body.rue}", "${req.body.code_postale}", "${req.body.ville}", "${req.body.latitude}", "${req.body.longitude}");
   `;
 
   const expoQuery = `
-    INSERT INTO Exposition (id, id_lieu, quota ,nom, type, date_debut, date_fin)
-    VALUES (5, 5, ${req.body.quota} ,"${req.body.nom}", "${req.body.type}", "${req.body.date_debut}", "${req.body.date_fin}");
+    INSERT INTO Exposition (quota ,nom, type, date_debut, date_fin, heure_debut, heure_fin)
+    VALUES (${req.body.quota} ,"${req.body.nom}", "${req.body.type}", "${req.body.date_debut}", "${req.body.date_fin}", "${req.body.heure_debut}", "${req.body.heure_fin}");
   `;
 
   // Commencez la transaction
@@ -107,7 +138,7 @@ app.post('/api/enregistrement', (req, res) => {
           }
 
           // Transaction réussie, envoyez la réponse au client
-          res.json({ success: true });
+          res.json({ success: true, message: 'Enregistrement réussi' });
         });
       });
     });
@@ -117,16 +148,49 @@ app.post('/api/enregistrement', (req, res) => {
 
 
 
-// app.get('/api/app', (req, res) => {
-//     res.send({
-//         msg: 'Hello world'
-//     })
-// })
+app.post('/api/register_user', (req, res) => {
+
+  let connection = connecterBaseDonnees();
+  const lieuQuery = `
+  INSERT INTO Visiteur (nom, prenom, email, id_expo, date_entree)
+  VALUES ("${req.body.nom}", "${req.body.prenom}", "${req.body.mail}", "${req.body.id_expo}", "${req.body.date_debut}");
+  `;
+
+  // Commencez la transaction
+  connection.beginTransaction((err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Erreur lors de la création d\'un nouvelle user' });
+      return;
+    }
+
+  // Exécutez la requête 
+  connection.query(lieuQuery, (err, results) => {
+    if (err) {
+      console.error(err);
+      return connection.rollback(() => {
+        res.status(500).json({ error: 'Erreur lors de la création d\'un nouvelle user' });
+      });
+    }
+
+      // Commit si tout s'est bien passé
+      connection.commit((err) => {
+        if (err) {
+          console.error(err);
+          return connection.rollback(() => {
+            res.status(500).json({ error: 'Erreur lors de la création d\'un nouvelle user' });
+          });
+        }
+        res.json({ success: true, message: 'Enregistrement réussi' });
+      });
+    });
+  });
+});
 
 app.get('/*', (_, res) => {
-    res.sendFile(path.join(__direname, '/front/build/index.html'));
+  res.sendFile(path.join(__dirname, '/front/build/index.html'));
 })
 
 app.listen(PORT, () => {
-    console.log(`server lancé sur le port: ${PORT}`);
+  console.log(`server lancé sur le port: ${PORT}`);
 })

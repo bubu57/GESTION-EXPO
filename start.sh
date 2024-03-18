@@ -1,0 +1,1 @@
+cd site/front ; npm run build ; cd ../ ; node server.js ; cd ../ 
