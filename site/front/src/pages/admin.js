@@ -9,35 +9,22 @@ const Admin = () => {
   const [newAdminData, setNewAdminData] = useState({ username: '', password: '' });
 
   useEffect(() => {
-    fetchAdmins();
+    fetch('/api/admins')
+      .then(data => {
+        setAdmins(data.data);
+        console.log(data.data);
+      })
+      .catch(error => {
+        console.error('Erreur lors de la récupération des admins:', error);
+      });
   }, []);
 
-  const fetchAdmins = async () => {
-    try {
-      const response = await axios.get('/api/admins');
-      setAdmins(response.data);
-    } catch (error) {
-      console.error('Erreur lors de la récupération des admins:', error);
-    }
-  };
-
   const handleDeleteAdmin = async (id) => {
-    try {
-      await axios.delete(`/api/admins/${id}`);
-      fetchAdmins();
-    } catch (error) {
-      console.error('Erreur lors de la suppression de l\'admin:', error);
-    }
+
   };
 
   const handleAddAdmin = async () => {
-    try {
-      await axios.post('/api/admins', newAdminData);
-      fetchAdmins();
-      setNewAdminData({ username: '', password: '' });
-    } catch (error) {
-      console.error('Erreur lors de l\'ajout de l\'admin:', error);
-    }
+
   };
 
   const handleChange = (e) => {
@@ -51,8 +38,8 @@ const Admin = () => {
       <div className='admin-container'>
         <h2>Liste des Admins</h2>
         <ul>
-          {admins.map(admin => (
-            <li key={admin.id}>
+          {admins.map((index, admin) => (
+            <li key={index}>
               <span>{admin.username}</span>
               <Button variant="contained" onClick={() => handleDeleteAdmin(admin.id)}>Supprimer</Button>
             </li>
