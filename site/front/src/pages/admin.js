@@ -3,6 +3,7 @@ import axios from 'axios';
 import Header from './header';
 import "../styles/admin.css";
 import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
 const Admin = () => {
   const [admins, setAdmins] = useState([]);
@@ -58,7 +59,7 @@ const Admin = () => {
 
   const handleDeleteExpo = async (id) => {
     try {
-      await axios.delete(`/api/expositions/${id}`);
+      await axios.post(`/api/dexpo`, { id: id});
       fetchExpositions();
     } catch (error) {
       console.error('Erreur lors de la suppression de l\'exposition:', error);
@@ -74,7 +75,7 @@ const Admin = () => {
           {admins.map(admin => (
             <li key={admin.id}>
               <span>{admin.User}</span>
-              <Button variant="outlined" size="small" color="error" onClick={() => handleDeleteAdmin(admin.id)}>Supprimer</Button>
+              <Button variant="text" size="small" color="error" onClick={() => handleDeleteAdmin(admin.id)}>X</Button>
             </li>
           ))}
         </ul>
@@ -83,10 +84,11 @@ const Admin = () => {
           {expositions.map(expo => (
             <li key={expo.id}>
               <span>{expo.nom}</span>
-              <Button variant="outlined" size="small" color="error" onClick={() => handleDeleteExpo(expo.id)}>Supprimer</Button>
+              <Button variant="text" size="small" color="error" onClick={() => handleDeleteExpo(expo.id)}>X</Button>
             </li>
           ))}
         </ul>
+        <Link to="/register_expo"><Button variant="contained">Ajouter une expo</Button></Link>
         <h2>Ajouter un nouvel Admin</h2>
         <div className='add-admin'>
           <input type="text" name="username" placeholder="Nom d'utilisateur" value={newAdminData.username} onChange={handleChange} />

@@ -250,6 +250,18 @@ app.post('/api/dadmins', (req, res) => {
   });
 });
 
+app.post('/api/dexpo', (req, res) => {
+  const query = `DELETE Exposition, Lieu FROM Exposition INNER JOIN Lieu ON Exposition.id = Lieu.id WHERE Exposition.id = ${req.body.id}`;
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error('Erreur lors de la suppression de l\'administrateur :', error);
+      res.status(500).json({ error: 'Erreur lors de la suppression de l\'administrateur :' });
+      return;
+    }
+    res.json({ success: true, message: 'Enregistrement réussi' });
+  });
+});
+
 
 
 app.get('/*', (_, res) => {
