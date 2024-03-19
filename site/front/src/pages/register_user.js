@@ -13,6 +13,11 @@ const FormEnregistrements = () => {
 
   let [dateDebut, setdateDebut] = useState(["2024/01/01"]);
   let [dateFin, setdateFin] = useState(["2024/01/02"]);
+  let [estimation, setestimation] = useState([120]);
+  let [heured , setheured] = useState(["08:00"]);
+  let [heuref, setheuref] = useState(["09:00"]);
+  let [heureliste, setheurelist] = useState([]);
+  const [selectedTime, setSelectedTime] = useState('');
 
   const [formData, setFormData] = useState({
     prenom: '',
@@ -51,6 +56,7 @@ const FormEnregistrements = () => {
       ...formData,
       date_debut: e.target.value,
     });
+    generateReservationTimes(heured, heuref, estimation);
   };
 
   function convertDateToISO(dateInput) {
@@ -74,6 +80,9 @@ const FormEnregistrements = () => {
       setquota(selectedExpo.quota);
       setdateDebut(selectedExpo.date_debut);
       setdateFin(selectedExpo.date_fin);
+      setestimation(selectedExpo.estimation);
+      setheured(selectedExpo.heure_debut);
+      setheuref(selectedExpo.heure_fin);
       setreqData({
         date_debut: selectedExpo.date_debut,
         id_expo: selectedExpo.id
@@ -127,39 +136,54 @@ const FormEnregistrements = () => {
     }
   };
 
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    let check = false;
-    try {
-      await axios.post('/api/quota', { id_expo: reqData.id_expo, date_debut: formData.date_debut });
-
+  // Fonction pour générer la liste d'heures disponibles
+  const generateReservationTimes = async (heured, heuref, est) => {
+    const step = parseInt(est); // Step en minutes
+    const start = new Date(`2000-01-01T${heured}`);
+    const end = new Date(`2000-01-01T${heuref}`);
+    const schedule = [];
+    schedule.push(start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    let currentTime = new Date(start);
+    while (currentTime < end) {
+      if (currentTime.getMinutes() + step > end) {
+        break;
+      }
+      await axios.post('/api/quota', { id_expo: reqData.id_expo, date_debut: formData.date_debut , heure: currentTime.getMinutes() + step });
       await axios.get('/api/quotanb')
       .then(response => {
         console.log(response.data.quotanb, quota);
         if (response.data.quotanb >= quota) {
-          alert('Ce jour est déjà complet, veuillez choisir un autre jour.');
-          return;
+          console.log('Quota atteint');
+          currentTime.setMinutes(currentTime.getMinutes() + step);
         } else {
-          check = true;
+          currentTime.setMinutes(currentTime.getMinutes() + step);
+          schedule.push(currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
         }
       })
       .catch(error => {
         console.error('Erreur lors de la récupération des expositions:', error);
-      });  
-      if (check) {
-        try {
-          console.log(formData);
-          await axios.post('/api/register_user', formData);
-          console.log('Données soumises avec succès.');
-          const qrCodeDataURL = await generateQRCode();
-          await handleSaveQRCodeAsPDF(qrCodeDataURL);
-        } catch (error) {
-          console.error('Erreur lors de la soumission du formulaire:', error);
-        }
-      }    
+      }); 
+    }    
+    console.log(schedule);
+    setheurelist(schedule);
+  };
+
+  // Fonction appelée lorsque l'utilisateur choisit une heure
+  const handleTimeSelection = (e) => {
+    setSelectedTime(e.target.value);
+  };
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      console.log(formData);
+      await axios.post('/api/register_user', formData);
+      console.log('Données soumises avec succès.');
+      const qrCodeDataURL = await generateQRCode();
+      await handleSaveQRCodeAsPDF(qrCodeDataURL);
     } catch (error) {
-      console.error('Erreur lors de la requête vers le serveur :', error);
+      console.error('Erreur lors de la soumission du formulaire:', error);
     }
   };
 
@@ -195,7 +219,7 @@ const FormEnregistrements = () => {
             <div className='div-input'>
               <p>Votre email</p>
               <input
-                type="text"
+                type="email"
                 placeholder="Mail"
                 name="mail"
                 value={formData.mail}
@@ -203,6 +227,7 @@ const FormEnregistrements = () => {
                 required
               />
             </div>
+            <p>Exposition</p>
             <select className='select-exposition' value={formData.id_expo} onChange={handleExpoChange} name="id_expo">
               <option value="">Sélectionner une exposition</option>
               {expositions.map((expo) => (
@@ -221,6 +246,15 @@ const FormEnregistrements = () => {
                 min = {convertDateToISO(`${dateDebut}`)}
                 max = {convertDateToISO(`${dateFin}`)}
               />
+            </div>
+            <div>
+              <p>Heure</p>
+              <select className='select-exposition' value={selectedTime} onChange={handleTimeSelection}>
+                <option value="">Sélectionner une heure</option>
+                {heureliste.map((time, index) => (
+                  <option key={index} value={time}>{time}</option>
+                ))}
+              </select>
             </div>
           </div>
           <center className='button-reserved-registeruser'>

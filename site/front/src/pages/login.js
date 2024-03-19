@@ -154,12 +154,16 @@ const Login = () => {
           </li>
         ))}
       </ul>
-      <Link to="/register_expo"><Button variant="contained">Ajouter une expo</Button></Link>
+      <div className='but'>
+        <Link to="/register_expo"><Button variant="contained">Ajouter une expo</Button></Link>
+      </div>
       <h2>Ajouter un nouvel Admin</h2>
       <div className='add-admin'>
         <input type="text" name="username" placeholder="Nom d'utilisateur" value={newAdminData.username} onChange={handleeChange} />
         <input type="password" name="password" placeholder="Mot de passe" value={newAdminData.password} onChange={handleeChange} />
-        <Button variant="contained" onClick={handleAddAdmin}>Ajouter</Button>
+        <div className='but'>
+          <Button variant="contained" onClick={handleAddAdmin}>Ajouter</Button>
+        </div>
       </div>
     </div>
       )}

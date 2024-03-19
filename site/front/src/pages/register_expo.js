@@ -21,7 +21,8 @@ const EnregistrementExpo = () => {
     code_postale: '',
     heure_debut: '',
     heure_fin: '',
-    lieu: ''
+    lieu: '',
+    estimation: ''
   });
   const [suggestions, setSuggestions] = useState([]);
 
@@ -209,6 +210,18 @@ const EnregistrementExpo = () => {
                   placeholder="15:00"
                   name="heure_fin"
                   value={formData.heure_fin}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className='div-input'>
+                <p className='label'>estimation duree</p>
+                <input
+                  className='estimation'
+                  type="time"
+                  placeholder="15:00"
+                  name="estimation"
+                  value={formData.estimation}
                   onChange={handleChange}
                   required
                 />
