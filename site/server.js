@@ -266,7 +266,6 @@ app.post('/api/dexpo', (req, res) => {
 
 app.post('/api/mail', (req, res) => {
 
-  console.log(req.body);
 
   const filePath = './gestion-exposition.pdf';
   fs.writeFileSync(filePath, req.body);

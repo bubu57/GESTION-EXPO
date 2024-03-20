@@ -130,7 +130,7 @@ const FormEnregistrements = () => {
       doc.text(textePresentation, 10, 130);
       doc.addImage(qrCodeDataURL, 'PNG', 10, 150, 50, 50);
     
-      await axios.post('/api/mail', `${doc.output()}`);
+      await axios.post('/api/mail', {data: `${doc.output()}`});
     
       doc.save('gestion-exposition.pdf');
       console.log('QR code sauvegardé en PDF');
