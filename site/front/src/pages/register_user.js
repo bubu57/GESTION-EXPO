@@ -10,12 +10,6 @@ import "../styles/register_user.css"
 const FormEnregistrements = () => {
   const [expositions, setExpositions] = useState([]);
   const [quota, setquota] = useState([]);
-<<<<<<< HEAD
-  const [quotar, setquotar] = useState([]);
-
-  let [dateDebut, setdateDebut] = useState(["2024/01/01"]);
-  let [dateFin, setdateFin] = useState(["2024/01/02"]);
-=======
 
   let [dateDebut, setdateDebut] = useState(["2024/01/01"]);
   let [dateFin, setdateFin] = useState(["2024/01/02"]);
@@ -24,7 +18,6 @@ const FormEnregistrements = () => {
   const [selectedTime, setSelectedTime] = useState('');
   let [ heured, setHeured] = useState('');
   let [ heuref, setHeuref] = useState('');
->>>>>>> origin/hugo
 
   const [formData, setFormData] = useState({
     prenom: '',
@@ -63,10 +56,7 @@ const FormEnregistrements = () => {
       ...formData,
       date_debut: e.target.value,
     });
-<<<<<<< HEAD
-=======
     generateReservationTimes(heured, heuref, estimation, e.target.value);
->>>>>>> origin/hugo
   };
 
   function convertDateToISO(dateInput) {
@@ -90,12 +80,9 @@ const FormEnregistrements = () => {
       setquota(selectedExpo.quota);
       setdateDebut(selectedExpo.date_debut);
       setdateFin(selectedExpo.date_fin);
-<<<<<<< HEAD
-=======
       setHeured(selectedExpo.heure_debut);
       setHeuref(selectedExpo.heure_fin);
       setestimation(selectedExpo.estimation);
->>>>>>> origin/hugo
       setreqData({
         date_debut: selectedExpo.date_debut,
         id_expo: selectedExpo.id
@@ -149,41 +136,6 @@ const FormEnregistrements = () => {
     }
   };
 
-<<<<<<< HEAD
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    let check = false;
-    try {
-      await axios.post('/api/quota', { id_expo: reqData.id_expo, date_debut: formData.date_debut });
-
-      await axios.get('/api/quotanb')
-      .then(response => {
-        console.log(response.data.quotanb, quota);
-        if (response.data.quotanb >= quota) {
-          alert('Ce jour est déjà complet, veuillez choisir un autre jour.');
-          return;
-        } else {
-          check = true;
-        }
-      })
-      .catch(error => {
-        console.error('Erreur lors de la récupération des expositions:', error);
-      });  
-      if (check) {
-        try {
-          console.log(formData);
-          await axios.post('/api/register_user', formData);
-          console.log('Données soumises avec succès.');
-          const qrCodeDataURL = await generateQRCode();
-          await handleSaveQRCodeAsPDF(qrCodeDataURL);
-        } catch (error) {
-          console.error('Erreur lors de la soumission du formulaire:', error);
-        }
-      }    
-    } catch (error) {
-      console.error('Erreur lors de la requête vers le serveur :', error);
-=======
   function getresa(list, heure) {
     let count = 0;
     for (let i = 0; i < list.quotanb.length; i++) {
@@ -238,7 +190,6 @@ const FormEnregistrements = () => {
       await handleSaveQRCodeAsPDF(qrCodeDataURL);
     } catch (error) {
       console.error('Erreur lors de la soumission du formulaire:', error);
->>>>>>> origin/hugo
     }
   };
 
@@ -274,11 +225,7 @@ const FormEnregistrements = () => {
             <div className='div-input'>
               <p>Votre email</p>
               <input
-<<<<<<< HEAD
-                type="text"
-=======
                 type="email"
->>>>>>> origin/hugo
                 placeholder="Mail"
                 name="mail"
                 value={formData.mail}
@@ -286,10 +233,7 @@ const FormEnregistrements = () => {
                 required
               />
             </div>
-<<<<<<< HEAD
-=======
             <p>Exposition</p>
->>>>>>> origin/hugo
             <select className='select-exposition' value={formData.id_expo} onChange={handleExpoChange} name="id_expo">
               <option value="">Sélectionner une exposition</option>
               {expositions.map((expo) => (
@@ -309,8 +253,6 @@ const FormEnregistrements = () => {
                 max = {convertDateToISO(`${dateFin}`)}
               />
             </div>
-<<<<<<< HEAD
-=======
             <div>
               <p>Heure</p>
               <select className='select-exposition' value={selectedTime} onChange={handleTimeSelection}>
@@ -320,7 +262,6 @@ const FormEnregistrements = () => {
                 ))}
               </select>
             </div>
->>>>>>> origin/hugo
           </div>
           <center className='button-reserved-registeruser'>
             <Button variant="contained" type="submit" >Réserver</Button>
