@@ -86,27 +86,25 @@ app.get('/api/app', (req, res) => {
   });
 });
 
-let quotanb = 1;
+let quotanb = [];
 
 app.post('/api/quota', (req, res) => {
   let connection = connecterBaseDonnees();
   console.log(req.body);
-  const expositionQuery = `SELECT COUNT(*) AS nb FROM Visiteur WHERE id_expo = ${req.body.id_expo} AND date_entree = '${req.body.date_debut}' AND heure = '${req.body.heure}';`;
+  const expositionQuery = `SELECT * FROM Visiteur WHERE id_expo = ${req.body.id_expo} AND date_entree = '${req.body.date_debut}';`;
 
   connection.query(expositionQuery, (expositionErr, expositionResults) => {
     if (expositionErr) {
       console.error('Erreur lors de la récupération des données de la table Visiteur:', expositionErr);
       res.status(500).json({ error: 'Erreur interne du serveur' });
     } else {
-      console.log(expositionResults)
-      quotanb = expositionResults[0].nb;
+      quotanb = expositionResults;
       res.json({ success: true, message: 'ok' });
     }
   });
 })
 
 app.get('/api/quotanb', (req, res) => {
-  console.log(quotanb);
   res.json({ quotanb });
 });
 

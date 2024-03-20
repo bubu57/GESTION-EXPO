@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import Header from './header.js'
 import Button from '@mui/material/Button';
-import ButtonRegister from '../img/Button-reserved.svg';
 import "../styles/liste_expo.css";
 
 const ListesExpos = () => {
@@ -15,8 +14,7 @@ const ListesExpos = () => {
   const [expositionSelectionnee, setExpositionSelectionnee] = useState(null);
 
   useEffect(() => {
-    // Charger les données des expositions depuis le serveur
-    fetch('/api/app') // Assurez-vous d'avoir une route '/api/expositions' sur votre serveur
+    fetch('/api/app')
       .then(response => {
         if (!response.ok) {
           console.log(response);

@@ -56,7 +56,7 @@ const FormEnregistrements = () => {
       ...formData,
       date_debut: e.target.value,
     });
-    generateReservationTimes(heured, heuref, estimation);
+    generateReservationTimes(heured, heuref, estimation, e.target.value);
   };
 
   function convertDateToISO(dateInput) {
@@ -136,23 +136,42 @@ const FormEnregistrements = () => {
     }
   };
 
+  function getresa(list, heure) {
+    let count = 0;
+    for (let i = 0; i < list.quotanb.length; i++) {
+      if (list.quotanb[i].heure.slice(0, -3) === heure) {
+        count = count + 1
+      }
+    }
+    if (count >= quota) {
+      return false
+    }
+    return true
+  }
+
   // Fonction pour générer la liste d'heures disponibles
-  const generateReservationTimes = (heured, heuref, est) => {
+  const generateReservationTimes = async (heured, heuref, est, datee) => {
     const step = parseInt(est); // Step en minutes
     const start = new Date(`2000-01-01T${heured}`);
     const end = new Date(`2000-01-01T${heuref}`);
     const schedule = [];
     schedule.push(start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
     let currentTime = new Date(start);
-    while (currentTime < end) {
-      if (currentTime.getMinutes() + step > end) {
-        break;
+  
+    await axios.post('/api/quota', { id_expo: reqData.id_expo, date_debut: datee });
+    await axios.get('/api/quotanb').then(response => {
+      while (currentTime < end) {
+        if (currentTime.getMinutes() + step > end) {
+          break;
+        }
+        if (getresa(response.data, currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })) === false) {
+        } else {
+          schedule.push(currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+        }
+        currentTime.setMinutes(currentTime.getMinutes() + step);
       }
-      currentTime.setMinutes(currentTime.getMinutes() + step);
-      schedule.push(currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-    }    
-    console.log(schedule);
-    setheurelist(schedule);
+      setheurelist(schedule);
+    })
   };
 
   // Fonction appelée lorsque l'utilisateur choisit une heure
@@ -163,36 +182,14 @@ const FormEnregistrements = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let check = false;
     try {
-      await axios.post('/api/quota', { id_expo: reqData.id_expo, date_debut: formData.date_debut, heure: selectedTime });
-
-      await axios.get('/api/quotanb')
-      .then(response => {
-        console.log(response.data.quotanb, quota);
-        if (response.data.quotanb >= quota) {
-          alert('Ce jour est déjà complet, veuillez choisir un autre jour.');
-          return;
-        } else {
-          check = true;
-        }
-      })
-      .catch(error => {
-        console.error('Erreur lors de la récupération des expositions:', error);
-      });  
-      if (check) {
-        try {
-          console.log(formData);
-          await axios.post('/api/register_user', formData);
-          console.log('Données soumises avec succès.');
-          const qrCodeDataURL = await generateQRCode();
-          await handleSaveQRCodeAsPDF(qrCodeDataURL);
-        } catch (error) {
-          console.error('Erreur lors de la soumission du formulaire:', error);
-        }
-      }    
+      console.log(formData);
+      await axios.post('/api/register_user', formData);
+      console.log('Données soumises avec succès.');
+      const qrCodeDataURL = await generateQRCode();
+      await handleSaveQRCodeAsPDF(qrCodeDataURL);
     } catch (error) {
-      console.error('Erreur lors de la requête vers le serveur :', error);
+      console.error('Erreur lors de la soumission du formulaire:', error);
     }
   };
 
