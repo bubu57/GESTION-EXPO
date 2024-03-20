@@ -1,0 +1,50 @@
+.container {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  h2 {
+    margin-top: 50px;
+    margin-bottom: 20px;
+  }
+
+  .but {
+    margin-top: 20px;
+  }
+
+  .add-admin {
+    width: 500px;
+  }
+  
+  .admin-section, .exposition-section {
+    width: 45%;
+  }
+  
+  .admin-section h2, .exposition-section h2 {
+    margin-bottom: 10px;
+  }
+  
+  .admin-section ul, .exposition-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .admin-section ul li, .exposition-section ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  .admin-section form {
+    margin-top: 20px;
+  }
+  
+  .admin-section input {
+    margin-bottom: 10px;
+  }
+  
+  .error {
+    color: red;
+  }
+  

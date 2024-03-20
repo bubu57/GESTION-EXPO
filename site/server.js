@@ -3,9 +3,12 @@ const path = require('path');
 const mysql = require('mysql2');  // Ajout du module mysql2
 require('dotenv').config()
 const app = express();
+const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
 
 // recuperation du port via .env sinon utilise le port 5000
 const PORT = process.env.PORT || 5000;
+const SECRET_KEY = 'secretkey123';
 
 const connecterBaseDonnees = () => {
   const connection = mysql.createConnection({
@@ -33,6 +36,26 @@ let connection = connecterBaseDonnees();
 
 app.use(express.json())
 app.use(express.static('front/build'))
+app.use(bodyParser.json());
+
+app.post('/api/login', (req, res) => {
+  const { username, password } = req.body;
+  const sql = 'SELECT * FROM Admin WHERE User = ? AND Password = ?';
+  connection.query(sql, [username, password], (err, results) => {
+    if (err) {
+      console.error('Erreur lors de la recherche de l\'utilisateur dans la base de données :', err);
+      res.status(500).json({ error: 'Erreur interne du serveur' });
+      return;
+    }
+    if (results.length > 0) {
+      const user = results[0];
+      const token = jwt.sign({ username: user.username, id: user.id }, SECRET_KEY);
+      res.json({ token });
+    } else {
+      res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
+    }
+  });
+});
 
 app.get('/api/app', (req, res) => {
   let connection = connecterBaseDonnees();
@@ -63,27 +86,42 @@ app.get('/api/app', (req, res) => {
   });
 });
 
+<<<<<<< HEAD
 let quotanb = 1;
+=======
+let quotanb = [];
+>>>>>>> origin/hugo
 
 app.post('/api/quota', (req, res) => {
   let connection = connecterBaseDonnees();
   console.log(req.body);
+<<<<<<< HEAD
   const expositionQuery = `SELECT COUNT(*) AS nb FROM Visiteur WHERE id_expo = ${req.body.id_expo} AND date_entree = '${req.body.date_debut}';`;
+=======
+  const expositionQuery = `SELECT * FROM Visiteur WHERE id_expo = ${req.body.id_expo} AND date_entree = '${req.body.date_debut}';`;
+>>>>>>> origin/hugo
 
   connection.query(expositionQuery, (expositionErr, expositionResults) => {
     if (expositionErr) {
       console.error('Erreur lors de la récupération des données de la table Visiteur:', expositionErr);
       res.status(500).json({ error: 'Erreur interne du serveur' });
     } else {
+<<<<<<< HEAD
       console.log(expositionResults)
       quotanb = expositionResults[0].nb;
+=======
+      quotanb = expositionResults;
+>>>>>>> origin/hugo
       res.json({ success: true, message: 'ok' });
     }
   });
 })
 
 app.get('/api/quotanb', (req, res) => {
+<<<<<<< HEAD
   console.log(quotanb);
+=======
+>>>>>>> origin/hugo
   res.json({ quotanb });
 });
 
@@ -98,8 +136,13 @@ app.post('/api/enregistrement', (req, res) => {
   `;
 
   const expoQuery = `
+<<<<<<< HEAD
     INSERT INTO Exposition (quota ,nom, type, date_debut, date_fin, heure_debut, heure_fin)
     VALUES (${req.body.quota} ,"${req.body.nom}", "${req.body.type}", "${req.body.date_debut}", "${req.body.date_fin}", "${req.body.heure_debut}", "${req.body.heure_fin}");
+=======
+    INSERT INTO Exposition (quota ,nom, type, date_debut, date_fin, heure_debut, heure_fin, estimation)
+    VALUES (${req.body.quota} ,"${req.body.nom}", "${req.body.type}", "${req.body.date_debut}", "${req.body.date_fin}", "${req.body.heure_debut}", "${req.body.heure_fin}", "${req.body.estimation}");
+>>>>>>> origin/hugo
   `;
 
   // Commencez la transaction
@@ -152,8 +195,13 @@ app.post('/api/register_user', (req, res) => {
 
   let connection = connecterBaseDonnees();
   const lieuQuery = `
+<<<<<<< HEAD
   INSERT INTO Visiteur (nom, prenom, email, id_expo, date_entree)
   VALUES ("${req.body.nom}", "${req.body.prenom}", "${req.body.mail}", "${req.body.id_expo}", "${req.body.date_debut}");
+=======
+  INSERT INTO Visiteur (nom, prenom, email, id_expo, date_entree, heure)
+  VALUES ("${req.body.nom}", "${req.body.prenom}", "${req.body.mail}", "${req.body.id_expo}", "${req.body.date_debut}", "${req.body.heure}");
+>>>>>>> origin/hugo
   `;
 
   // Commencez la transaction
@@ -186,6 +234,63 @@ app.post('/api/register_user', (req, res) => {
     });
   });
 });
+<<<<<<< HEAD
+=======
+
+
+
+
+
+app.get('/api/admins', (req, res) => {
+  const query = 'SELECT * FROM Admin';
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error('Erreur lors de la récupération des administrateurs :', error);
+      res.status(500).json({ error: 'Erreur lors de la récupération des administrateurs' });
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.post('/api/admins', (req, res) => {
+  const query = `INSERT INTO Admin (User, Password) VALUES ('${req.body.username}', '${req.body.password}')`;
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error('Erreur lors de la creation de l\'administrateur :', error);
+      res.status(500).json({ error: 'Erreur lors de la creation de l\'administrateur :' });
+      return;
+    }
+    res.json({ success: true, message: 'Enregistrement réussi' });
+  });
+});
+
+app.post('/api/dadmins', (req, res) => {
+  const query = `DELETE FROM Admin WHERE id = ${req.body.id}`;
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error('Erreur lors de la suppression de l\'administrateur :', error);
+      res.status(500).json({ error: 'Erreur lors de la suppression de l\'administrateur :' });
+      return;
+    }
+    res.json({ success: true, message: 'Enregistrement réussi' });
+  });
+});
+
+app.post('/api/dexpo', (req, res) => {
+  const query = `DELETE Exposition, Lieu FROM Exposition INNER JOIN Lieu ON Exposition.id = Lieu.id WHERE Exposition.id = ${req.body.id}`;
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error('Erreur lors de la suppression de l\'administrateur :', error);
+      res.status(500).json({ error: 'Erreur lors de la suppression de l\'administrateur :' });
+      return;
+    }
+    res.json({ success: true, message: 'Enregistrement réussi' });
+  });
+});
+
+
+>>>>>>> origin/hugo
 
 app.get('/*', (_, res) => {
   res.sendFile(path.join(__dirname, '/front/build/index.html'));

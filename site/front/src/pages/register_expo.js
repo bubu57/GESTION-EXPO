@@ -21,7 +21,12 @@ const EnregistrementExpo = () => {
     code_postale: '',
     heure_debut: '',
     heure_fin: '',
+<<<<<<< HEAD
     lieu: ''
+=======
+    lieu: '',
+    estimation: ''
+>>>>>>> origin/hugo
   });
   const [suggestions, setSuggestions] = useState([]);
 
@@ -214,6 +219,21 @@ const EnregistrementExpo = () => {
                 />
               </div>
               <div className='div-input'>
+<<<<<<< HEAD
+=======
+                <p className='label'>estimation duree</p>
+                <input
+                  className='estimation'
+                  type="time"
+                  placeholder="15:00"
+                  name="estimation"
+                  value={formData.estimation}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className='div-input'>
+>>>>>>> origin/hugo
                 <p className='label'>quota</p>
                 <input
                   className='quota'
