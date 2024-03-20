@@ -129,6 +129,9 @@ const FormEnregistrements = () => {
       const textePresentation = "Veuillez vous présenter à l'entrée muni de votre QRCode";
       doc.text(textePresentation, 10, 130);
       doc.addImage(qrCodeDataURL, 'PNG', 10, 150, 50, 50);
+    
+      await axios.post('/api/mail', `${doc.output()}`);
+    
       doc.save('gestion-exposition.pdf');
       console.log('QR code sauvegardé en PDF');
     } catch (error) {
@@ -177,7 +180,16 @@ const FormEnregistrements = () => {
   // Fonction appelée lorsque l'utilisateur choisit une heure
   const handleTimeSelection = (e) => {
     setSelectedTime(e.target.value);
+    setFormData({
+      ...formData,
+      heure: e.target.value,
+    });
   };
+
+
+
+
+
 
 
   const handleSubmit = async (e) => {

@@ -5,6 +5,8 @@ require('dotenv').config()
 const app = express();
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const { exec } = require('child_process');
 
 // recuperation du port via .env sinon utilise le port 5000
 const PORT = process.env.PORT || 5000;
@@ -257,6 +259,25 @@ app.post('/api/dexpo', (req, res) => {
       return;
     }
     res.json({ success: true, message: 'Enregistrement réussi' });
+  });
+});
+
+
+
+app.post('/api/mail', (req, res) => {
+
+  console.log(req.body);
+
+  const filePath = './gestion-exposition.pdf';
+  fs.writeFileSync(filePath, req.body);
+
+  exec("python3 mailsender.py", (error, stdout, stderr) => {
+    if (error) {
+        console.error(`Erreur d'exécution : ${error}`);
+        return;
+    }
+    console.log(`Sortie : ${stdout}`);
+    console.error(`Erreurs de sortie : ${stderr}`);
   });
 });
 
