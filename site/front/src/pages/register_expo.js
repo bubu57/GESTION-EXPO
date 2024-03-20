@@ -21,12 +21,8 @@ const EnregistrementExpo = () => {
     code_postale: '',
     heure_debut: '',
     heure_fin: '',
-<<<<<<< HEAD
-    lieu: ''
-=======
     lieu: '',
     estimation: ''
->>>>>>> origin/hugo
   });
   const [suggestions, setSuggestions] = useState([]);
 
@@ -219,8 +215,6 @@ const EnregistrementExpo = () => {
                 />
               </div>
               <div className='div-input'>
-<<<<<<< HEAD
-=======
                 <p className='label'>estimation duree</p>
                 <input
                   className='estimation'
@@ -233,7 +227,6 @@ const EnregistrementExpo = () => {
                 />
               </div>
               <div className='div-input'>
->>>>>>> origin/hugo
                 <p className='label'>quota</p>
                 <input
                   className='quota'

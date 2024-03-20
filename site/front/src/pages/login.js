@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-import React, { useState } from 'react';
-import axios from 'axios';
-import Header from './header.js';
-import "../styles/login.css";
-import Button from '@mui/material/Button';
-=======
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -12,13 +5,10 @@ import Header from './header.js';
 import Button from '@mui/material/Button';
 import "../styles/login.css";
 import "../styles/admin.css";
->>>>>>> origin/hugo
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
-<<<<<<< HEAD
-=======
   const [isAdminVisible, setIsAdminVisible] = useState(false);
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(true);
 
@@ -26,7 +16,6 @@ const Login = () => {
     fetchAdmins();
     fetchExpositions();
   }, []);
->>>>>>> origin/hugo
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,8 +24,6 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-<<<<<<< HEAD
-=======
     try {
       const response = await axios.post('/api/login', formData);
       localStorage.setItem('token', response.data.token);
@@ -106,47 +93,11 @@ const Login = () => {
     } catch (error) {
       console.error('Erreur lors de la suppression de l\'exposition:', error);
     }
->>>>>>> origin/hugo
   };
 
   return (
     <div>
       <Header />
-<<<<<<< HEAD
-      <div className='form'>
-        <center><p className='title'>Connexion</p></center>
-        <form onSubmit={handleSubmit}>
-          <div className='form-block'>
-            <div className='div-input'>
-              <input
-                type="text"
-                placeholder="Nom d'utilisateur"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className='div-input'>
-              <input
-                type="password"
-                placeholder="Mot de passe"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            {error && <p className="error">{error}</p>}
-          </div>
-          <center>
-            <div className='but'>
-                <Button variant="contained" type="submit" >Se connecter</Button>
-            </div>
-          </center>
-        </form>
-      </div>
-=======
       {isLoginFormVisible && (
         <div className='form'>
           <center><p className='title'>Connexion</p></center>
@@ -216,7 +167,6 @@ const Login = () => {
       </div>
     </div>
       )}
->>>>>>> origin/hugo
     </div>
   );
 };
