@@ -86,42 +86,25 @@ app.get('/api/app', (req, res) => {
   });
 });
 
-<<<<<<< HEAD
-let quotanb = 1;
-=======
 let quotanb = [];
->>>>>>> origin/hugo
 
 app.post('/api/quota', (req, res) => {
   let connection = connecterBaseDonnees();
   console.log(req.body);
-<<<<<<< HEAD
-  const expositionQuery = `SELECT COUNT(*) AS nb FROM Visiteur WHERE id_expo = ${req.body.id_expo} AND date_entree = '${req.body.date_debut}';`;
-=======
   const expositionQuery = `SELECT * FROM Visiteur WHERE id_expo = ${req.body.id_expo} AND date_entree = '${req.body.date_debut}';`;
->>>>>>> origin/hugo
 
   connection.query(expositionQuery, (expositionErr, expositionResults) => {
     if (expositionErr) {
       console.error('Erreur lors de la récupération des données de la table Visiteur:', expositionErr);
       res.status(500).json({ error: 'Erreur interne du serveur' });
     } else {
-<<<<<<< HEAD
-      console.log(expositionResults)
-      quotanb = expositionResults[0].nb;
-=======
       quotanb = expositionResults;
->>>>>>> origin/hugo
       res.json({ success: true, message: 'ok' });
     }
   });
 })
 
 app.get('/api/quotanb', (req, res) => {
-<<<<<<< HEAD
-  console.log(quotanb);
-=======
->>>>>>> origin/hugo
   res.json({ quotanb });
 });
 
@@ -136,13 +119,8 @@ app.post('/api/enregistrement', (req, res) => {
   `;
 
   const expoQuery = `
-<<<<<<< HEAD
-    INSERT INTO Exposition (quota ,nom, type, date_debut, date_fin, heure_debut, heure_fin)
-    VALUES (${req.body.quota} ,"${req.body.nom}", "${req.body.type}", "${req.body.date_debut}", "${req.body.date_fin}", "${req.body.heure_debut}", "${req.body.heure_fin}");
-=======
     INSERT INTO Exposition (quota ,nom, type, date_debut, date_fin, heure_debut, heure_fin, estimation)
     VALUES (${req.body.quota} ,"${req.body.nom}", "${req.body.type}", "${req.body.date_debut}", "${req.body.date_fin}", "${req.body.heure_debut}", "${req.body.heure_fin}", "${req.body.estimation}");
->>>>>>> origin/hugo
   `;
 
   // Commencez la transaction
@@ -195,13 +173,8 @@ app.post('/api/register_user', (req, res) => {
 
   let connection = connecterBaseDonnees();
   const lieuQuery = `
-<<<<<<< HEAD
-  INSERT INTO Visiteur (nom, prenom, email, id_expo, date_entree)
-  VALUES ("${req.body.nom}", "${req.body.prenom}", "${req.body.mail}", "${req.body.id_expo}", "${req.body.date_debut}");
-=======
   INSERT INTO Visiteur (nom, prenom, email, id_expo, date_entree, heure)
   VALUES ("${req.body.nom}", "${req.body.prenom}", "${req.body.mail}", "${req.body.id_expo}", "${req.body.date_debut}", "${req.body.heure}");
->>>>>>> origin/hugo
   `;
 
   // Commencez la transaction
@@ -234,8 +207,6 @@ app.post('/api/register_user', (req, res) => {
     });
   });
 });
-<<<<<<< HEAD
-=======
 
 
 
@@ -290,7 +261,6 @@ app.post('/api/dexpo', (req, res) => {
 });
 
 
->>>>>>> origin/hugo
 
 app.get('/*', (_, res) => {
   res.sendFile(path.join(__dirname, '/front/build/index.html'));
