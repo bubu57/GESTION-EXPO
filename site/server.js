@@ -5,8 +5,8 @@ require('dotenv').config()
 const app = express();
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-const fs = require('fs');
-const { exec } = require('child_process');
+const nodemailer = require('nodemailer');
+const multer = require('multer');
 
 // recuperation du port via .env sinon utilise le port 5000
 const PORT = process.env.PORT || 5000;
@@ -264,19 +264,47 @@ app.post('/api/dexpo', (req, res) => {
 
 
 
-app.post('/api/mail', (req, res) => {
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'exposgratuites@gmail.com',
+    pass: 'dcle kwwk vepy nzwk'
+  }
+});
 
+// Configuration de multer pour gérer les fichiers entrants
+let storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+let upload = multer({ storage: storage });
 
-  const filePath = './gestion-exposition.pdf';
-  fs.writeFileSync(filePath, req.body);
+// Route pour recevoir les données PDF et envoyer l'email
+app.post('/sendEmail', upload.single('pdf'), (req, res) => {
+  const mailOptions = {
+    from: 'exposgratuites@gmail.com',
+    to: 'bunelierpro@gmail.com',
+    subject: 'Sujet de l\'email',
+    text: 'Texte de l\'email',
+    attachments: [
+      {
+        path: path.join(__dirname, 'uploads', req.file.filename)
+      }
+    ]
+  };
 
-  exec("python3 mailsender.py", (error, stdout, stderr) => {
+  transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-        console.error(`Erreur d'exécution : ${error}`);
-        return;
+      console.error('Erreur lors de l\'envoi de l\'email:', error);
+      res.status(500).send('Erreur lors de l\'envoi de l\'email');
+    } else {
+      console.log('Email envoyé avec succès:', info.response);
+      res.send('Email envoyé avec succès');
     }
-    console.log(`Sortie : ${stdout}`);
-    console.error(`Erreurs de sortie : ${stderr}`);
   });
 });
 

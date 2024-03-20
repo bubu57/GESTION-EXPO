@@ -112,7 +112,7 @@ const FormEnregistrements = () => {
         console.error('Aucune donnée d exposition disponible.');
         return;
       }
-      const doc = new jsPDF();
+      let doc = new jsPDF();
       const selectedExpo = expositions.find(expo => expo.id === formData.id_expo);
       if (selectedExpo) {
         const nomExposition = `Nom de l'exposition : ${selectedExpo.nom}\n`;
@@ -129,10 +129,22 @@ const FormEnregistrements = () => {
       const textePresentation = "Veuillez vous présenter à l'entrée muni de votre QRCode";
       doc.text(textePresentation, 10, 130);
       doc.addImage(qrCodeDataURL, 'PNG', 10, 150, 50, 50);
-    
-      await axios.post('/api/mail', {data: `${doc.output()}`});
-    
       doc.save('gestion-exposition.pdf');
+    
+      let pdfBlob = doc.output('blob');
+      let formData = new FormData();
+      formData.append('pdf', pdfBlob, 'gestion-exposition.pdf');
+  
+      let response = await fetch('/sendEmail', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        console.log('PDF envoyé par email avec succès');
+      } else {
+        console.error('Échec de l\'envoi du PDF par email');
+      }
       console.log('QR code sauvegardé en PDF');
     } catch (error) {
       console.error('Erreur lors de la sauvegarde du QR code en PDF:', error);
