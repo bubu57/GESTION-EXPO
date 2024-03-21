@@ -131,11 +131,6 @@ const FormEnregistrements = () => {
       doc.addImage(qrCodeDataURL, 'PNG', 10, 150, 50, 50);
       doc.save('gestion-exposition.pdf');
 
-      if (response.ok) {
-        console.log('PDF envoyé par email avec succès');
-      } else {
-        console.error('Échec de l\'envoi du PDF par email');
-      }
       console.log('QR code sauvegardé en PDF');
     } catch (error) {
       console.error('Erreur lors de la sauvegarde du QR code en PDF:', error);
