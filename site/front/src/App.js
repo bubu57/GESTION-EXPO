@@ -15,7 +15,6 @@ const App = () => {
                 <Route path="/historique" element={<HistoExpo />} />
                 <Route path="/register_user" element={<FormEnregistrement />} />
                 <Route path="/header" element={<Header />} />
-                <Route path="/email" element={<EmailRestAPI />} />
                 <Route path="/login" element={<Login />} />
             </Routes>
         </BrowserRouter>
