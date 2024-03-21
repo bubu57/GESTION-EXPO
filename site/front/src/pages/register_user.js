@@ -98,7 +98,7 @@ const FormEnregistrements = () => {
 
   const generateQRCode = async () => {
     try {
-      const qrCodeData = `${formData.prenom} ${formData.nom} ${dayjs(formData.date_debut).format('DD/MM/YYYY')} ${formData.id_expo} ${formData.heure}`;
+      const qrCodeData = `${formData.prenom} ${formData.nom} ${dayjs(formData.date_debut).format('YYYY-MM-DD')} ${formData.id_expo} ${formData.heure}`;
       const qrCodeDataURL = await QRCode.toDataURL(qrCodeData);
       return qrCodeDataURL;
     } catch (error) {
