@@ -130,15 +130,6 @@ const FormEnregistrements = () => {
       doc.text(textePresentation, 10, 130);
       doc.addImage(qrCodeDataURL, 'PNG', 10, 150, 50, 50);
       doc.save('gestion-exposition.pdf');
-    
-      let pdfBlob = doc.output('blob');
-      let formData = new FormData();
-      formData.append('pdf', pdfBlob, 'gestion-exposition.pdf');
-  
-      let response = await fetch('/sendEmail', {
-        method: 'POST',
-        body: formData
-      });
 
       if (response.ok) {
         console.log('PDF envoyé par email avec succès');

@@ -264,46 +264,31 @@ app.post('/api/dexpo', (req, res) => {
 
 
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'exposgratuites@gmail.com',
-    pass: 'dcle kwwk vepy nzwk'
-  }
-});
+app.get('/api/map', (req, res) => {
+  let connection = connecterBaseDonnees();
+  const today = new Date().toISOString().split('T')[0];
+  const expositionQuery = `SELECT *, DATE_FORMAT(date_debut, '%d/%m/%Y') AS date_debut, DATE_FORMAT(date_fin, '%d/%m/%Y') AS date_fin FROM Exposition WHERE date_fin <= '${today}'`;
+  const lieuQuery = 'SELECT * FROM Lieu';
 
-// Configuration de multer pour gérer les fichiers entrants
-let storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  }
-});
-let upload = multer({ storage: storage });
-
-// Route pour recevoir les données PDF et envoyer l'email
-app.post('/sendEmail', upload.single('pdf'), (req, res) => {
-  const mailOptions = {
-    from: 'exposgratuites@gmail.com',
-    to: 'bunelierpro@gmail.com',
-    subject: 'Sujet de l\'email',
-    text: 'Texte de l\'email',
-    attachments: [
-      {
-        path: path.join(__dirname, 'uploads', req.file.filename)
-      }
-    ]
-  };
-
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.error('Erreur lors de l\'envoi de l\'email:', error);
-      res.status(500).send('Erreur lors de l\'envoi de l\'email');
+  connection.query(expositionQuery, (expositionErr, expositionResults) => {
+    if (expositionErr) {
+      console.error('Erreur lors de la récupération des données de la table exposition:', expositionErr);
+      res.status(500).json({ error: 'Erreur interne du serveur' });
     } else {
-      console.log('Email envoyé avec succès:', info.response);
-      res.send('Email envoyé avec succès');
+      connection.query(lieuQuery, (lieuErr, lieuResults) => {
+        if (lieuErr) {
+          console.error('Erreur lors de la récupération des données de la table lieu:', lieuErr);
+          res.status(500).json({ error: 'Erreur interne du serveur' });
+        } else {
+          // Combine les données exposition et lieu
+          const combinedResults = expositionResults.map(exposition => {
+            const lieu = lieuResults.find(l => l.id === exposition.id);
+            return { ...exposition, ville: lieu.ville, numero: lieu.numero, rue: lieu.rue, cp: lieu.code_postale, latitude: lieu.latitude, longitude: lieu.longitude };
+          });
+
+          res.json(combinedResults);
+        }
+      });
     }
   });
 });
