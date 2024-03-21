@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Bar, Doughnut } from 'react-chartjs-2';
 import axios from 'axios';
-import Header from './header.js'
+import Header from './header.js';
 import Button from '@mui/material/Button';
-import "../styles/liste_expo.css";
+import "../styles/graph.css";
 
 const ListesExpos = () => {
   const [expositions, setExpositions] = useState([]);
