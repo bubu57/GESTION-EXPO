@@ -10,6 +10,7 @@ const Admin = () => {
   const [expositions, setExpositions] = useState([]);
   const [newAdminData, setNewAdminData] = useState({ username: '', password: '' });
 
+  
   useEffect(() => {
     fetchAdmins();
     fetchExpositions();
