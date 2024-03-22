@@ -141,7 +141,7 @@ const FormEnregistrements = () => {
   function getresa(list, heure) {
     let count = 0;
     for (let i = 0; i < list.quotanb.length; i++) {
-      if (list.quotanb[i].heure.slice(0, -3) === heure) {
+      if (list.quotanb[i].heure && list.quotanb[i].heure.length > 3 && list.quotanb[i].heure.slice(0, -3) === heure) {
         count = count + 1
       }
     }
@@ -163,7 +163,7 @@ const FormEnregistrements = () => {
     await axios.post('/api/quota', { id_expo: reqData.id_expo, date_debut: datee });
     await axios.get('/api/quotanb').then(response => {
       while (currentTime < end) {
-        if (currentTime.getMinutes() + step > end) {
+        if (currentTime.getMinutes() + step >= end) {
           break;
         }
         if (getresa(response.data, currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })) === false) {

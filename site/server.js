@@ -37,7 +37,7 @@ const connecterBaseDonnees = () => {
 let connection = connecterBaseDonnees();
 
 app.use(express.json())
-app.use(express.static('front/build'))
+app.use(express.static('front/build'), { dotfiles: 'allow' })
 app.use(bodyParser.json());
 
 app.post('/api/login', (req, res) => {
