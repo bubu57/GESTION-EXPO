@@ -80,6 +80,10 @@ const FormEnregistrements = () => {
     if (selectedExpo) {
       setquota(selectedExpo.quota);
       setdateDebut(selectedExpo.date_debut);
+      if (convertDateToISO(selectedExpo.date_debut) > convertDateToISO(dayjs().format('YYYY/MM/DD'))) {
+        setdateDebut(dayjs().format('YYYY/MM/DD'));
+      }
+
       setdateFin(selectedExpo.date_fin);
       setHeured(selectedExpo.heure_debut);
       setHeuref(selectedExpo.heure_fin);
