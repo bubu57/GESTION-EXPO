@@ -5,19 +5,19 @@ import jsPDF from 'jspdf';
 import Button from '@mui/material/Button';
 import Header from './header.js';
 import dayjs from 'dayjs';
-import "../styles/register_user.css"
+import "../styles/register_user.css";
 
 const FormEnregistrements = () => {
   const [expositions, setExpositions] = useState([]);
-  const [quota, setquota] = useState([]);
-
-  let [dateDebut, setdateDebut] = useState(["2024/01/01"]);
-  let [dateFin, setdateFin] = useState(["2024/01/02"]);
-  let [estimation, setestimation] = useState([120]);
+  const [quota, setQuota] = useState([]);
+  const [dateDebut, setdateDebut] = useState("2024/01/01");
+  const [dateFin, setdateFin] = useState("2024/01/02");
+  const [estimation, setEstimation] = useState([]);
   let [heureliste, setheurelist] = useState([]);
   const [selectedTime, setSelectedTime] = useState('');
-  let [ heured, setHeured] = useState('');
-  let [ heuref, setHeuref] = useState('');
+  const [heured, setHeured] = useState('');
+  const [heuref, setHeuref] = useState('');
+  const [nomexpo, setNomexpo] =  useState('');
 
   const [formData, setFormData] = useState({
     prenom: '',
@@ -26,9 +26,13 @@ const FormEnregistrements = () => {
     date_debut: '',
     id_expo: '',
     heure: '',
+    firstName: '', // Ajout des champs de ContactForm
+    lastName: '',
+    email: '',
+    subject: ''
   });
 
-  const [reqData, setreqData] = useState({
+  const [reqData, setReqData] = useState({
     date_debut: '',
     id_expo: '',
   });
@@ -43,6 +47,16 @@ const FormEnregistrements = () => {
       });
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://smtpjs.com/v3/smtp.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,14 +75,13 @@ const FormEnregistrements = () => {
   };
 
   function convertDateToISO(dateInput) {
-    const parts = dateInput.split("/"); 
+    const parts = dateInput.split("/");
     const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
     return formattedDate;
   }
 
-
   const handleExpoChange = (e) => {
-    let selectedExpoId = e.target.value;
+    const selectedExpoId = e.target.value;
     let selectedExpo;
 
     for (let i = 0; i < expositions.length; i++) {
@@ -78,7 +91,7 @@ const FormEnregistrements = () => {
       }
     }
     if (selectedExpo) {
-      setquota(selectedExpo.quota);
+      setQuota(selectedExpo.quota);
       setdateDebut(selectedExpo.date_debut);
       if (convertDateToISO(selectedExpo.date_debut) > convertDateToISO(dayjs().format('YYYY/MM/DD'))) {
         setdateDebut(dayjs().format('YYYY/MM/DD'));
@@ -87,8 +100,9 @@ const FormEnregistrements = () => {
       setdateFin(selectedExpo.date_fin);
       setHeured(selectedExpo.heure_debut);
       setHeuref(selectedExpo.heure_fin);
-      setestimation(selectedExpo.estimation);
-      setreqData({
+      setEstimation(selectedExpo.estimation);
+      setNomexpo(selectedExpo.nom);
+      setReqData({
         date_debut: selectedExpo.date_debut,
         id_expo: selectedExpo.id
       })
@@ -98,7 +112,6 @@ const FormEnregistrements = () => {
       });
     }
   };
-  
 
   const generateQRCode = async () => {
     try {
@@ -117,7 +130,7 @@ const FormEnregistrements = () => {
         console.error('Aucune donnée d exposition disponible.');
         return;
       }
-      let doc = new jsPDF();
+      const doc = new jsPDF();
       const selectedExpo = expositions.find(expo => expo.id === formData.id_expo);
       if (selectedExpo) {
         const nomExposition = `Nom de l'exposition : ${selectedExpo.nom}\n`;
@@ -141,8 +154,7 @@ const FormEnregistrements = () => {
       console.error('Erreur lors de la sauvegarde du QR code en PDF:', error);
     }
   };
-
-  function getresa(list, heure) {
+   function getresa(list, heure) {
     let count = 0;
     for (let i = 0; i < list.quotanb.length; i++) {
       if (list.quotanb[i].heure && list.quotanb[i].heure.length > 3 && list.quotanb[i].heure.slice(0, -3) === heure) {
@@ -155,30 +167,32 @@ const FormEnregistrements = () => {
     return true
   }
 
-  // Fonction pour générer la liste d'heures disponibles
   const generateReservationTimes = async (heured, heuref, est, datee) => {
-    const step = parseInt(est); // Step en minutes
+    const step = 10; // Step en minutes, changé à 10 minutes
     const start = new Date(`2000-01-01T${heured}`);
     const end = new Date(`2000-01-01T${heuref}`);
     const schedule = [];
-    schedule.push(start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+  
     let currentTime = new Date(start);
   
     await axios.post('/api/quota', { id_expo: reqData.id_expo, date_debut: datee });
     await axios.get('/api/quotanb').then(response => {
       while (currentTime < end) {
-        if (currentTime.getMinutes() + step >= end) {
+        const currentTimeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        if (currentTime.getMinutes() + step >= end || schedule.includes(currentTimeString)) {
           break;
         }
-        if (getresa(response.data, currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })) === false) {
+        if (getresa(response.data, currentTimeString) === false) {
         } else {
-          schedule.push(currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+          schedule.push(currentTimeString);
         }
         currentTime.setMinutes(currentTime.getMinutes() + step);
       }
       setheurelist(schedule);
-    })
+    });
   };
+  
+  
 
   // Fonction appelée lorsque l'utilisateur choisit une heure
   const handleTimeSelection = (e) => {
@@ -191,18 +205,67 @@ const FormEnregistrements = () => {
 
 
 
+  function getresa(list, heure) {
+    let count = 0;
+    for (let i = 0; i < list.quotanb.length; i++) {
+      if (list.quotanb[i].heure && list.quotanb[i].heure.length > 3 && list.quotanb[i].heure.slice(0, -3) === heure) {
+        count = count + 1;
+      }
+    }
+    if (count >= quota) {
+      return false;
+    }
+    return true;
+  }
 
+  const sendMail = async () => {
+    const { nom, prenom, mail, subject, date_debut, id_expo, heure } = formData;
+    const selectedExpo = expositions.find(expo => expo.id === id_expo);
+    console.log(selectedExpo); // Ajout du console.log pour vérifier les données d'exposition
+    const qrCodeDataURL = await generateQRCode(); // Générer le QR code
+  
+    const formDataWithQRCode = {
+      ...formData,
+      qrCodeDataURL: qrCodeDataURL // Ajouter l'URL de données du QR code aux données du formulaire
+    };
+  
+    const formDataString = JSON.stringify(formDataWithQRCode);
+    const formDataBlob = new Blob([formDataString], { type: "application/json" });
+    const formDataFile = new File([formDataBlob], "formData.json", { type: "application/json" });
+  
+    const formDataAttachment = new FormData();
+    formDataAttachment.append("formData", formDataFile);
+  
+    try {
+      await window.Email.send({
+        SecureToken: "de3b96be-d360-4f4b-987d-47c0282903be",
+        To: mail,
+        From: "exposgratuites@gmail.com",
+        Subject: "Votre Réservation",
+        Body: `Merci pour votre réservation pour l'exposition "${nomexpo}" le ${date_debut} à ${heure} ! Veuillez trouver ci-joint votre QR code.`,
+        Attachments: [
+          {
+            name: "QRCode.png",
+            data: qrCodeDataURL // Inclure le QR code en tant que pièce jointe
+          }
+        ]
+      });
+      alert("Email envoyé avec succès merci de vérifier vos spams !");
+    } catch (error) {
+      console.error('Erreur lors de l envoi de l email:', error);
+      alert("Une erreur s'est produite lors de l'envoi de l'email");
+    }
+  };
+  
 
-
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(formData);
-      await axios.post('/api/register_user', formData);
-      console.log('Données soumises avec succès.');
       const qrCodeDataURL = await generateQRCode();
       await handleSaveQRCodeAsPDF(qrCodeDataURL);
+      await sendMail();
     } catch (error) {
       console.error('Erreur lors de la soumission du formulaire:', error);
     }
@@ -219,20 +282,20 @@ const FormEnregistrements = () => {
               <p>Votre nom</p>
               <input
                 type="text"
-                placeholder="Prénom"
-                name="prenom"
-                value={formData.prenom}
+                placeholder="Nom"
+                name="nom"
+                value={formData.nom}
                 onChange={handleChange}
                 required
               />
             </div>
             <div className='div-input'>
-              <p>Votre prenom</p>
+              <p>Votre prénom</p>
               <input
                 type="text"
-                placeholder="Nom"
-                name="nom"
-                value={formData.nom}
+                placeholder="Prénom"
+                name="prenom"
+                value={formData.prenom}
                 onChange={handleChange}
                 required
               />
@@ -264,8 +327,8 @@ const FormEnregistrements = () => {
                 placeholder="Date d'entrée"
                 value={formData.date_debut}
                 onChange={handleDateChange}
-                min = {convertDateToISO(`${dateDebut}`)}
-                max = {convertDateToISO(`${dateFin}`)}
+                min={convertDateToISO(`${dateDebut}`)}
+                max={convertDateToISO(`${dateFin}`)}
               />
             </div>
             <div>
@@ -279,7 +342,7 @@ const FormEnregistrements = () => {
             </div>
           </div>
           <center className='button-reserved-registeruser'>
-            <Button variant="contained" type="submit" >Réserver</Button>
+            <Button variant="contained" type="submit">Réserver</Button>
           </center>
         </form>
       </div>
@@ -288,3 +351,4 @@ const FormEnregistrements = () => {
 };
 
 export default FormEnregistrements;
+
