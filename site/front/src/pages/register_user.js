@@ -289,6 +289,22 @@ const FormEnregistrements = () => {
       const qrCodeDataURL = await generateQRCode(formData);
       await handleSaveQRCodeAsPDF(qrCodeDataURL);
       await sendMail();
+  
+      fetch('/api/register_user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Réponse du serveur:', data);
+        alert('L\'exposition a bien été enregistree');
+      })
+      .catch(error => {
+        console.error('Erreur lors de la requête:', error);
+      });
     } catch (error) {
       console.error('Erreur lors de la soumission du formulaire:', error);
     }
