@@ -345,7 +345,7 @@ const FormEnregistrements = () => {
             <div className='div-input'>
               <p>Votre email</p>
               <input
-                type="email"
+                type="text"
                 placeholder="Mail"
                 name="mail"
                 value={formData.mail}
@@ -373,7 +373,7 @@ const FormEnregistrements = () => {
                 max={convertDateToISO(`${dateFin}`)}
               />
             </div>
-            <div>
+            <div className='div-input'>
               <p>Heure</p>
               <select className='select-exposition' value={selectedTime} onChange={handleTimeSelection}>
                 <option value="">Sélectionner une heure</option>
