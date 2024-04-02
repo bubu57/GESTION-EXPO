@@ -5,8 +5,7 @@ import jsPDF from 'jspdf';
 import Button from '@mui/material/Button';
 import Header from './header.js';
 import dayjs from 'dayjs';
-import "../styles/register_user.css";
-
+import CryptoJS from 'crypto-js';
 const FormEnregistrements = () => {
   const [expositions, setExpositions] = useState([]);
   const [quota, setQuota] = useState([]);
@@ -113,16 +112,40 @@ const FormEnregistrements = () => {
     }
   };
 
-  const generateQRCode = async () => {
+  const generateQRCode = async (formData) => {
     try {
+      if (!formData || !formData.prenom || !formData.nom || !formData.date_debut || !formData.id_expo || !formData.heure) {
+        throw new Error('Les données du formulaire sont incomplètes.');
+      }
+  
+      // Création d'une chaîne de données à partir des informations du formulaire
       const qrCodeData = `${formData.prenom};${formData.nom};${dayjs(formData.date_debut).format('YYYY-MM-DD')};${formData.id_expo};${formData.heure}`;
-      const qrCodeDataURL = await QRCode.toDataURL(qrCodeData);
+  
+      // Génération de la signature numérique à partir des données du formulaire
+      const signature = generateSignature(qrCodeData);
+  
+      // Inclusion de la signature dans les données du QR code
+      const qrCodeDataWithSignature = `${qrCodeData};${signature}`;
+  
+      // Génération du QR code avec les données originales et la signature
+      const qrCodeDataURL = await QRCode.toDataURL(qrCodeDataWithSignature);
+  
       return qrCodeDataURL;
     } catch (error) {
       console.error('Erreur lors de la génération du QR code:', error);
       throw error;
     }
   };
+  
+  // Fonction pour générer la signature numérique
+  const generateSignature = (data) => {
+    // Utilisation d'une clé secrète pour générer la signature
+    const secretKey = 'apagnan';
+    const hash = CryptoJS.HmacSHA256(data, secretKey);
+    const signature = CryptoJS.enc.Hex.stringify(hash);
+    return signature;
+  };
+  
 
   const handleSaveQRCodeAsPDF = async (qrCodeDataURL) => {
     try {
@@ -222,7 +245,7 @@ const FormEnregistrements = () => {
     const { nom, prenom, mail, subject, date_debut, id_expo, heure } = formData;
     const selectedExpo = expositions.find(expo => expo.id === id_expo);
     console.log(selectedExpo); // Ajout du console.log pour vérifier les données d'exposition
-    const qrCodeDataURL = await generateQRCode(); // Générer le QR code
+    const qrCodeDataURL = await generateQRCode(formData); // Générer le QR code
   
     const formDataWithQRCode = {
       ...formData,
@@ -263,7 +286,7 @@ const FormEnregistrements = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const qrCodeDataURL = await generateQRCode();
+      const qrCodeDataURL = await generateQRCode(formData);
       await handleSaveQRCodeAsPDF(qrCodeDataURL);
       await sendMail();
     } catch (error) {
@@ -350,5 +373,5 @@ const FormEnregistrements = () => {
   );
 };
 
-export default FormEnregistrements;
 
+export default FormEnregistrements;
