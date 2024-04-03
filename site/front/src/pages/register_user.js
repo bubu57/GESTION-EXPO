@@ -96,6 +96,7 @@ const FormEnregistrements = () => {
       setdateDebut(selectedExpo.date_debut);
       console.log(dateDebut);
       if (dateDebut < dayjs().format('DD/MM/YYYY')) {
+        console.log(`newdate ${dayjs().format('DD/MM/YYYY')}`)
         setdateDebut(dayjs().format('DD/MM/YYYY'))
       }
       setdateFin(selectedExpo.date_fin);
