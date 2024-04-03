@@ -95,6 +95,9 @@ const FormEnregistrements = () => {
       setQuota(selectedExpo.quota);
       setdateDebut(selectedExpo.date_debut);
       console.log(dateDebut);
+      if (dateDebut < dayjs().format('DD/MM/YYYY')) {
+        setdateDebut(dayjs().format('DD/MM/YYYY'))
+      }
       setdateFin(selectedExpo.date_fin);
       setHeured(selectedExpo.heure_debut);
       setHeuref(selectedExpo.heure_fin);
