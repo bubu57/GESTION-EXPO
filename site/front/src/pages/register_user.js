@@ -11,7 +11,7 @@ import "../styles/register_user.css";
 const FormEnregistrements = () => {
   const [expositions, setExpositions] = useState([]);
   const [quota, setQuota] = useState([]);
-  const [dateDebut, setdateDebut] = useState("2024/01/01");
+  const [dateDebut, setdateDebut] = useState("01/01/2024");
   const [dateFin, setdateFin] = useState("2024/01/02");
   const [estimation, setEstimation] = useState([]);
   let [heureliste, setheurelist] = useState([]);
@@ -94,9 +94,7 @@ const FormEnregistrements = () => {
       setQuota(selectedExpo.quota);
       setdateDebut(selectedExpo.date_debut);
       console.log(convertDateToISO(dateDebut));
-      
-      if (dateDebut < dayjs().format('DD/MM/YYYY')) {
-        console.log(`newdate ${dayjs().format('DD/MM/YYYY')}`)
+      if (new Date(`${convertDateToISO(dateDebut)}`) > new Date(`${dayjs().format('YYYY-MM-DD')}`)) {
         setdateDebut(dayjs().format('DD/MM/YYYY'))
       }
       setdateFin(selectedExpo.date_fin);
