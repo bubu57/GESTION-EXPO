@@ -94,7 +94,7 @@ const FormEnregistrements = () => {
     if (selectedExpo) {
       setQuota(selectedExpo.quota);
       setdateDebut(selectedExpo.date_debut);
-      console.log(selectedExpo.date_debut);
+      console.log(convertDateToISO(selectedExpo.date_debut));
       console.log(convertDateToISO(dayjs().format('YYYY/MM/DD')));
       if (convertDateToISO(selectedExpo.date_debut) > convertDateToISO(dayjs().format('YYYY/MM/DD'))) {
         setdateDebut(dayjs().format('YYYY/MM/DD'));
