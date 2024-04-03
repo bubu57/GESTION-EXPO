@@ -19,7 +19,6 @@ const FormEnregistrements = () => {
   const [heured, setHeured] = useState('');
   const [heuref, setHeuref] = useState('');
   const [nomexpo, setNomexpo] =  useState('');
-
   const [formData, setFormData] = useState({
     prenom: '',
     nom: '',
@@ -94,7 +93,8 @@ const FormEnregistrements = () => {
     if (selectedExpo) {
       setQuota(selectedExpo.quota);
       setdateDebut(selectedExpo.date_debut);
-      console.log(dateDebut);
+      console.log(convertDateToISO(dateDebut));
+      
       if (dateDebut < dayjs().format('DD/MM/YYYY')) {
         console.log(`newdate ${dayjs().format('DD/MM/YYYY')}`)
         setdateDebut(dayjs().format('DD/MM/YYYY'))
