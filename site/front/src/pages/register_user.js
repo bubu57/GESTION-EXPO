@@ -94,6 +94,7 @@ const FormEnregistrements = () => {
     if (selectedExpo) {
       setQuota(selectedExpo.quota);
       setdateDebut(selectedExpo.date_debut);
+      console.log(dateDebut);
       setdateFin(selectedExpo.date_fin);
       setHeured(selectedExpo.heure_debut);
       setHeuref(selectedExpo.heure_fin);
