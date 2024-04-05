@@ -122,29 +122,14 @@ const FormEnregistrements = () => {
       // Création d'une chaîne de données à partir des informations du formulaire
       const qrCodeData = `${formData.prenom};${formData.nom};${dayjs(formData.date_debut).format('YYYY-MM-DD')};${formData.id_expo};${formData.heure}`;
   
-      // Génération de la signature numérique à partir des données du formulaire
-      const signature = generateSignature(qrCodeData);
-  
-      // Inclusion de la signature dans les données du QR code
-      const qrCodeDataWithSignature = `${qrCodeData};${signature}`;
-  
       // Génération du QR code avec les données originales et la signature
-      const qrCodeDataURL = await QRCode.toDataURL(qrCodeDataWithSignature);
+      const qrCodeDataURL = await QRCode.toDataURL(qrCodeData);
   
       return qrCodeDataURL;
     } catch (error) {
       console.error('Erreur lors de la génération du QR code:', error);
       throw error;
     }
-  };
-  
-  // Fonction pour générer la signature numérique
-  const generateSignature = (data) => {
-    // Utilisation d'une clé secrète pour générer la signature
-    const secretKey = 'apagnan';
-    const hash = CryptoJS.HmacSHA256(data, secretKey);
-    const signature = CryptoJS.enc.Hex.stringify(hash);
-    return signature;
   };
   
 
@@ -192,7 +177,7 @@ const FormEnregistrements = () => {
   }
 
   const generateReservationTimes = async (heured, heuref, est, datee) => {
-    const step = 10; // Step en minutes, changé à 10 minutes
+    const step = estimation
     const start = new Date(`2000-01-01T${heured}`);
     const end = new Date(`2000-01-01T${heuref}`);
     const schedule = [];
