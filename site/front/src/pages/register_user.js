@@ -5,7 +5,6 @@ import jsPDF from 'jspdf';
 import Button from '@mui/material/Button';
 import Header from './header.js';
 import dayjs from 'dayjs';
-import CryptoJS from 'crypto-js';
 import "../styles/register_user.css";
 
 const FormEnregistrements = () => {

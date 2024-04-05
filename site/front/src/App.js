@@ -10,7 +10,7 @@ import ProtectedRoute from './pages/protectedroute.js';
 
 
 const App = () => {
-    const [loggedIn, setLoggedIn] = useState(false);
+
     return (
         <BrowserRouter>
             <Routes>
@@ -19,12 +19,6 @@ const App = () => {
                 <Route path="/register_user" element={<FormEnregistrement />} />
                 <Route path="/header" element={<Header />} />
                 <Route path="/login" element={<Login />} />
-                <ProtectedRoute
-                    exact
-                    path="/register_expo"
-                    component={EnregistrementExpo}
-                    loggedIn={loggedIn}
-                />
             </Routes>
         </BrowserRouter>
     );
