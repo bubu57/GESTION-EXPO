@@ -177,7 +177,7 @@ const FormEnregistrements = () => {
   }
 
   const generateReservationTimes = async (heured, heuref, est, datee) => {
-    const step = estimation
+    const step = parseInt(estimation)
     const start = new Date(`2000-01-01T${heured}`);
     const end = new Date(`2000-01-01T${heuref}`);
     const schedule = [];
