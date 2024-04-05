@@ -91,6 +91,7 @@ const FormEnregistrements = () => {
       }
     }
     if (selectedExpo) {
+      console.log(selectedExpo.estimation)
       setQuota(selectedExpo.quota);
       setdateDebut(selectedExpo.date_debut);
       console.log(convertDateToISO(dateDebut));
