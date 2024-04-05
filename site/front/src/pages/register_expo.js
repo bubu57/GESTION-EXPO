@@ -215,11 +215,11 @@ const EnregistrementExpo = () => {
                 />
               </div>
               <div className='div-input'>
-                <p className='label'>estimation duree</p>
+                <p className='label'>estimation duree en min</p>
                 <input
                   className='estimation'
-                  type="time"
-                  placeholder="15:00"
+                  type="number"
+                  placeholder="30min"
                   name="estimation"
                   value={formData.estimation}
                   onChange={handleChange}
