@@ -6,16 +6,25 @@ import HistoExpo from "./pages/graph.js";
 import FormEnregistrement from './pages/register_user.js'
 import Header from './pages/header.js'
 import Login from './pages/login.js'
+import ProtectedRoute from './ProtectedRoute';
+
+
 const App = () => {
+    const [loggedIn, setLoggedIn] = useState(false);
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<ListesExpos />} />
-                <Route path="/register_expo" element={<EnregistrementExpo />} />
                 <Route path="/historique" element={<HistoExpo />} />
                 <Route path="/register_user" element={<FormEnregistrement />} />
                 <Route path="/header" element={<Header />} />
                 <Route path="/login" element={<Login />} />
+                <ProtectedRoute
+                    exact
+                    path="/register_expo"
+                    component={EnregistrementExpo}
+                    loggedIn={loggedIn}
+                />
             </Routes>
         </BrowserRouter>
     );

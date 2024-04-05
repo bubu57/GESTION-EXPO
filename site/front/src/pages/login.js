@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import "../styles/login.css";
 import "../styles/admin.css";
 
-const Login = () => {
+const Login = ({setLoggedIn}) => {
   const [formData, setFormData] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
   const [isAdminVisible, setIsAdminVisible] = useState(false);
@@ -29,6 +29,7 @@ const Login = () => {
       localStorage.setItem('token', response.data.token);
       setIsLoginFormVisible(false);
       setIsAdminVisible(true);
+      setLoggedIn(true);
     } catch (error) {
       console.log(error);
       setError('Nom d\'utilisateur ou mot de passe incorrect');
@@ -94,6 +95,8 @@ const Login = () => {
       console.error('Erreur lors de la suppression de l\'exposition:', error);
     }
   };
+
+
 
   return (
     <div>
