@@ -13,7 +13,7 @@ const FormEnregistrements = () => {
   const [quota, setQuota] = useState([]);
   const [dateDebut, setdateDebut] = useState("01/01/2024");
   const [dateFin, setdateFin] = useState("2024/01/02");
-  const [estimation, setEstimation] = useState([]);
+  const [estimation, setEstimation] = useState(0);
   let [heureliste, setheurelist] = useState([]);
   const [selectedTime, setSelectedTime] = useState('');
   const [heured, setHeured] = useState('');
@@ -178,7 +178,7 @@ const FormEnregistrements = () => {
   }
 
   const generateReservationTimes = async (heured, heuref, est, datee) => {
-    const step = parseInt(estimation)
+    const step = estimation
     const start = new Date(`2000-01-01T${heured}`);
     const end = new Date(`2000-01-01T${heuref}`);
     const schedule = [];
