@@ -6,7 +6,7 @@ import HistoExpo from "./pages/graph.js";
 import FormEnregistrement from './pages/register_user.js'
 import Header from './pages/header.js'
 import Login from './pages/login.js'
-import ProtectedRoute from './ProtectedRoute';
+import ProtectedRoute from './pages/protectedroute.js';
 
 
 const App = () => {
