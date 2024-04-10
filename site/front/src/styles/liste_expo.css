@@ -13,19 +13,6 @@ body {
   padding: 20px;
 }
 
-/* Header styles */
-.header {
-  background-color: #ffffff;
-  padding: 20px 0;
-  text-align: center;
-}
-
-.header h1 {
-  margin: 0;
-  font-size: 36px;
-  font-weight: bold;
-}
-
 /* Titre styles */
 .div-titre {
   margin-bottom: 20px;

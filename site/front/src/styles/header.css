@@ -1,7 +1,7 @@
 /* header.css */
 
 .header {
-  background-color: #2196f3; /* Nouvelle couleur du header */
+  background-color: #fff; /* Nouvelle couleur du header */
   padding: 20px;
   display: flex;
   align-items: center;
@@ -14,9 +14,14 @@
   width: 50px; /* Taille du logo */
 }
 
+.contt {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
 /* Style pour les liens de navigation */
 .navlabel {
-  color: white; /* Couleur du texte */
+  color: #6c757d; /* Couleur du texte */
   text-decoration: none;
   margin-right: 20px; /* Espacement entre les éléments */
   font-size: 18px; /* Taille du texte */
@@ -32,7 +37,8 @@
 
 /* Style pour le texte à l'intérieur du bouton de navigation */
 .buttonnav .navlabel {
-  color: white; /* Couleur du texte */
+  text-decoration: none;
+  color: 6c757d; /* Couleur du texte */
   font-size: 18px; /* Taille du texte */
   font-weight: 500; /* Poids de la police */
 }
