@@ -1,6 +1,6 @@
 /* Global styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   background-color: #1e1e1e;
   color: #ffffff;
   margin: 0;
@@ -16,12 +16,13 @@ body {
 /* Header styles */
 .header {
   background-color: #333333;
-  padding: 10px 0;
+  padding: 20px 0;
   text-align: center;
 }
 
 .header h1 {
   margin: 0;
+  font-size: 32px;
 }
 
 /* Titre styles */
@@ -30,7 +31,7 @@ body {
 }
 
 .titre {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
 }
 
@@ -38,6 +39,7 @@ body {
 .search {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
 }
 
@@ -48,11 +50,12 @@ body {
 
 .input {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #666666;
+  padding: 12px;
+  border: none;
   border-radius: 5px;
   background-color: #333333;
   color: #ffffff;
+  font-size: 16px;
 }
 
 .input::placeholder {
@@ -67,13 +70,18 @@ body {
 }
 
 .expo {
-  background-color: #444444;
+  background-color: #333333;
   border-radius: 10px;
   padding: 20px;
+  transition: transform 0.3s ease;
+}
+
+.expo:hover {
+  transform: translateY(-5px);
 }
 
 .text-expo {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: bold;
   margin: 0;
 }
@@ -88,6 +96,7 @@ body {
 .label-ville,
 .label-heure {
   margin: 5px 0;
+  font-size: 16px;
 }
 
 .reserver {
@@ -111,10 +120,16 @@ body {
   background-color: #333333;
   padding: 20px;
   border-radius: 10px;
+  max-width: 600px;
+  width: 100%;
 }
 
 .details p {
   margin: 5px 0;
+}
+
+.details button {
+  margin-top: 20px;
 }
 
 /* Button styles */
@@ -122,9 +137,10 @@ body {
   background-color: #007bff;
   color: #ffffff;
   border: none;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
   transition: background-color 0.3s ease;
 }
 
@@ -137,4 +153,55 @@ body {
   .div-inputt {
     margin-right: 0;
   }
+}
+
+/* Dark mode toggle */
+.dark-mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.dark-mode-toggle label {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.dark-mode-toggle input {
+  display: none;
+}
+
+.dark-mode-toggle .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.dark-mode-toggle .slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+.dark-mode-toggle input:checked + .slider {
+  background-color: #2196F3;
+}
+
+.dark-mode-toggle input:checked + .slider:before {
+  transform: translateX(26px);
 }
