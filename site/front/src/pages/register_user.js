@@ -273,9 +273,6 @@ const FormEnregistrements = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const qrCodeDataURL = await generateQRCode(formData);
-      await handleSaveQRCodeAsPDF(qrCodeDataURL);
-      
       // Enregistrer les données dans la base de données
       const response = await fetch('/api/register_user', {
         method: 'POST',
@@ -284,6 +281,9 @@ const FormEnregistrements = () => {
         },
         body: JSON.stringify(formData),
       });
+
+      const qrCodeDataURL = await generateQRCode(formData);
+      await handleSaveQRCodeAsPDF(qrCodeDataURL);
       
       if (!response.ok) {
         throw new Error('Erreur lors de l\'enregistrement des données dans la base de données');
