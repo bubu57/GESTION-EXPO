@@ -1,7 +1,7 @@
 /* Global styles */
 body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #1e1e1e;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #111111;
   color: #ffffff;
   margin: 0;
   padding: 0;
@@ -15,14 +15,16 @@ body {
 
 /* Header styles */
 .header {
-  background-color: #333333;
+  background-color: transparent;
   padding: 20px 0;
   text-align: center;
 }
 
 .header h1 {
   margin: 0;
-  font-size: 32px;
+  font-size: 36px;
+  font-weight: bold;
+  color: #ffffff;
 }
 
 /* Titre styles */
@@ -31,7 +33,7 @@ body {
 }
 
 .titre {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: bold;
 }
 
@@ -84,6 +86,7 @@ body {
   font-size: 24px;
   font-weight: bold;
   margin: 0;
+  color: #ffffff;
 }
 
 .expo-content {
@@ -97,6 +100,7 @@ body {
 .label-heure {
   margin: 5px 0;
   font-size: 16px;
+  color: #999999;
 }
 
 .reserver {
@@ -117,11 +121,12 @@ body {
 }
 
 .details {
-  background-color: #333333;
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 10px;
   max-width: 600px;
   width: 100%;
+  color: #333333;
 }
 
 .details p {
@@ -134,7 +139,7 @@ body {
 
 /* Button styles */
 .Button {
-  background-color: #007bff;
+  background-color: #4cd964;
   color: #ffffff;
   border: none;
   padding: 12px 24px;
@@ -145,7 +150,7 @@ body {
 }
 
 .Button:hover {
-  background-color: #0056b3;
+  background-color: #44bd32;
 }
 
 /* Responsive styles */
