@@ -371,7 +371,7 @@ const FormEnregistrements = () => {
             </div>
           </div>
           <center className='button-reserved-registeruser'>
-            <Button variant="contained" type="submit">Réserver</Button>
+            <Button color="success" variant="contained" type="submit" endIcon={<SendIcon />}>Réserver</Button>
           </center>
         </form>
       </div>
