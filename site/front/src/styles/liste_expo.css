@@ -30,8 +30,8 @@ body {
   align-items: center;
   margin-bottom: 20px;
   width: 100%;
-  margin-left: 50px;
-  margin-left: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .div-inputt {
@@ -58,8 +58,8 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
-  margin-left: 50px;
-  margin-left: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
   width: 100%;
 }
 
