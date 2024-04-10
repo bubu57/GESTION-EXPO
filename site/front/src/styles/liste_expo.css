@@ -1,28 +1,32 @@
-/* listesExpos.css */
-
-/* Reset des styles par défaut */
-* {
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #1e1e1e;
+  color: #ffffff;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
-/* Utilisation de la même police d'écriture que dans le header */
-body, input, button, select, textarea {
-  font-family: 'Roboto', sans-serif; /* Police d'écriture */
-}
-
-/* Style pour le container principal */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* Style pour le titre */
+/* Header styles */
+.header {
+  background-color: #333333;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+/* Titre styles */
 .div-titre {
-  margin-bottom: 30px; /* Plus d'espace en bas du titre */
-  margin-top: 50px;
+  margin-bottom: 20px;
 }
 
 .titre {
@@ -30,111 +34,107 @@ body, input, button, select, textarea {
   font-weight: bold;
 }
 
-/* Style pour la zone de recherche */
+/* Search section styles */
 .search {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30px; /* Plus d'espace en bas de la zone de recherche */
+  margin-bottom: 20px;
 }
 
 .div-inputt {
   flex: 1;
-  margin-right: 20px; /* Plus d'espace à droite des champs de recherche */
+  margin-right: 10px;
 }
 
 .input {
   width: 100%;
-  padding: 12px; /* Un peu plus de padding */
-  font-size: 16px;
-  border: 1px solid #ccc;
+  padding: 10px;
+  border: 1px solid #666666;
   border-radius: 5px;
+  background-color: #333333;
+  color: #ffffff;
 }
 
-/* Style pour le contenu des expositions */
+.input::placeholder {
+  color: #999999;
+}
+
+/* Content styles */
 .content {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 30px; /* Plus d'espace entre les expositions */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
 }
 
-/* Style pour chaque exposition */
 .expo {
-  background-color: #f5f5f5;
+  background-color: #444444;
   border-radius: 10px;
   padding: 20px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Ombre légère */
 }
 
 .text-expo {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
-  margin-bottom: 15px; /* Plus d'espace en bas du texte de l'exposition */
+  margin: 0;
 }
 
-/* Style pour les détails de l'exposition */
 .expo-content {
-  display: flex;
-  align-items: center;
+  margin-top: 10px;
 }
 
-.expo-text {
-  flex: 1;
+.label-type,
+.label-quota,
+.label-date,
+.label-ville,
+.label-heure {
+  margin: 5px 0;
 }
 
 .reserver {
-  cursor: pointer;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
-/* Style pour le bouton de réservation */
-.button-text {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-/* Style pour l'overlay des détails */
+/* Overlay styles */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
 }
 
 .details {
-  background-color: white;
-  border-radius: 10px;
+  background-color: #333333;
   padding: 20px;
-  max-width: 600px;
-  width: 100%;
+  border-radius: 10px;
 }
 
-.labell {
-  font-weight: bold;
-  margin-bottom: 10px;
+.details p {
+  margin: 5px 0;
 }
 
-.labella {
-  margin-bottom: 15px; /* Plus d'espace entre les éléments */
-}
-
-/* Style pour le bouton "Fermer" des détails */
-.details button {
-  background-color: #ff4f4f;
+/* Button styles */
+.Button {
+  background-color: #007bff;
+  color: #ffffff;
   border: none;
-  color: white;
-  padding: 12px 24px; /* Un peu plus de padding */
+  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
 }
 
-.details button:hover {
-  background-color: #ff3333;
+.Button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .div-inputt {
+    margin-right: 0;
+  }
 }
