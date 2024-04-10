@@ -167,7 +167,7 @@ const ListesExpos = () => {
                   <p className='label-ville'>Ville: {expo.ville}</p>
                   <p className='label-heure'>Horaire: {expo.heure_debut.slice(0, -3)} - {expo.heure_fin.slice(0, -3)}</p>
                   <div className='reserver' onClick={() => handleVoirPlusClick(expo)}>
-                    <Button variant="contained" onClick={() => handleVoirPlusClick(expo)}>Réserver</Button>
+                    <Button color="success" variant="contained" onClick={() => handleVoirPlusClick(expo)}>Réserver</Button>
                   </div>  
                 </div>
 
