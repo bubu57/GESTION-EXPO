@@ -121,8 +121,8 @@ app.post('/api/enregistrement', (req, res) => {
   `;
 
   const expoQuery = `
-    INSERT INTO Exposition (quota ,nom, type, date_debut, date_fin, heure_debut, heure_fin, estimation)
-    VALUES (${req.body.quota} ,"${req.body.nom}", "${req.body.type}", "${req.body.date_debut}", "${req.body.date_fin}", "${req.body.heure_debut}", "${req.body.heure_fin}", "${req.body.estimation}");
+    INSERT INTO Exposition (quota ,nom, type, date_debut, date_fin, heure_debut, heure_fin, estimation, visiteur)
+    VALUES (${req.body.quota} ,"${req.body.nom}", "${req.body.type}", "${req.body.date_debut}", "${req.body.date_fin}", "${req.body.heure_debut}", "${req.body.heure_fin}", "${req.body.estimation}", 0);
   `;
 
   // Commencez la transaction
