@@ -28,8 +28,8 @@ body, input, button, select, textarea {
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 .historique-div-input {
