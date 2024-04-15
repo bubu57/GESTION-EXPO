@@ -10,9 +10,9 @@ const Header = () =>  {
     <header className='header-content'>
       <div className='header-label-group'>
         <div className='header-logo'><img className='header-img' src={logo} alt="Logo"></img> </div>
-        <Link to="/"><p className='header-label'>Accueil</p></Link>
-        <Link to="/historique"><p className='header-label'>Historique</p></Link>
-        <Link to="/register_user"><p className='header-label'>Inscripription</p></Link>
+        <Link to="/"><Button color="success" variant="text">Acceuil</Button></Link>
+        <Link to="/historique"><Button color="success" variant="text">Historique</Button></Link>
+        <Link to="/register_user"><Button color="success" variant="text">Inscripription</Button></Link>
         <Link to="/login"><Button color="success" variant="contained">Admin</Button></Link>
       </div>
     </header>
