@@ -72,19 +72,18 @@ body, input, button, select, textarea {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 15px; /* Plus d'espace en bas du texte de l'exposition */
-  width: 90%;
+  width: 70%;
 }
 
 
 .historique-expo-content {
   display: flex;
   align-items: center;
-  width: 90%;
+  width: 70%;
 }
 
 .historique-expo-text {
   flex: 1;
-  width: 90%;
 }
 
 .historique-label {
