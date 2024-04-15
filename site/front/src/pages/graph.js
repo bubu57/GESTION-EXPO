@@ -206,13 +206,15 @@ const ListesExpos = () => {
             <div key={index} class='historique-expo'>
               <center><p class='historique-text-expo'>{expo.nom}</p></center>
               <div class='historique-expo-content'>
-                <p class='historique-label'><strong>Type:</strong> {expo.type}</p>
-                <p class='historique-label'><strong>Quota:</strong> {expo.quota}</p>
-                <p class='historique-label'><strong>Date:</strong> {expo.date_debut} - {expo.date_fin}</p>
-                <p class='historique-label'><strong>Horaire:</strong> {expo.heure_debut} - {expo.heure_fin}</p>
-                <p class='historique-label'><strong>Adresse:</strong> {expo.numero} {expo.rue}, {expo.cp} {expo.ville}</p>
-                <p class='historique-label'><strong>Coordonnées:</strong> {expo.latitude}, {expo.longitude}</p>
-                <p class='historique-label'><strong>Nombre de visiteurs:</strong> {expo.visiteur}</p>
+                <div class='historique-expo-text'>
+                    <p class='historique-label'><strong>Type:</strong> {expo.type}</p>
+                    <p class='historique-label'><strong>Quota:</strong> {expo.quota}</p>
+                    <p class='historique-label'><strong>Date:</strong> {expo.date_debut} - {expo.date_fin}</p>
+                    <p class='historique-label'><strong>Horaire:</strong> {expo.heure_debut} - {expo.heure_fin}</p>
+                    <p class='historique-label'><strong>Adresse:</strong> {expo.numero} {expo.rue}, {expo.cp} {expo.ville}</p>
+                    <p class='historique-label'><strong>Coordonnées:</strong> {expo.latitude}, {expo.longitude}</p>
+                    <p class='historique-label'><strong>Nombre de visiteurs:</strong> {expo.visiteur}</p>
+                </div>
               </div>
             </div>
           ))}

@@ -84,6 +84,7 @@ body, input, button, select, textarea {
 
 .historique-expo-text {
   flex: 1;
+  width: 70%;
 }
 
 .historique-label {
