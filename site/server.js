@@ -225,6 +225,7 @@ app.get('/api/admins', (req, res) => {
     }
     res.json(results);
   });
+  
 });
 
 app.post('/api/admins', (req, res) => {

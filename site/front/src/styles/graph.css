@@ -90,7 +90,7 @@ body, input, button, select, textarea {
 .historique-label {
   font-weight: bold;
   margin-bottom: 10px;
-  width: 100%;
+  width: 90%;
 }
 
 .historique-canvas, .historique-maps {
