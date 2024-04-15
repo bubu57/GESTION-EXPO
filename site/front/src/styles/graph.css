@@ -72,29 +72,25 @@ body, input, button, select, textarea {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 15px; /* Plus d'espace en bas du texte de l'exposition */
+  width: 100%;
 }
 
 
 .historique-expo-content {
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .historique-expo-text {
   flex: 1;
+  width: 100%;
 }
 
 .historique-label {
   font-weight: bold;
   margin-bottom: 10px;
-}
-
-.historique-labella {
-  margin-bottom: 15px; /* Plus d'espace entre les éléments */
-}
-
-.historique-lable {
-  margin-bottom: 10px;
+  width: 100%;
 }
 
 .historique-canvas, .historique-maps {
