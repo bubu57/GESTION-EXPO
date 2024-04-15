@@ -95,7 +95,7 @@ body, input, button, select, textarea {
   margin-bottom: 10px;
 }
 
-.historique-canvas {
+.historique-canvas, .historique-maps {
   margin-top: 50px;
   padding-left: 30px;
   padding-right: 30px;

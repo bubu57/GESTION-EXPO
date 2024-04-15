@@ -221,7 +221,7 @@ const ListesExpos = () => {
         </div>
         <canvas class='historique-canvas' id="bar-chart" width="800" height="400"></canvas>
 
-        <div style={{ height: '100vh', width: '100%' }}>
+        <div className='historique-maps' style={{ height: '100vh', width: '100%' }}>
             <GoogleMapReact
             bootstrapURLKeys={{ key: "AIzaSyDsRLiCf-00haCE_rSfT0klkQ9ite7g0z8" }}
             defaultCenter={{ lat: 48.85, lng: 2.35 }}
