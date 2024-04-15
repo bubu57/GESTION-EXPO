@@ -215,6 +215,7 @@ app.post('/api/register_user', (req, res) => {
 
 
 app.get('/api/admins', (req, res) => {
+  let connection = connecterBaseDonnees();
   const query = 'SELECT * FROM Admin';
   connection.query(query, (error, results) => {
     if (error) {
@@ -227,6 +228,7 @@ app.get('/api/admins', (req, res) => {
 });
 
 app.post('/api/admins', (req, res) => {
+  let connection = connecterBaseDonnees();
   const query = `INSERT INTO Admin (User, Password) VALUES ('${req.body.username}', '${req.body.password}')`;
   connection.query(query, (error, results) => {
     if (error) {
@@ -239,6 +241,7 @@ app.post('/api/admins', (req, res) => {
 });
 
 app.post('/api/dadmins', (req, res) => {
+  let connection = connecterBaseDonnees();
   const query = `DELETE FROM Admin WHERE id = ${req.body.id}`;
   connection.query(query, (error, results) => {
     if (error) {
@@ -251,6 +254,7 @@ app.post('/api/dadmins', (req, res) => {
 });
 
 app.post('/api/dexpo', (req, res) => {
+  let connection = connecterBaseDonnees();
   const query = `DELETE Exposition, Lieu FROM Exposition INNER JOIN Lieu ON Exposition.id = Lieu.id WHERE Exposition.id = ${req.body.id}`;
   connection.query(query, (error, results) => {
     if (error) {
