@@ -44,8 +44,6 @@ const fermerConnexionBaseDonnees = (connection) => {
   });
 };
 
-let connection = connecterBaseDonnees();
-
 app.use(express.json())
 app.use(express.static('front/build'))
 app.use(bodyParser.json());
