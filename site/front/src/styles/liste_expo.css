@@ -1,4 +1,4 @@
-/* Global styles */
+/* acceuil-global.css */
 body {
   font-family: 'Roboto', sans-serif;
   background-color: #f7f8fa;
@@ -7,24 +7,24 @@ body {
   padding: 0;
 }
 
-.container {
+.acceuil-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
 /* Titre styles */
-.div-titre {
+.acceuil-div-titre {
   margin-bottom: 20px;
 }
 
-.titre {
+.acceuil-titre {
   font-size: 32px;
   font-weight: bold;
 }
 
 /* Search section styles */
-.search {
+.acceuil-search {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -34,12 +34,12 @@ body {
   padding-right: 20px;
 }
 
-.div-inputt {
+.acceuil-div-input {
   flex: 1;
   margin-right: 10px;
 }
 
-.input {
+.acceuil-input {
   width: 100%;
   padding: 12px;
   border: 1px solid #ced4da;
@@ -49,12 +49,12 @@ body {
   font-size: 16px;
 }
 
-.input::placeholder {
+.acceuil-input::placeholder {
   color: #6c757d;
 }
 
 /* Content styles */
-.content {
+.acceuil-content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
@@ -63,7 +63,7 @@ body {
   width: 100%;
 }
 
-.expo {
+.acceuil-expo {
   background-color: #ffffff;
   border-radius: 10px;
   padding: 20px;
@@ -71,36 +71,36 @@ body {
   transition: transform 0.3s ease;
 }
 
-.expo:hover {
+.acceuil-expo:hover {
   transform: translateY(-5px);
 }
 
-.text-expo {
+.acceuil-text-expo {
   font-size: 24px;
   font-weight: bold;
   margin: 0;
 }
 
-.expo-content {
+.acceuil-expo-content {
   margin-top: 10px;
 }
 
-.label-type,
-.label-quota,
-.label-date,
-.label-ville,
-.label-heure {
+.acceuil-label-type,
+.acceuil-label-quota,
+.acceuil-label-date,
+.acceuil-label-ville,
+.acceuil-label-heure {
   margin: 5px 0;
   font-size: 16px;
   color: #6c757d;
 }
 
-.reserver {
+.acceuil-reserver {
   margin-top: 10px;
 }
 
 /* Overlay styles */
-.overlay {
+.acceuil-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -113,7 +113,7 @@ body {
   z-index: 9999;
 }
 
-.details {
+.acceuil-details {
   background-color: #ffffff;
   padding: 20px;
   border-radius: 10px;
@@ -122,33 +122,10 @@ body {
   color: #1a202c;
 }
 
-.details p {
+.acceuil-details p {
   margin: 5px 0;
 }
 
-.details button {
+.acceuil-details button {
   margin-top: 20px;
-}
-
-/* Button styles */
-.Button {
-  background-color: #48BB78;
-  color: #ffffff;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
-
-.Button:hover {
-  background-color: #38a169;
-}
-
-/* Responsive styles */
-@media screen and (max-width: 768px) {
-  .div-inputt {
-    margin-right: 0;
-  }
 }

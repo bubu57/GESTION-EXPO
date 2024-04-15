@@ -165,7 +165,7 @@ const ListesExpos = () => {
         <div class='historique-div-titre'><p class='historique-titre'>Expositions passées</p></div>
       </center>
 
-      <p className='historique-nb-expo'>Filtres</p>
+      <center><p className='historique-nb-expo'>Filtres:</p></center>
 
       <div class='historique-search'>
         <div class='historique-div-input'>
