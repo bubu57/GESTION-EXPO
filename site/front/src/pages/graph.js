@@ -159,17 +159,17 @@ const ListesExpos = () => {
   
 
   return (
-    <div className='1container'>
+    <div class='historique-container'>
       <Header></Header>
       <center>
-        <div className='div-titre'><p className='titre'>Expositions passées</p></div>
+        <div class='historique-div-titre'><p class='historique-titre'>Expositions passées</p></div>
       </center>
 
-      <div className='search'>
-        <div className='div-inputt'>
+      <div class='historique-search'>
+        <div class='historique-div-input'>
           <p>Filtrer par ville</p>
           <input
-            className='input'
+            class='historique-input'
             type="text"
             placeholder="Paris"
             value={villeFiltre}
@@ -177,10 +177,10 @@ const ListesExpos = () => {
           />
         </div>
 
-        <div className='div-inputt'>
+        <div class='historique-div-input'>
           <p>Filtrer par date</p>
           <input
-            className='input'
+            class='historique-input'
             type="text"
             placeholder="jj/mm/aaaa"
             value={dateFiltre}
@@ -188,10 +188,10 @@ const ListesExpos = () => {
           />
         </div>
 
-        <div className='div-inputt'>
+        <div class='historique-div-input'>
           <p>Filtrer par heure</p>
           <input
-            className='input'
+            class='historique-input'
             type="text"
             placeholder="15:30"
             value={heureFiltre}
@@ -200,28 +200,26 @@ const ListesExpos = () => {
         </div>
       </div>
       <center>
-        <p>Nombre d'expositions créées : {nombreExpos}</p>
-        <div className='content'>
+        <p className='historique-nb-expo'>Nombre d'expositions créées : {nombreExpos}</p>
+        <div class='historique-content'>
           {expositionsFiltrees.map((expo, index) => (
-            <div key={index} className='expo'>
-              <center><p className='text-expo'>{expo.nom}</p></center>
-              <div className='expo-content'>
-                <div className='expo-text'>
-                    <p className='lable'><strong>Type:</strong> {expo.type}</p>
-                    <p className='lable'><strong>Quota:</strong> {expo.quota}</p>
-                    <p className='lable'><strong>Date:</strong> {expo.date_debut} - {expo.date_fin}</p>
-                    <p className='lable'><strong>Horaire:</strong> {expo.heure_debut} - {expo.heure_fin}</p>
-                    <p className='lable'><strong>Adresse:</strong> {expo.numero} {expo.rue}, {expo.cp} {expo.ville}</p>
-                    <p className='lable'><strong>Coordonnées:</strong> {expo.latitude}, {expo.longitude}</p>
-                    <p className='lable'><strong>Nombre de visiteurs:</strong> {expo.visiteur}</p>
+            <div key={index} class='historique-expo'>
+              <center><p class='historique-text-expo'>{expo.nom}</p></center>
+              <div class='historique-expo-content'>
+                <div class='historique-expo-text'>
+                    <p class='historique-label'><strong>Type:</strong> {expo.type}</p>
+                    <p class='historique-label'><strong>Quota:</strong> {expo.quota}</p>
+                    <p class='historique-label'><strong>Date:</strong> {expo.date_debut} - {expo.date_fin}</p>
+                    <p class='historique-label'><strong>Horaire:</strong> {expo.heure_debut} - {expo.heure_fin}</p>
+                    <p class='historique-label'><strong>Adresse:</strong> {expo.numero} {expo.rue}, {expo.cp} {expo.ville}</p>
+                    <p class='historique-label'><strong>Coordonnées:</strong> {expo.latitude}, {expo.longitude}</p>
+                    <p class='historique-label'><strong>Nombre de visiteurs:</strong> {expo.visiteur}</p>
                 </div>
               </div>
             </div>
           ))}
         </div>
-        <canvas className='canvas' id="bar-chart" width="800" height="400"></canvas>
-
-
+        <canvas class='historique-canvas' id="bar-chart" width="800" height="400"></canvas>
 
         <div style={{ height: '100vh', width: '100%' }}>
             <GoogleMapReact
@@ -233,10 +231,9 @@ const ListesExpos = () => {
             {renderMarkers()}
             </GoogleMapReact>
         </div>
-
-
       </center>
     </div>
+
   );
 };
 

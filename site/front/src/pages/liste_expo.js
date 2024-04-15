@@ -184,7 +184,7 @@ const ListesExpos = () => {
                         <p className='labell'>Adresse: {expo.numero} {expo.rue} {expo.ville} {expo.cp}</p>
                         <p className='labell'>Coordonnee: {expo.latitude} {expo.longitude}</p>
                         <Link to="/register_user">
-                          <Button variant="contained">Réserver</Button>
+                          <Button color="success" variant="contained">Réserver</Button>
                         </Link>
                       </center>
                     </div>

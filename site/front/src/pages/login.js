@@ -129,7 +129,7 @@ const Login = () => {
             </div>
             <center>
               <div className='but'>
-                <Button variant="contained" type="submit" >Se connecter</Button>
+                <Button color="success" variant="contained" type="submit" >Se connecter</Button>
               </div>
             </center>
           </form>
@@ -164,7 +164,7 @@ const Login = () => {
         <input type="text" name="username" placeholder="Nom d'utilisateur" value={newAdminData.username} onChange={handleeChange} />
         <input type="password" name="password" placeholder="Mot de passe" value={newAdminData.password} onChange={handleeChange} />
         <div className='but'>
-          <Button variant="contained" onClick={handleAddAdmin}>Ajouter</Button>
+          <Button color="success" variant="contained" onClick={handleAddAdmin}>Ajouter</Button>
         </div>
       </div>
     </div>

@@ -1,141 +1,95 @@
-/* listesExpos.css */
+/* historique-listesExpos.css */
 
 /* Reset des styles par défaut */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Utilisation de la même police d'écriture que dans le header */
-  body, input, button, select, textarea {
-    font-family: 'Roboto', sans-serif; /* Police d'écriture */
-  }
-  
-  /* Style pour le container principal */
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  /* Style pour le titre */
-  .div-titre {
-    margin-bottom: 30px; /* Plus d'espace en bas du titre */
-    margin-top: 50px;
-  }
-  
-  .titre {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  /* Style pour la zone de recherche */
-  .search {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 30px; /* Plus d'espace en bas de la zone de recherche */
-  }
-  
-  .div-inputt {
-    flex: 1;
-    margin-right: 20px; /* Plus d'espace à droite des champs de recherche */
-  }
-  
-  .input {
-    width: 100%;
-    padding: 12px; /* Un peu plus de padding */
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  /* Style pour le contenu des expositions */
-  .content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 30px; /* Plus d'espace entre les expositions */
-  }
-  
-  .text-expo {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 15px; /* Plus d'espace en bas du texte de l'exposition */
-  }
-  
-  /* Style pour les détails de l'exposition */
-  .expo-content {
-    display: flex;
-    align-items: center;
-  }
-  
-  .expo-text {
-    flex: 1;
-  }
-  
-  .reserver {
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  
-  /* Style pour le bouton de réservation */
-  .button-text {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-  }
-  
-  /* Style pour l'overlay des détails */
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-  }
-  
-  .details {
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
-    max-width: 600px;
-    width: 100%;
-  }
-  
-  .labell {
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .labella {
-    margin-bottom: 15px; /* Plus d'espace entre les éléments */
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .lable {
-    margin-bottom: 10px;
-  }
-  
-  /* Style pour le bouton "Fermer" des détails */
-  .details button {
-    background-color: #ff4f4f;
-    border: none;
-    color: white;
-    padding: 12px 24px; /* Un peu plus de padding */
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 10px;
-  }
-  
-  .details button:hover {
-    background-color: #ff3333;
-  }
+/* Utilisation de la même police d'écriture que dans le header */
+body, input, button, select, textarea {
+  font-family: 'Roboto', sans-serif; /* Police d'écriture */
+}
 
-  .canvas {
-    margin-top: 50px;
-  }
-  
+/* Style pour le container principal */
+.historique-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Style pour le titre */
+.historique-div-titre {
+  margin-bottom: 30px; /* Plus d'espace en bas du titre */
+  margin-top: 50px;
+}
+
+.historique-titre {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Style pour la zone de recherche */
+.historique-search {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px; /* Plus d'espace en bas de la zone de recherche */
+}
+
+.historique-div-input {
+  flex: 1;
+  margin-right: 20px; /* Plus d'espace à droite des champs de recherche */
+}
+
+.historique-input {
+  width: 100%;
+  padding: 12px; /* Un peu plus de padding */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.historique-nb-expo {
+  padding: 30px;
+}
+
+/* Style pour le contenu des expositions */
+.historique-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 30px; /* Plus d'espace entre les expositions */
+}
+
+.historique-text-expo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px; /* Plus d'espace en bas du texte de l'exposition */
+}
+
+/* Style pour les détails de l'exposition */
+.historique-expo-content {
+  display: flex;
+  align-items: center;
+}
+
+.historique-expo-text {
+  flex: 1;
+}
+
+.historique-label {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.historique-labella {
+  margin-bottom: 15px; /* Plus d'espace entre les éléments */
+}
+
+.historique-lable {
+  margin-bottom: 10px;
+}
+
+.historique-canvas {
+  margin-top: 50px;
+}
