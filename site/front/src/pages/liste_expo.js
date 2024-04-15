@@ -12,7 +12,7 @@ const ListesExpos = () => {
   const [heureFiltre, setHeureFiltre] = useState('');
   const [expositionsFiltrees, setExpositionsFiltrees] = useState([]);
   const [expositionSelectionnee, setExpositionSelectionnee] = useState(null);
-  let [detail, setDetail] = useState(false);
+  let [detail, setDetail] = useState(0);
 
   useEffect(() => {
     fetch('/api/app')
@@ -105,12 +105,12 @@ const ListesExpos = () => {
 
   // Fonction pour afficher les détails
   const handleVoirPlusClick = (expo) => {
-    if(detail = false) {
+    if(detail == 0) {
       setExpositionSelectionnee(expo);
-      setDetail(true);
+      setDetail(1);
     } else {
       setExpositionSelectionnee(null);
-      setDetail(false);
+      setDetail(0);
     }
   };
   
