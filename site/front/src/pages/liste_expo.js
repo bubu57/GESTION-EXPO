@@ -12,6 +12,7 @@ const ListesExpos = () => {
   const [heureFiltre, setHeureFiltre] = useState('');
   const [expositionsFiltrees, setExpositionsFiltrees] = useState([]);
   const [expositionSelectionnee, setExpositionSelectionnee] = useState(null);
+  let [detail, setDetail] = useState(false);
 
   useEffect(() => {
     fetch('/api/app')
@@ -104,12 +105,13 @@ const ListesExpos = () => {
 
   // Fonction pour afficher les détails
   const handleVoirPlusClick = (expo) => {
-    setExpositionSelectionnee(expo);
-  };
-
-  // Fonction pour cacher les détails
-  const handleFermerDetails = () => {
-    setExpositionSelectionnee(null);
+    if(detail = false) {
+      setExpositionSelectionnee(expo);
+      setDetail(true);
+    } else {
+      setExpositionSelectionnee(null);
+      setDetail(false);
+    }
   };
   
 
@@ -172,12 +174,6 @@ const ListesExpos = () => {
                   <p className='acceuil-label-heure'>Horaire: {expo.heure_debut.slice(0, -3)} - {expo.heure_fin.slice(0, -3)}</p>
                   {expositionSelectionnee && expositionSelectionnee.id === expo.id && (
                     <div className='acceuil-overlay'>
-                      <button onClick={handleFermerDetails}>Fermer</button>
-                      <p className='acceuil-labell'>Nom: {expo.nom}</p>
-                      <p className='acceuil-labell'>Type: {expo.type}</p>
-                      <p className='acceuil-labell'>Quota: {expo.quota}</p>
-                      <p className='acceuil-labell'>Date: {expo.date_debut} - {expo.date_fin}</p>
-                      <p className='acceuil-labell'>Horaire: {expo.heure_debut} - {expo.heure_fin}</p>
                       <p className='acceuil-labell'>Adresse: {expo.numero} {expo.rue} {expo.ville} {expo.cp}</p>
                       <p className='acceuil-labell'>Coordonnee: {expo.latitude} {expo.longitude}</p>
                     </div>
