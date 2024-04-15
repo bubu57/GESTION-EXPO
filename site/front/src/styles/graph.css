@@ -27,7 +27,9 @@ body, input, button, select, textarea {
 .historique-search {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30px; /* Plus d'espace en bas de la zone de recherche */
+  margin-bottom: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .historique-div-input {
@@ -52,6 +54,8 @@ body, input, button, select, textarea {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .historique-expo {
@@ -68,7 +72,7 @@ body, input, button, select, textarea {
   margin-bottom: 15px; /* Plus d'espace en bas du texte de l'exposition */
 }
 
-/* Style pour les détails de l'exposition */
+
 .historique-expo-content {
   display: flex;
   align-items: center;
@@ -93,4 +97,6 @@ body, input, button, select, textarea {
 
 .historique-canvas {
   margin-top: 50px;
+  padding-left: 30px;
+  padding-right: 30px;
 }
