@@ -170,30 +170,20 @@ const ListesExpos = () => {
                   <p className='acceuil-label-date'>Date: {expo.date_debut} - {expo.date_fin}</p>
                   <p className='acceuil-label-ville'>Ville: {expo.ville}</p>
                   <p className='acceuil-label-heure'>Horaire: {expo.heure_debut.slice(0, -3)} - {expo.heure_fin.slice(0, -3)}</p>
-                  <div className='acceuil-reserver' onClick={() => handleVoirPlusClick(expo)}>
-                    <Button color="success" variant="contained" onClick={() => handleVoirPlusClick(expo)}>Réserver</Button>
-                  </div>  
-                </div>
-
-                {expositionSelectionnee && expositionSelectionnee.id === expo.id && (
-                  <div className='acceuil-overlay'>
-                    <div className='acceuil-details'>
+                  {expositionSelectionnee && expositionSelectionnee.id === expo.id && (
+                    <div className='acceuil-overlay'>
                       <button onClick={handleFermerDetails}>Fermer</button>
-                      <center>
-                        <p className='acceuil-labell'>Nom: {expo.nom}</p>
-                        <p className='acceuil-labell'>Type: {expo.type}</p>
-                        <p className='acceuil-labella'>Quota: {expo.quota}</p>
-                        <p className='acceuil-labell'>Date: {expo.date_debut} - {expo.date_fin}</p>
-                        <p className='acceuil-labell'>Horaire: {expo.heure_debut} - {expo.heure_fin}</p>
-                        <p className='acceuil-labell'>Adresse: {expo.numero} {expo.rue} {expo.ville} {expo.cp}</p>
-                        <p className='acceuil-labell'>Coordonnee: {expo.latitude} {expo.longitude}</p>
-                        <Link to="/register_user">
-                          <Button color="success" variant="contained">Réserver</Button>
-                        </Link>
-                      </center>
+                      <p className='acceuil-labell'>Nom: {expo.nom}</p>
+                      <p className='acceuil-labell'>Type: {expo.type}</p>
+                      <p className='acceuil-labell'>Quota: {expo.quota}</p>
+                      <p className='acceuil-labell'>Date: {expo.date_debut} - {expo.date_fin}</p>
+                      <p className='acceuil-labell'>Horaire: {expo.heure_debut} - {expo.heure_fin}</p>
+                      <p className='acceuil-labell'>Adresse: {expo.numero} {expo.rue} {expo.ville} {expo.cp}</p>
+                      <p className='acceuil-labell'>Coordonnee: {expo.latitude} {expo.longitude}</p>
                     </div>
-                  </div>
-                )}
+                  )}
+                  <Button color="success" variant="contained" onClick={() => handleVoirPlusClick(expo)}>Details</Button>
+                </div>
               </div>
             </div>
           ))}
