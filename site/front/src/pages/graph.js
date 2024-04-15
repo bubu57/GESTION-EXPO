@@ -165,9 +165,11 @@ const ListesExpos = () => {
         <div class='historique-div-titre'><p class='historique-titre'>Expositions passées</p></div>
       </center>
 
+      <p className='historique-nb-expo'>Filtres</p>
+
       <div class='historique-search'>
         <div class='historique-div-input'>
-          <p>Filtrer par ville</p>
+          <p>Ville</p>
           <input
             class='historique-input'
             type="text"
@@ -178,7 +180,7 @@ const ListesExpos = () => {
         </div>
 
         <div class='historique-div-input'>
-          <p>Filtrer par date</p>
+          <p>Date</p>
           <input
             class='historique-input'
             type="text"
@@ -189,7 +191,7 @@ const ListesExpos = () => {
         </div>
 
         <div class='historique-div-input'>
-          <p>Filtrer par heure</p>
+          <p>Heure</p>
           <input
             class='historique-input'
             type="text"
