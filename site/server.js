@@ -34,15 +34,7 @@ const connecterBaseDonnees = () => {
   return connection;
 };
 
-const fermerConnexionBaseDonnees = (connection) => {
-  connection.end((err) => {
-    if (err) {
-      console.error('Erreur lors de la fermeture de la connexion à la base de données :', err);
-    } else {
-      console.log('Connexion à la base de données fermée avec succès');
-    }
-  });
-};
+let connection = connecterBaseDonnees();
 
 app.use(express.json())
 app.use(express.static('front/build'))
@@ -66,6 +58,7 @@ app.post('/api/login', (req, res) => {
       res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
     }
   });
+  
 });
 
 app.get('/api/app', (req, res) => {
@@ -95,6 +88,7 @@ app.get('/api/app', (req, res) => {
       });
     }
   });
+  
 });
 
 let quotanb = [];
@@ -113,6 +107,7 @@ app.post('/api/quota', (req, res) => {
       res.json({ success: true, message: 'ok' });
     }
   });
+  
 })
 
 app.get('/api/quotanb', (req, res) => {
@@ -175,6 +170,7 @@ app.post('/api/enregistrement', (req, res) => {
       });
     });
   });
+  
 });
 
 
@@ -216,6 +212,7 @@ app.post('/api/register_user', (req, res) => {
       });
     });
   });
+  
 });
 
 
@@ -233,6 +230,7 @@ app.get('/api/admins', (req, res) => {
     }
     res.json(results);
   });
+  
 });
 
 app.post('/api/admins', (req, res) => {
@@ -246,6 +244,7 @@ app.post('/api/admins', (req, res) => {
     }
     res.json({ success: true, message: 'Enregistrement réussi' });
   });
+  
 });
 
 app.post('/api/dadmins', (req, res) => {
@@ -259,6 +258,7 @@ app.post('/api/dadmins', (req, res) => {
     }
     res.json({ success: true, message: 'Enregistrement réussi' });
   });
+  
 });
 
 app.post('/api/dexpo', (req, res) => {
@@ -272,6 +272,7 @@ app.post('/api/dexpo', (req, res) => {
     }
     res.json({ success: true, message: 'Enregistrement réussi' });
   });
+  
 });
 
 
@@ -303,6 +304,7 @@ app.get('/api/map', (req, res) => {
       });
     }
   });
+  
 });
 
 
