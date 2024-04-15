@@ -52,7 +52,7 @@ body, input, button, select, textarea {
 /* Style pour le contenu des expositions */
 .historique-content {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 30px;
   padding-left: 4%;
   padding-right: 4%;
@@ -72,19 +72,16 @@ body, input, button, select, textarea {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 15px; /* Plus d'espace en bas du texte de l'exposition */
-  width: 70%;
 }
 
 
 .historique-expo-content {
   display: flex;
   align-items: center;
-  width: 70%;
 }
 
 .historique-expo-text {
   flex: 1;
-  width: 70%;
 }
 
 .historique-label {
