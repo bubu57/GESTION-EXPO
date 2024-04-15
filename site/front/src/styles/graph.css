@@ -12,13 +12,6 @@ body, input, button, select, textarea {
   font-family: 'Roboto', sans-serif; /* Police d'écriture */
 }
 
-/* Style pour le container principal */
-.historique-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
 /* Style pour le titre */
 .historique-div-titre {
   margin-bottom: 30px; /* Plus d'espace en bas du titre */
@@ -58,7 +51,12 @@ body, input, button, select, textarea {
 .historique-content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 30px; /* Plus d'espace entre les expositions */
+  gap: 30px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
 .historique-text-expo {
