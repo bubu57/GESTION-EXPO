@@ -157,7 +157,7 @@ const Login = () => {
         ))}
       </ul>
       <div className='but'>
-        <Link to="/register_expo"><Button variant="contained">Ajouter une expo</Button></Link>
+        <Link to="/register_expo"><Button color="success" variant="contained">Ajouter une expo</Button></Link>
       </div>
       <h2>Ajouter un nouvel Admin</h2>
       <div className='add-admin'>
