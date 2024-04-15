@@ -168,7 +168,6 @@ const ListesExpos = () => {
               <div className='acceuil-expo-content'>
                 <div className='acceuil-expo-text'>
                   <p className='acceuil-label-type'>Type: {expo.type}</p>
-                  <p className='acceuil-label-quota'>Quota: {expo.quota}</p>
                   <p className='acceuil-label-date'>Date: {expo.date_debut} - {expo.date_fin}</p>
                   <p className='acceuil-label-ville'>Ville: {expo.ville}</p>
                   <p className='acceuil-label-heure'>Horaire: {expo.heure_debut.slice(0, -3)} - {expo.heure_fin.slice(0, -3)}</p>
@@ -176,6 +175,7 @@ const ListesExpos = () => {
                     <div className='acceuil-overlay'>
                       <p className='acceuil-labell'>Adresse: {expo.numero} {expo.rue} {expo.ville} {expo.cp}</p>
                       <p className='acceuil-labell'>Coordonnee: {expo.latitude} {expo.longitude}</p>
+                      <p className='acceuil-label-quota'>Places: {expo.quota}</p>
                     </div>
                   )}
                   <Button color="success" variant="contained" onClick={() => handleVoirPlusClick(expo)}>Details</Button>
