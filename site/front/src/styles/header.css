@@ -37,6 +37,10 @@
   transition: visibility 0s, opacity 0.3s linear;
 }
 
+.button {
+  padding-top: 10px;
+}
+
 .menu-open .menu-items {
   visibility: visible;
   opacity: 1;
