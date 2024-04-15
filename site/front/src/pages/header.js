@@ -7,12 +7,12 @@ import "../styles/header.css";
 const Header = () =>  {
 
   return (
-    <header className='header'>
-      <div className='contt'>
-        <div className='logo'><img src={logo} alt="Logo"></img> </div>
-        <Link to="/"><p className='navlabel'>Accueil</p></Link>
-        <Link to="/historique"><p className='navlabel'>Historique</p></Link>
-        <Link to="/login"><Button color="success" variant="contained">Mon profil</Button></Link>
+    <header className='header-content'>
+      <div className='header-label-group'>
+        <div className='header-logo'><img className='header-img' src={logo} alt="Logo"></img> </div>
+        <Link to="/"><p className='header-label'>Accueil</p></Link>
+        <Link to="/historique"><p className='header-label'>Historique</p></Link>
+        <Link to="/login"><Button color="success" variant="contained">Admin</Button></Link>
       </div>
     </header>
   );
