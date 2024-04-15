@@ -25,6 +25,7 @@
 .menu-items {
   display: flex;
   flex-direction: column;
+  gap: 20px;
   position: absolute;
   top: 100%;
   right: 0;
@@ -35,10 +36,6 @@
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s, opacity 0.3s linear;
-}
-
-.button {
-  padding-top: 10px;
 }
 
 .menu-open .menu-items {
