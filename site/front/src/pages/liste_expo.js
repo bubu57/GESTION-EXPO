@@ -120,9 +120,13 @@ const ListesExpos = () => {
         <div className='acceuil-div-titre'><p className='acceuil-titre'>Listes des expositions</p></div>
       </center>
 
+      <center>
+        <div className='acceuil-div-titre'><p className='acceuil-filtre'>Filtres:</p></div>
+      </center>
+
       <div className='acceuil-search'>
         <div className='acceuil-div-input'>
-          <p>Filtrer par ville</p>
+          <p>Ville</p>
           <input
             className='acceuil-input'
             type="text"
@@ -133,7 +137,7 @@ const ListesExpos = () => {
         </div>
 
         <div className='acceuil-div-input'>
-          <p>Filtrer par date</p>
+          <p>Date</p>
           <input
             className='acceuil-input'
             type="text"
@@ -144,7 +148,7 @@ const ListesExpos = () => {
         </div>
 
         <div className='acceuil-div-input'>
-          <p>Filtrer par heure</p>
+          <p>Heure</p>
           <input
             className='acceuil-input'
             type="text"
