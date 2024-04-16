@@ -306,6 +306,7 @@ const EnregistrementExpo = () => {
           </center>
         </form>
       </div>
+      <Footer></Footer>
     </div>
   );
 };

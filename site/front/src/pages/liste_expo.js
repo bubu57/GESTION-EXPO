@@ -185,6 +185,7 @@ const ListesExpos = () => {
           ))}
         </div>
       </center>
+      <Footer></Footer>
     </div>
 
   );
