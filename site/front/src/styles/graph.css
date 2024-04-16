@@ -95,3 +95,7 @@ body, input, button, select, textarea {
   padding-left: 4%;
   padding-right: 4%;
 }
+
+.historique-maps {
+  padding-bottom: 100px;
+}
