@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-import Header from './header';
+import Header from './header.js';
+import Footer from './footer.js';
 import dayjs from 'dayjs';
 import "../styles/register_expo.css";
 import Button from '@mui/material/Button';

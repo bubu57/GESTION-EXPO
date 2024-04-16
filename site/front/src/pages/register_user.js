@@ -4,6 +4,7 @@ import QRCode from 'qrcode';
 import jsPDF from 'jspdf';
 import Button from '@mui/material/Button';
 import Header from './header.js';
+import Footer from './footer.js';
 import dayjs from 'dayjs';
 import "../styles/register_user.css";
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import Footer from './footer.js';
 import Header from './header.js'
 import Button from '@mui/material/Button';
 import "../styles/liste_expo.css";
