@@ -5,10 +5,11 @@ const Footer = () => {
 
   return (
     <footer className='footer-content'>
+      <div>
         <center><p className='footer-text'>Gestion-exposition.fr</p></center>
+      </div>
     </footer>
   );
 };
 
-export default Header;
-
+export default Footer;

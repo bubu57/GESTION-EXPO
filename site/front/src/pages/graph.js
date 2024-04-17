@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import Chart from 'chart.js/auto';
 import Header from './header.js'
+import Footer from './footer.js';
 import Button from '@mui/material/Button';
 import "../styles/graph.css";
 import GoogleMapReact from 'google-map-react';
@@ -234,6 +235,7 @@ const ListesExpos = () => {
             </GoogleMapReact>
         </div>
       </center>
+      <Footer></Footer>
     </div>
 
   );
