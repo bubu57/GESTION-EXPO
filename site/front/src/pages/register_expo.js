@@ -296,12 +296,12 @@ const EnregistrementExpo = () => {
                   disabled
                 />
               </div>
-              <p className='coordonnee' >* La lattitude et la longitude seront auto completere</p>
+              <p className='coordonnee' >* La lattitude et la longitude seront auto completées</p>
             </div>
           </div>
           <center>
             <div className='but'>
-              <Button variant="contained" type="submit" >Enregistrer</Button>
+              <Button color="success" variant="contained" type="submit" >Enregistrer</Button>
             </div>
           </center>
         </form>
