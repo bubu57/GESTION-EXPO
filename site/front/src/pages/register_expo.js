@@ -1,8 +1,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-import Header from './header.js';
-import Footer from './footer.js';
+import Header from './header';
 import dayjs from 'dayjs';
 import "../styles/register_expo.css";
 import Button from '@mui/material/Button';
@@ -297,17 +296,16 @@ const EnregistrementExpo = () => {
                   disabled
                 />
               </div>
-              <p className='coordonnee' >* La lattitude et la longitude seront auto completées</p>
+              <p className='coordonnee' >* La lattitude et la longitude seront auto completere</p>
             </div>
           </div>
           <center>
             <div className='but'>
-              <Button color="success" variant="contained" type="submit" >Enregistrer</Button>
+              <Button variant="contained" type="submit" >Enregistrer</Button>
             </div>
           </center>
         </form>
       </div>
-      <Footer></Footer>
     </div>
   );
 };
