@@ -235,7 +235,6 @@ const ListesExpos = () => {
             </GoogleMapReact>
         </div>
       </center>
-      <Footer></Footer>
     </div>
 
   );

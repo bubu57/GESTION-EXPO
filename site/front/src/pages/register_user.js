@@ -376,7 +376,6 @@ const FormEnregistrements = () => {
           </center>
         </form>
       </div>
-      <Footer></Footer>
     </div>
   );
 };
