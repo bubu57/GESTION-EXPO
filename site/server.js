@@ -178,6 +178,7 @@ app.post('/api/enregistrement', (req, res) => {
       });
     });
   });
+  connection.commit()
   fermerConnexionBaseDonnees(connection);
 });
 
@@ -220,6 +221,7 @@ app.post('/api/register_user', (req, res) => {
       });
     });
   });
+  connection.commit()
   fermerConnexionBaseDonnees(connection);
 });
 
