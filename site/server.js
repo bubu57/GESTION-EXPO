@@ -48,6 +48,8 @@ app.use(express.json())
 app.use(express.static('front/build'))
 app.use(bodyParser.json());
 
+let connection = connecterBaseDonnees();
+
 app.post('/api/login', (req, res) => {
   let connection = connecterBaseDonnees();
   const { username, password } = req.body;
