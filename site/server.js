@@ -48,8 +48,6 @@ app.use(express.json())
 app.use(express.static('front/build'))
 app.use(bodyParser.json());
 
-let connection = connecterBaseDonnees();
-
 app.post('/api/login', (req, res) => {
   let connection = connecterBaseDonnees();
   const { username, password } = req.body;
@@ -180,7 +178,6 @@ app.post('/api/enregistrement', (req, res) => {
       });
     });
   });
-  connection.commit()
   fermerConnexionBaseDonnees(connection);
 });
 
@@ -202,14 +199,14 @@ app.post('/api/register_user', (req, res) => {
       return;
     }
 
-    // Exécutez la requête 
-    connection.query(lieuQuery, (err, results) => {
-      if (err) {
-        console.error(err);
-        return connection.rollback(() => {
-          res.status(500).json({ error: 'Erreur lors de la création d\'un nouvelle user' });
-        });
-      }
+  // Exécutez la requête 
+  connection.query(lieuQuery, (err, results) => {
+    if (err) {
+      console.error(err);
+      return connection.rollback(() => {
+        res.status(500).json({ error: 'Erreur lors de la création d\'un nouvelle user' });
+      });
+    }
 
       // Commit si tout s'est bien passé
       connection.commit((err) => {
@@ -223,7 +220,6 @@ app.post('/api/register_user', (req, res) => {
       });
     });
   });
-  connection.commit()
   fermerConnexionBaseDonnees(connection);
 });
 
