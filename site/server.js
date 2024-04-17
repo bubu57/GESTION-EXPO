@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const mysql = require('mysql2/promise'); // Utilisation de mysql2/promise pour les promesses
+const mysql = require('mysql2'); // Utilisation de mysql2/promise pour les promesses
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
