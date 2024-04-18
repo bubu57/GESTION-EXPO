@@ -171,13 +171,16 @@ const FormEnregistrements = () => {
       // Contenu du document
       const selectedExpo = expositions.find(expo => expo.id === formData.id_expo);
       if (selectedExpo) {
-        const descriptionText = `Exposition: ${selectedExpo.nom}\n adresse: ${selectedExpo.lieu}`;
-        doc.text(descriptionText, 10, 20);
+        doc.setFontSize(15);
+        doc.text("Information de l'exposition:", 10, 30);
+        doc.setFontSize(12);
+        doc.text(`nom: ${selectedExpo.nom}`, 10, 40);
+        doc.text(`adresse: ${selectedExpo.lieu}`, 10, 45);
       }
-      const dateSelectionnee = `Date sélectionnée : ${dayjs(formData.date_debut).format('DD/MM/YYYY')}\n`;
-      doc.text(dateSelectionnee, 10, 70);
-      const nomPrenom = `Nom : ${formData.nom}\nPrénom : ${formData.prenom}\n\n`;
-      doc.text(nomPrenom, 10, 100);
+      doc.setFontSize(15);
+      doc.text("Vos informations:", 10, 55);
+      doc.setFontSize(12);
+      doc.text(`Nom: ${formData.nom}\nPrénom: ${formData.prenom}\ndate: ${dayjs(formData.date_debut).format('DD/MM/YYYY')}`, 10, 65);
       const textePresentation = "Veuillez vous présenter à l'entrée muni de votre QRCode";
       doc.text(textePresentation, 10, 130);
       
