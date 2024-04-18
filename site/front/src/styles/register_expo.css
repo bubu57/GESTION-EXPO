@@ -1,5 +1,5 @@
 .register_expo-container {
-  padding-top: 50px;
+  margin-top: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,7 +7,8 @@
 }
 
 .register_expo-form {
-  max-width: 600px;
+  margin-top: 50px;
+  max-width: 800px;
   padding: 20px;
   border-radius: 5px;
   background-color: #ffffff;

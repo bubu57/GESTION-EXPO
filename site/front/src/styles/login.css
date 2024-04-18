@@ -1,6 +1,5 @@
 /* login.css */
 
-
 .login-form {
   max-width: 400px;
   margin: 0 auto;
@@ -55,6 +54,7 @@ input[type="password"] {
   border-radius: 5px;
   background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
 }
 
 .login-admin-container h2 {
