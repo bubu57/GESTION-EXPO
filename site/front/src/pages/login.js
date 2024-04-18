@@ -123,7 +123,7 @@ const Login = () => {
       check = false;
     }
 
-    if (expoformData.heureDebut > expoformData.heureFin) {
+    if (expoformData.heure_debut > expoformData.heure_fin) {
       alert('L\'heure de fin doit être supérieure ou égale à l\'heure de départ.');
       check = false;
     }
@@ -373,8 +373,8 @@ const Login = () => {
                       className='register_expo-heure_debut'
                       type="time"
                       placeholder="Heure début"
-                      name="heureDebut"
-                      value={expoformData.heureDebut}
+                      name="heure_debut"
+                      value={expoformData.heure_debut}
                       onChange={expohandleChange}
                       required
                     />
@@ -385,8 +385,8 @@ const Login = () => {
                       className='register_expo-heure_fin'
                       type="time"
                       placeholder="Heure fin"
-                      name="heureFin"
-                      value={expoformData.heureFin}
+                      name="heure_fin"
+                      value={expoformData.heure_fin}
                       onChange={expohandleChange}
                       required
                     />
