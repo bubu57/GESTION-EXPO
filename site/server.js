@@ -34,8 +34,8 @@ const connecterBaseDonnees = () => {
   return connection;
 };
 
-const fermerConnexionBaseDonnees = (connection) => {
-  connection.end((err) => {
+const fermerConnexionBaseDonnees = (connectionn) => {
+  connectionn.end((err) => {
     if (err) {
       console.error('Erreur lors de la fermeture de la connexion à la base de données :', err);
     } else {
@@ -66,6 +66,7 @@ app.post('/api/login', (req, res) => {
       res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
     }
   });
+  fermerConnexionBaseDonnees(connection);
 });
 
 app.get('/api/app', (req, res) => {
@@ -95,6 +96,7 @@ app.get('/api/app', (req, res) => {
       });
     }
   });
+  fermerConnexionBaseDonnees(connection);
 });
 
 let quotanb = [];
@@ -113,6 +115,7 @@ app.post('/api/quota', (req, res) => {
       res.json({ success: true, message: 'ok' });
     }
   });
+  fermerConnexionBaseDonnees(connection);
 })
 
 app.get('/api/quotanb', (req, res) => {
@@ -175,7 +178,8 @@ app.post('/api/enregistrement', (req, res) => {
       });
     });
   });
-  connection.commit()
+  connection.commit();
+  fermerConnexionBaseDonnees(connection);
 });
 
 
@@ -217,7 +221,8 @@ app.post('/api/register_user', (req, res) => {
       });
     });
   });
-  connection.commit()
+  connection.commit();
+  fermerConnexionBaseDonnees(connection);
 });
 
 
@@ -235,6 +240,7 @@ app.get('/api/admins', (req, res) => {
     }
     res.json(results);
   });
+  fermerConnexionBaseDonnees(connection);
 });
 
 app.post('/api/admins', (req, res) => {
@@ -248,6 +254,7 @@ app.post('/api/admins', (req, res) => {
     }
     res.json({ success: true, message: 'Enregistrement réussi' });
   });
+  fermerConnexionBaseDonnees(connection);
 });
 
 app.post('/api/dadmins', (req, res) => {
@@ -261,6 +268,7 @@ app.post('/api/dadmins', (req, res) => {
     }
     res.json({ success: true, message: 'Enregistrement réussi' });
   });
+  fermerConnexionBaseDonnees(connection);
 });
 
 app.post('/api/dexpo', (req, res) => {
@@ -274,6 +282,7 @@ app.post('/api/dexpo', (req, res) => {
     }
     res.json({ success: true, message: 'Enregistrement réussi' });
   });
+  fermerConnexionBaseDonnees(connection);
 });
 
 
@@ -305,6 +314,7 @@ app.get('/api/map', (req, res) => {
       });
     }
   });
+  fermerConnexionBaseDonnees(connection);
 });
 
 
