@@ -128,6 +128,8 @@ const Login = () => {
       check = false;
     }
 
+    console.log(expoformData);
+
     if (check) {
       fetch('/api/enregistrement', {
         method: 'POST',
