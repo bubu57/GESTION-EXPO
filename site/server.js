@@ -20,29 +20,17 @@ const connecterBaseDonnees = () => {
     database: process.env.DB_NAME,
     port: process.env.DB_PORT,
   });
-
-  connection.connect((err) => {
-    if (err) {
-      console.error('Erreur de connexion à la base de données:', err);
-      // Réessayer la connexion après un délai
-      setTimeout(connecterBaseDonnees, 5000); // Réessayer la connexion après 5 secondes
-    } else {
-      console.log('Connexion à la base de données réussie');
-    }
-  });
-
-  return connection;
 };
 
-const fermerConnexionBaseDonnees = (connectionn) => {
-  connectionn.end((err) => {
-    if (err) {
-      console.error('Erreur lors de la fermeture de la connexion à la base de données :', err);
-    } else {
-      console.log('Connexion à la base de données fermée avec succès');
-    }
-  });
-};
+connection.connect((err) => {
+  if (err) {
+    console.error('Erreur de connexion à la base de données:', err);
+    // Réessayer la connexion après un délai
+    setTimeout(connecterBaseDonnees, 5000); // Réessayer la connexion après 5 secondes
+  } else {
+    console.log('Connexion à la base de données réussie');
+  }
+});
 
 app.use(express.json())
 app.use(express.static('front/build'))
@@ -126,7 +114,7 @@ app.post('/api/enregistrement', (req, res) => {
   let connection = connecterBaseDonnees();
   const lieuQuery = `
   INSERT INTO Lieu (numero, rue, code_postal, ville, latitude, longitude)
-  VALUES ("${req.body.numero}", "${req.body.rue}", "${req.body.code_postale}", "${req.body.ville}", "${req.body.latitude}", "${req.body.longitude}");
+  VALUES ("${req.body.numero}", "${req.body.rue}", "${req.body.code_postal}", "${req.body.ville}", "${req.body.latitude}", "${req.body.longitude}");
   `;
 
   const expoQuery = `
@@ -316,3 +304,17 @@ app.get('/*', (_, res) => {
 app.listen(PORT, () => {
   console.log(`server lancé sur le port: ${PORT}`);
 })
+
+
+// Gestion de la fermeture de l'application
+process.on('SIGINT', () => {
+  console.log('Arrêt du serveur, fermeture de la connexion à la base de données...');
+  connection.end((err) => {
+    if (err) {
+      console.error('Erreur lors de la fermeture de la connexion à la base de données :', err);
+    } else {
+      console.log('Connexion à la base de données fermée avec succès');
+    }
+    process.exit(0); // Arrêtez le processus Node.js
+  });
+});

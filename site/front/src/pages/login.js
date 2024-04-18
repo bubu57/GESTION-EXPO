@@ -26,7 +26,7 @@ const Login = () => {
     numero: '',
     rue: '',
     ville: '',
-    code_postale: '',
+    code_postal: '',
     heureDebut: '',
     heureFin: '',
     lieu: '',
@@ -103,7 +103,7 @@ const Login = () => {
         numero: splitedAdresse[0].long_name,
         rue: splitedAdresse[1].long_name,
         ville: splitedAdresse[2].long_name,
-        codePostal: splitedAdresse[6].long_name,
+        code_postal: splitedAdresse[6].long_name,
         lieu: adresse,
       });
 
