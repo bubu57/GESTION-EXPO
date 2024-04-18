@@ -141,6 +141,7 @@ const Login = () => {
       .then(response => response.json())
       .then(data => {
         console.log('Réponse du serveur:', data);
+        fetchExpositions();
         alert('L\'exposition a bien été enregistrée');
       })
       .catch(error => {
