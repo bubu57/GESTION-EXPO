@@ -26,7 +26,7 @@ const Login = () => {
     numero: '',
     rue: '',
     ville: '',
-    codePostal: '',
+    code_postale: '',
     heureDebut: '',
     heureFin: '',
     lieu: '',
