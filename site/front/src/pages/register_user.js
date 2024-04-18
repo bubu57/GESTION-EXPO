@@ -158,7 +158,7 @@ const FormEnregistrements = () => {
       logoImg.src = logo;
       
       // En-tête
-      doc.addImage(logoImg, 'PNG', 10, 10, 20, 20); // Ajout du logo
+      doc.addImage(logoImg, 'svg', 10, 10, 20, 20); // Ajout du logo
       doc.setFontSize(18);
       doc.text("Votre Réservation", 40, 20); // Titre
       
