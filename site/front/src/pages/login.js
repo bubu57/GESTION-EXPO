@@ -128,8 +128,6 @@ const Login = () => {
       check = false;
     }
 
-    console
-
     if (check) {
       fetch('/api/enregistrement', {
         method: 'POST',
