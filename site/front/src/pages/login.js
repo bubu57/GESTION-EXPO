@@ -309,9 +309,6 @@ const Login = () => {
                   </li>
                 ))}
               </ul>
-              <div className='login-but'>
-                <Link to="/register_expo"><Button color="success" variant="contained">Ajouter une expo</Button></Link>
-              </div>
               <h2>Ajouter un nouvel Admin</h2>
               <div className='login-add-admin'>
                 <input type="text" name="username" placeholder="Nom d'utilisateur" value={newAdminData.username} onChange={handleeChange} />
