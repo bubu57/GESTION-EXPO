@@ -139,7 +139,7 @@ const Login = () => {
           <ul>
             {admins.map(admin => (
               <li key={admin.id}>
-                <span>{admin.User}</span>
+                <span>{admin.user}</span>
                 <Button variant="text" size="small" color="error" onClick={() => handleDeleteAdmin(admin.id)}>X</Button>
               </li>
             ))}
