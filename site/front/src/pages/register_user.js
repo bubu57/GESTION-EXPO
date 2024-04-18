@@ -174,8 +174,8 @@ const FormEnregistrements = () => {
       const dateSelectionnee = `Bonjour ${formData.prenom} ${formData.nom},\n\ngestion exposition vous donne rendez vous à ${nomexpo} le ${dayjs(formData.date_debut).format('DD/MM/YYYY')} à ${formData.heure}\nau ${Adresse}`;
       doc.text(dateSelectionnee, 10, 50);
 
-      const mess = `Veuillez vous présenter a l'entrée avec votre QR-Code, une plage de 10 min vous est accorder pour scanner votre QR-Code`;
-      doc.text(mess, 10, 80);
+      const mess = `Veuillez vous présenter a l'entrée avec votre QR-Code, une plage de 10 min vous est accorder pour\nscanner votre QR-Code`;
+      doc.text(mess, 10, 100);
       
       // Ajoutez une image QR code
       doc.addImage(qrCodeDataURL, 'PNG', 10, 120, 50, 50); // Positionnez le QR code
