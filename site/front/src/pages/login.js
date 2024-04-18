@@ -17,8 +17,8 @@ const Login = () => {
   // ------------------------- RGISTER EXPO ----------------------------
   const [expoformData, exposetFormData] = useState({
     nom: '',
-    dateDebut: '',
-    dateFin: '',
+    date_debut: '',
+    date_fin: '',
     quota: '',
     type: '',
     latitude: '',
@@ -27,8 +27,8 @@ const Login = () => {
     rue: '',
     ville: '',
     code_postal: '',
-    heureDebut: '',
-    heureFin: '',
+    heure_debut: '',
+    heure_fin: '',
     lieu: '',
     estimation: ''
   });
@@ -127,6 +127,8 @@ const Login = () => {
       alert('L\'heure de fin doit être supérieure ou égale à l\'heure de départ.');
       check = false;
     }
+
+    console
 
     if (check) {
       fetch('/api/enregistrement', {
