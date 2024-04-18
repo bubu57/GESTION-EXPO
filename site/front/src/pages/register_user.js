@@ -172,9 +172,8 @@ const FormEnregistrements = () => {
       const selectedExpo = expositions.find(expo => expo.id === formData.id_expo);
       if (selectedExpo) {
         doc.setFontSize(12);
-        const nomExposition = `Nom de l'exposition : ${selectedExpo.nom}\n`;
-        const lieu = `Lieu : ${selectedExpo.lieu}\n\n`;
-        doc.text(`${nomExposition} ${lieu}`, 10, 40); // Contenu principal
+        const nomExposition = `Nom de l'exposition: ${selectedExpo.nom}`;
+        doc.text(nomExposition, 10, 40); // Contenu principal
       }
       
       // Ajoutez une image QR code
