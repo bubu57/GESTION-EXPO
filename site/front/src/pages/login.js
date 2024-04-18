@@ -118,7 +118,7 @@ const Login = () => {
     
     let check = true;
 
-    if (expoformData.dateDebut > expoformData.dateFin) {
+    if (expoformData.date_debut > expoformData.date_fin) {
       alert('La date de fin doit être supérieure ou égale à la date de départ.');
       check = false;
     }
@@ -336,7 +336,7 @@ const Login = () => {
                       type="text"
                       placeholder="Paris exposition"
                       name="nom"
-                      value={formData.nom}
+                      value={expoformData.nom}
                       onChange={expohandleChange}
                       required
                     />
@@ -347,8 +347,8 @@ const Login = () => {
                       className='register_expo-date_debut'
                       type="date"
                       placeholder="jj-mm-aaaa"
-                      name="dateDebut"
-                      value={formData.dateDebut}
+                      name="date_debut"
+                      value={expoformData.date_debut}
                       onChange={expohandleChange}
                       min = {convertDateToISO(`${datenow}`)}
                       required
@@ -360,8 +360,8 @@ const Login = () => {
                       className='register_expo-date_fin'
                       type="date"
                       placeholder="jj-mm-aaaa"
-                      name="dateFin"
-                      value={formData.dateFin}
+                      name="date_fin"
+                      value={expoformData.date_fin}
                       onChange={expohandleChange}
                       min = {convertDateToISO(`${datenow}`)}
                       required
@@ -374,7 +374,7 @@ const Login = () => {
                       type="time"
                       placeholder="Heure début"
                       name="heureDebut"
-                      value={formData.heureDebut}
+                      value={expoformData.heureDebut}
                       onChange={expohandleChange}
                       required
                     />
@@ -386,7 +386,7 @@ const Login = () => {
                       type="time"
                       placeholder="Heure fin"
                       name="heureFin"
-                      value={formData.heureFin}
+                      value={expoformData.heureFin}
                       onChange={expohandleChange}
                       required
                     />
@@ -398,7 +398,7 @@ const Login = () => {
                       type="number"
                       placeholder="30"
                       name="estimation"
-                      value={formData.estimation}
+                      value={expoformData.estimation}
                       onChange={expohandleChange}
                       required
                     />
@@ -410,7 +410,7 @@ const Login = () => {
                       type="text"
                       placeholder="200"
                       name="quota"
-                      value={formData.quota}
+                      value={expoformData.quota}
                       onChange={expohandleChange}
                       required
                     />
@@ -422,7 +422,7 @@ const Login = () => {
                       type="text"
                       placeholder="Art"
                       name="type"
-                      value={formData.type}
+                      value={expoformData.type}
                       onChange={expohandleChange}
                       required
                     />
@@ -435,7 +435,7 @@ const Login = () => {
                       type="text"
                       placeholder="13 bis rue de Paris, 54000 Paris"
                       name="lieu"
-                      value={formData.lieu}
+                      value={expoformData.lieu}
                       onChange={expohandleChange}
                       required
                     />
@@ -456,7 +456,7 @@ const Login = () => {
                       type="text"
                       placeholder="48.6896627"
                       name="latitude"
-                      value={formData.latitude}
+                      value={expoformData.latitude}
                       onChange={expohandleChange}
                       disabled
                     />
@@ -468,7 +468,7 @@ const Login = () => {
                       type="text"
                       placeholder="6.1880792"
                       name="longitude"
-                      value={formData.longitude}
+                      value={expoformData.longitude}
                       onChange={expohandleChange}
                       disabled
                     />
