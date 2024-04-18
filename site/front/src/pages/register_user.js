@@ -4,7 +4,7 @@ import QRCode from 'qrcode';
 import jsPDF from 'jspdf';
 import Button from '@mui/material/Button';
 import Header from './header.js';
-import Footer from './footer.js';
+import CryptoJS from 'crypto-js';
 import dayjs from 'dayjs';
 import "../styles/register_user.css";
 
@@ -124,8 +124,15 @@ const FormEnregistrements = () => {
       // Création d'une chaîne de données à partir des informations du formulaire
       const qrCodeData = `${formData.prenom};${formData.nom};${dayjs(formData.date_debut).format('YYYY-MM-DD')};${formData.id_expo};${formData.heure}`;
   
-      // Génération du QR code avec les données originales et la signature
-      const qrCodeDataURL = await QRCode.toDataURL(qrCodeData);
+      // Clé de chiffrement
+      const key = CryptoJS.enc.Utf8.parse('1234567890123456');
+      // IV (Initialisation Vector)
+      const iv = CryptoJS.enc.Utf8.parse('1234567890123456');
+      // Chiffrement AES
+      const encrypted = CryptoJS.AES.encrypt(qrCodeData, key, { iv: iv });
+  
+      // Génération du QR code avec les données chiffrées
+      const qrCodeDataURL = await QRCode.toDataURL(encrypted.toString());
   
       return qrCodeDataURL;
     } catch (error) {
