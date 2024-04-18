@@ -35,7 +35,6 @@ app.use(express.static('front/build'))
 app.use(bodyParser.json());
 
 app.post('/api/login', (req, res) => {
-  let connection = connecterBaseDonnees();
   const { username, password } = req.body;
   const sql = 'SELECT * FROM Admin WHERE User = ? AND Password = ?';
   connection.query(sql, [username, password], (err, results) => {
@@ -55,7 +54,6 @@ app.post('/api/login', (req, res) => {
 });
 
 app.get('/api/app', (req, res) => {
-  let connection = connecterBaseDonnees();
   const today = new Date().toISOString().split('T')[0];
   const expositionQuery = `SELECT *, DATE_FORMAT(date_debut, '%d/%m/%Y') AS date_debut, DATE_FORMAT(date_fin, '%d/%m/%Y') AS date_fin FROM Exposition WHERE date_fin >= '${today}'`;
   const lieuQuery = 'SELECT * FROM Lieu';
@@ -86,7 +84,6 @@ app.get('/api/app', (req, res) => {
 let quotanb = [];
 
 app.post('/api/quota', (req, res) => {
-  let connection = connecterBaseDonnees();
   console.log(req.body);
   const expositionQuery = `SELECT * FROM Visiteur WHERE id_expo = ${req.body.id_expo} AND date_entree = '${req.body.date_debut}';`;
 
@@ -109,7 +106,6 @@ app.get('/api/quotanb', (req, res) => {
 
 app.post('/api/enregistrement', (req, res) => {
 
-  let connection = connecterBaseDonnees();
   const lieuQuery = `
   INSERT INTO Lieu (numero, rue, code_postal, ville, latitude, longitude)
   VALUES ("${req.body.numero}", "${req.body.rue}", "${req.body.code_postal}", "${req.body.ville}", "${req.body.latitude}", "${req.body.longitude}");
@@ -168,7 +164,6 @@ app.post('/api/enregistrement', (req, res) => {
 
 app.post('/api/register_user', (req, res) => {
 
-  let connection = connecterBaseDonnees();
   const lieuQuery = `
   INSERT INTO Visiteur (nom, prenom, email, id_expo, date_entree, heure)
   VALUES ("${req.body.nom}", "${req.body.prenom}", "${req.body.mail}", "${req.body.id_expo}", "${req.body.date_debut}", "${req.body.heure}");
@@ -211,7 +206,6 @@ app.post('/api/register_user', (req, res) => {
 
 
 app.get('/api/admins', (req, res) => {
-  let connection = connecterBaseDonnees();
   const query = 'SELECT * FROM Admin';
   connection.query(query, (error, results) => {
     if (error) {
@@ -224,7 +218,6 @@ app.get('/api/admins', (req, res) => {
 });
 
 app.post('/api/admins', (req, res) => {
-  let connection = connecterBaseDonnees();
   const query = `INSERT INTO Admin (User, Password) VALUES ('${req.body.username}', '${req.body.password}')`;
   connection.query(query, (error, results) => {
     if (error) {
@@ -237,7 +230,6 @@ app.post('/api/admins', (req, res) => {
 });
 
 app.post('/api/dadmins', (req, res) => {
-  let connection = connecterBaseDonnees();
   const query = `DELETE FROM Admin WHERE id = ${req.body.id}`;
   connection.query(query, (error, results) => {
     if (error) {
@@ -250,7 +242,6 @@ app.post('/api/dadmins', (req, res) => {
 });
 
 app.post('/api/dexpo', (req, res) => {
-  let connection = connecterBaseDonnees();
   const query = `DELETE Exposition, Lieu FROM Exposition INNER JOIN Lieu ON Exposition.id = Lieu.id WHERE Exposition.id = ${req.body.id}`;
   connection.query(query, (error, results) => {
     if (error) {
@@ -265,7 +256,6 @@ app.post('/api/dexpo', (req, res) => {
 
 
 app.get('/api/map', (req, res) => {
-  let connection = connecterBaseDonnees();
   const today = new Date().toISOString().split('T')[0];
   const expositionQuery = `SELECT *, DATE_FORMAT(date_debut, '%d/%m/%Y') AS date_debut, DATE_FORMAT(date_fin, '%d/%m/%Y') AS date_fin FROM Exposition WHERE date_fin <= '${today}'`;
   const lieuQuery = 'SELECT * FROM Lieu';
