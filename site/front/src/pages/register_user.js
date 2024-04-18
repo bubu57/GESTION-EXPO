@@ -171,14 +171,15 @@ const FormEnregistrements = () => {
       // Contenu du document
       const selectedExpo = expositions.find(expo => expo.id === formData.id_expo);
       if (selectedExpo) {
-        const nomExposition = `Nom de l'exposition : ${selectedExpo.nom}\n`;
-        const dateDebut = `Date de début : ${selectedExpo.date_debut}\n`;
-        const dateFin = `Date de fin : ${selectedExpo.date_fin}\n`;
-        const lieu = `Lieu : ${selectedExpo.lieu}\n\n`;
-        const descriptionText = nomExposition + dateDebut + dateFin + lieu;
-        doc.setFontSize(12);
-        doc.text(descriptionText, 10, 40); // Contenu principal
+        const descriptionText = `Exposition: ${selectedExpo.nom}\n adresse: ${selectedExpo.lieu}`;
+        doc.text(descriptionText, 10, 20);
       }
+      const dateSelectionnee = `Date sélectionnée : ${dayjs(formData.date_debut).format('DD/MM/YYYY')}\n`;
+      doc.text(dateSelectionnee, 10, 70);
+      const nomPrenom = `Nom : ${formData.nom}\nPrénom : ${formData.prenom}\n\n`;
+      doc.text(nomPrenom, 10, 100);
+      const textePresentation = "Veuillez vous présenter à l'entrée muni de votre QRCode";
+      doc.text(textePresentation, 10, 130);
       
       // Ajoutez une image QR code
       doc.addImage(qrCodeDataURL, 'PNG', 10, 60, 50, 50); // Positionnez le QR code
