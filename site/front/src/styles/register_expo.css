@@ -1,4 +1,5 @@
 .register_expo-container {
+  padding-top: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,6 +13,7 @@
   background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding-bottom: 100px;
+  text-align: left;
 }
 
 .register_expo-title {
