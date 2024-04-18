@@ -167,14 +167,14 @@ const FormEnregistrements = () => {
       const pageNumber = doc.internal.getNumberOfPages();
       doc.setFontSize(10);
       doc.text(footerText, 105, 280); // Positionnez le texte du pied de page
-      
-      // Contenu du document
-      const selectedExpo = expositions.find(expo => expo.id === formData.id_expo);
-      if (selectedExpo) {
-        doc.setFontSize(12);
-        const nomExposition = `Nom de l'exposition: ${selectedExpo.nom}`;
-        doc.text(nomExposition, 10, 40); // Contenu principal
-      }
+
+      doc.setFontSize(12);
+      const dateSelectionnee = `Date sélectionnée : ${dayjs(formData.date_debut).format('DD/MM/YYYY')}\n`;
+      doc.text(dateSelectionnee, 10, 40);
+      const nomPrenom = `Nom : ${formData.nom}\nPrénom : ${formData.prenom}\n\n`;
+      doc.text(nomPrenom, 10, 45);
+      const textePresentation = "Veuillez vous présenter à l'entrée muni de votre QRCode";
+      doc.text(textePresentation, 10, 50);
       
       // Ajoutez une image QR code
       doc.addImage(qrCodeDataURL, 'PNG', 10, 60, 50, 50); // Positionnez le QR code
