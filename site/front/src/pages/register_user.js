@@ -168,13 +168,9 @@ const FormEnregistrements = () => {
       doc.setFontSize(10);
       doc.text(footerText, 105, 280); // Positionnez le texte du pied de page
 
-      const selectedExpo = expositions.find(expo => expo.id === formData.id_expo);
-      if (selectedExpo) {
-        doc.setFontSize(12);
-        const dateSelectionnee = `Bonjour ${formData.prenom} ${formData.prenom}, gestion exposition vous donne rendez vous à ${selectedExpo.nom}\n le ${dayjs(formData.date_debut).format('DD/MM/YYYY')} a ${formData.heure} au ${selectedExpo.lieu}\n`;
-        console.log(dateSelectionnee);
-        doc.text(dateSelectionnee, 10, 40);
-      }
+      doc.setFontSize(12);
+      const dateSelectionnee = `Bonjour ${formData.prenom} ${formData.prenom}, gestion exposition vous donne rendez vous à votre exposition le ${dayjs(formData.date_debut).format('DD/MM/YYYY')} a ${formData.heure}\n`;
+      doc.text(dateSelectionnee, 10, 40);
       
       // Ajoutez une image QR code
       doc.addImage(qrCodeDataURL, 'PNG', 10, 120, 50, 50); // Positionnez le QR code
