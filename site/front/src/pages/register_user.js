@@ -160,7 +160,6 @@ const FormEnregistrements = () => {
         doc.text(descriptionText, 10, 20);
       }
       doc.addImage()
-      doc.addImage(logo, 'svg', 10, 60, 50, 50);
       const dateSelectionnee = `Date sélectionnée : ${dayjs(formData.date_debut).format('DD/MM/YYYY')}\n`;
       doc.text(dateSelectionnee, 10, 70);
       const nomPrenom = `Nom : ${formData.nom}\nPrénom : ${formData.prenom}\n\n`;
@@ -168,6 +167,7 @@ const FormEnregistrements = () => {
       const textePresentation = "Veuillez vous présenter à l'entrée muni de votre QRCode";
       doc.text(textePresentation, 10, 130);
       doc.addImage(qrCodeDataURL, 'PNG', 10, 150, 50, 50);
+      doc.addImage(logo, 'svg', 60, 200, 50, 50);
       doc.save('gestion-exposition.pdf');
 
       console.log('QR code sauvegardé en PDF');
