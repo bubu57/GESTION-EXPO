@@ -106,7 +106,7 @@ const FormEnregistrements = () => {
       setHeuref(selectedExpo.heure_fin);
       setEstimation(selectedExpo.estimation);
       setNomexpo(selectedExpo.nom);
-      setAdresse(`${selectedExpo.numero} ${selectedExpo.rue} ${selectedExpo.ville} ${selectedExpo.code_postal}`)
+      setAdresse(`${selectedExpo.numero} ${selectedExpo.rue} ${selectedExpo.ville} ${selectedExpo.cp}`)
       setReqData({
         date_debut: selectedExpo.date_debut,
         id_expo: selectedExpo.id
@@ -171,7 +171,7 @@ const FormEnregistrements = () => {
       doc.text(footerText, 105, 280); // Positionnez le texte du pied de page
 
       doc.setFontSize(12);
-      const dateSelectionnee = `Bonjour ${formData.prenom} ${formData.prenom},\n gestion exposition vous donne rendez vous à ${nomexpo} le ${dayjs(formData.date_debut).format('DD/MM/YYYY')} à ${formData.heure}\n au ${Adresse}`;
+      const dateSelectionnee = `Bonjour ${formData.prenom} ${formData.nom},\n\gestion exposition vous donne rendez vous à ${nomexpo} le ${dayjs(formData.date_debut).format('DD/MM/YYYY')} à ${formData.heure}\n au ${Adresse}`;
       doc.text(dateSelectionnee, 10, 50);
       
       // Ajoutez une image QR code
