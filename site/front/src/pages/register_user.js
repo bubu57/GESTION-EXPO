@@ -149,7 +149,26 @@ const FormEnregistrements = () => {
         console.error('Aucune donnée d exposition disponible.');
         return;
       }
-      const doc = new jsPDF();
+      
+      // Création d'un nouveau document PDF
+      const doc = new jsPDF('p', 'mm', 'a4');
+      
+      // Logo
+      const logoImg = new Image();
+      logoImg.src = logo;
+      
+      // En-tête
+      doc.addImage(logoImg, 'PNG', 10, 10, 20, 20); // Ajout du logo
+      doc.setFontSize(18);
+      doc.text("Votre Réservation", 40, 20); // Titre
+      
+      // Pied de page
+      const footerText = "© 2024 Votre Entreprise. Tous droits réservés.";
+      const pageNumber = doc.internal.getNumberOfPages();
+      doc.setFontSize(10);
+      doc.text(footerText, 105, 280); // Positionnez le texte du pied de page
+      
+      // Contenu du document
       const selectedExpo = expositions.find(expo => expo.id === formData.id_expo);
       if (selectedExpo) {
         const nomExposition = `Nom de l'exposition : ${selectedExpo.nom}\n`;
@@ -157,19 +176,16 @@ const FormEnregistrements = () => {
         const dateFin = `Date de fin : ${selectedExpo.date_fin}\n`;
         const lieu = `Lieu : ${selectedExpo.lieu}\n\n`;
         const descriptionText = nomExposition + dateDebut + dateFin + lieu;
-        doc.text(descriptionText, 10, 20);
+        doc.setFontSize(12);
+        doc.text(descriptionText, 10, 40); // Contenu principal
       }
-      doc.addImage()
-      const dateSelectionnee = `Date sélectionnée : ${dayjs(formData.date_debut).format('DD/MM/YYYY')}\n`;
-      doc.text(dateSelectionnee, 10, 70);
-      const nomPrenom = `Nom : ${formData.nom}\nPrénom : ${formData.prenom}\n\n`;
-      doc.text(nomPrenom, 10, 100);
-      const textePresentation = "Veuillez vous présenter à l'entrée muni de votre QRCode";
-      doc.text(textePresentation, 10, 130);
-      doc.addImage(qrCodeDataURL, 'PNG', 10, 150, 50, 50);
-      doc.addImage(logo, 'svg', 60, 200, 50, 50);
+      
+      // Ajoutez une image QR code
+      doc.addImage(qrCodeDataURL, 'PNG', 10, 60, 50, 50); // Positionnez le QR code
+      
+      // Enregistrer le document PDF
       doc.save('gestion-exposition.pdf');
-
+      
       console.log('QR code sauvegardé en PDF');
     } catch (error) {
       console.error('Erreur lors de la sauvegarde du QR code en PDF:', error);
