@@ -97,7 +97,7 @@ const Login = () => {
 
       // Mettre à jour les champs 'latitude' et 'longitude' dans l'état local
       exposetFormData({
-        ...formData,
+        ...expoformData,
         latitude: location.lat,
         longitude: location.lng,
         numero: splitedAdresse[0].long_name,
