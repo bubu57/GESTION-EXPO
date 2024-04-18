@@ -7,6 +7,7 @@ import Header from './header.js';
 import CryptoJS from 'crypto-js';
 import dayjs from 'dayjs';
 import "../styles/register_user.css";
+import logo from '../img/logo.svg';
 
 const FormEnregistrements = () => {
   const [expositions, setExpositions] = useState([]);
@@ -158,6 +159,8 @@ const FormEnregistrements = () => {
         const descriptionText = nomExposition + dateDebut + dateFin + lieu;
         doc.text(descriptionText, 10, 20);
       }
+      doc.addImage()
+      doc.addImage(logo, 'svg', 10, 10, 50, 50);
       const dateSelectionnee = `Date sélectionnée : ${dayjs(formData.date_debut).format('DD/MM/YYYY')}\n`;
       doc.text(dateSelectionnee, 10, 70);
       const nomPrenom = `Nom : ${formData.nom}\nPrénom : ${formData.prenom}\n\n`;
