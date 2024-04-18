@@ -88,7 +88,7 @@ app.get('/api/app', (req, res) => {
           // Combine les données exposition et lieu
           const combinedResults = expositionResults.map(exposition => {
             const lieu = lieuResults.find(l => l.id === exposition.id);
-            return { ...exposition, ville: lieu.ville, numero: lieu.numero, rue: lieu.rue, cp: lieu.code_postale, latitude: lieu.latitude, longitude: lieu.longitude };
+            return { ...exposition, ville: lieu.ville, numero: lieu.numero, rue: lieu.rue, cp: lieu.code_postal, latitude: lieu.latitude, longitude: lieu.longitude };
           });
 
           res.json(combinedResults);
