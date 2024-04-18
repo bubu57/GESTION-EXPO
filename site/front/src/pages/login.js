@@ -288,203 +288,206 @@ const Login = () => {
       )}
 
       {isAdminVisible && (
-        <div>
-        <div className='login-admin-container'>
-          <h2>Liste des Admins</h2>
-          <ul>
-            {admins.map(admin => (
-              <li key={admin.id}>
-                <span>{admin.user}</span>
-                <Button variant="text" size="small" color="error" onClick={() => handleDeleteAdmin(admin.id)}>X</Button>
-              </li>
-            ))}
-          </ul>
-          <h2>Liste des Expositions</h2>
-          <ul>
-            {expositions.map(expo => (
-              <li key={expo.id}>
-                <span>{expo.nom}</span>
-                <Button variant="text" size="small" color="error" onClick={() => handleDeleteExpo(expo.id)}>X</Button>
-              </li>
-            ))}
-          </ul>
-          <div className='login-but'>
-            <Link to="/register_expo"><Button color="success" variant="contained">Ajouter une expo</Button></Link>
-          </div>
-          <h2>Ajouter un nouvel Admin</h2>
-          <div className='login-add-admin'>
-            <input type="text" name="username" placeholder="Nom d'utilisateur" value={newAdminData.username} onChange={handleeChange} />
-            <input type="password" name="password" placeholder="Mot de passe" value={newAdminData.password} onChange={handleeChange} />
-            <div className='login-but'>
-              <Button color="success" variant="contained" onClick={handleAddAdmin}>Ajouter</Button>
+        <center>
+          <div>
+            <div className='login-admin-container'>
+              <h2>Liste des Admins</h2>
+              <ul>
+                {admins.map(admin => (
+                  <li key={admin.id}>
+                    <span>{admin.user}</span>
+                    <Button variant="text" size="small" color="error" onClick={() => handleDeleteAdmin(admin.id)}>X</Button>
+                  </li>
+                ))}
+              </ul>
+              <h2>Liste des Expositions</h2>
+              <ul>
+                {expositions.map(expo => (
+                  <li key={expo.id}>
+                    <span>{expo.nom}</span>
+                    <Button variant="text" size="small" color="error" onClick={() => handleDeleteExpo(expo.id)}>X</Button>
+                  </li>
+                ))}
+              </ul>
+              <div className='login-but'>
+                <Link to="/register_expo"><Button color="success" variant="contained">Ajouter une expo</Button></Link>
+              </div>
+              <h2>Ajouter un nouvel Admin</h2>
+              <div className='login-add-admin'>
+                <input type="text" name="username" placeholder="Nom d'utilisateur" value={newAdminData.username} onChange={handleeChange} />
+                <input type="password" name="password" placeholder="Mot de passe" value={newAdminData.password} onChange={handleeChange} />
+                <div className='login-but'>
+                  <Button color="success" variant="contained" onClick={handleAddAdmin}>Ajouter</Button>
+                </div>
+              </div>
             </div>
+
+
+
+
+
+
+            <div className='register_expo-form'>
+            <center><p className='register_expo-title'>Enregistrement exposition</p></center>
+            <form onSubmit={expohandleSubmit}>
+              <div className='register_expo-form-block'>
+                <div className='register_expo-form-input'>
+                  <div className='register_expo-div-input'>
+                    <p className='register_expo-label'>Nom exposition</p>
+                    <input
+                      className='register_expo-nom'
+                      type="text"
+                      placeholder="Paris exposition"
+                      name="nom"
+                      value={formData.nom}
+                      onChange={expohandleChange}
+                      required
+                    />
+                  </div>
+                  <div className='register_expo-div-input'>
+                    <p className='register_expo-label'>Date début</p>
+                    <input
+                      className='register_expo-date_debut'
+                      type="date"
+                      placeholder="jj-mm-aaaa"
+                      name="dateDebut"
+                      value={formData.dateDebut}
+                      onChange={expohandleChange}
+                      min = {convertDateToISO(`${datenow}`)}
+                      required
+                    />
+                  </div>
+                  <div className='register_expo-div-input'>
+                    <p className='register_expo-label'>Date fin</p>
+                    <input
+                      className='register_expo-date_fin'
+                      type="date"
+                      placeholder="jj-mm-aaaa"
+                      name="dateFin"
+                      value={formData.dateFin}
+                      onChange={expohandleChange}
+                      min = {convertDateToISO(`${datenow}`)}
+                      required
+                    />
+                  </div>
+                  <div className='register_expo-div-input'>
+                    <p className='register_expo-label'>Heure début</p>
+                    <input
+                      className='register_expo-heure_debut'
+                      type="time"
+                      placeholder="Heure début"
+                      name="heureDebut"
+                      value={formData.heureDebut}
+                      onChange={expohandleChange}
+                      required
+                    />
+                  </div>
+                  <div className='register_expo-div-input'>
+                    <p className='register_expo-label'>Heure fin</p>
+                    <input
+                      className='register_expo-heure_fin'
+                      type="time"
+                      placeholder="Heure fin"
+                      name="heureFin"
+                      value={formData.heureFin}
+                      onChange={expohandleChange}
+                      required
+                    />
+                  </div>
+                  <div className='register_expo-div-input'>
+                    <p className='register_expo-label'>Estimation durée en min</p>
+                    <input
+                      className='register_expo-estimation'
+                      type="number"
+                      placeholder="30"
+                      name="estimation"
+                      value={formData.estimation}
+                      onChange={expohandleChange}
+                      required
+                    />
+                  </div>
+                  <div className='register_expo-div-input'>
+                    <p className='register_expo-label'>Quota</p>
+                    <input
+                      className='register_expo-quota'
+                      type="text"
+                      placeholder="200"
+                      name="quota"
+                      value={formData.quota}
+                      onChange={expohandleChange}
+                      required
+                    />
+                  </div>
+                  <div className='register_expo-div-input'>
+                    <p className='register_expo-label'>Type</p>
+                    <input
+                      className='register_expo-type'
+                      type="text"
+                      placeholder="Art"
+                      name="type"
+                      value={formData.type}
+                      onChange={expohandleChange}
+                      required
+                    />
+                  </div>
+                  <div className='register_expo-div-input'>
+                    <p className='register_expo-label'>Adresse</p>
+                    <input
+                      id='lieuInput'
+                      className='register_expo-lieu'
+                      type="text"
+                      placeholder="13 bis rue de Paris, 54000 Paris"
+                      name="lieu"
+                      value={formData.lieu}
+                      onChange={expohandleChange}
+                      required
+                    />
+                    {suggestions.length > 0 && (
+                      <ul className="register_expo-suggestions-list">
+                        {suggestions.map((suggestion, index) => (
+                          <li key={index} onClick={() => handleSuggestionClick(suggestion)}>
+                            {suggestion}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                  <div className='register_expo-div-input'>
+                    <p className='register_expo-label'>Latitude</p>
+                    <input
+                      className='register_expo-latitude'
+                      type="text"
+                      placeholder="48.6896627"
+                      name="latitude"
+                      value={formData.latitude}
+                      onChange={expohandleChange}
+                      disabled
+                    />
+                  </div>
+                  <div className='register_expo-div-input'>
+                    <p className='register_expo-label'>Longitude</p>
+                    <input
+                      className='register_expo-longitude'
+                      type="text"
+                      placeholder="6.1880792"
+                      name="longitude"
+                      value={formData.longitude}
+                      onChange={expohandleChange}
+                      disabled
+                    />
+                  </div>
+                  <p className='register_expo-coordonnee' >* La latitude et la longitude seront automatiquement complétées</p>
+                </div>
+              </div>
+              <center>
+                <div className='register_expo-but'>
+                  <Button color="success" variant="contained" type="submit" >Enregistrer</Button>
+                </div>
+              </center>
+            </form>
           </div>
         </div>
-
-
-        
-
-
-        <div className='register_expo-form'>
-        <center><p className='register_expo-title'>Enregistrement exposition</p></center>
-        <form onSubmit={expohandleSubmit}>
-          <div className='register_expo-form-block'>
-            <div className='register_expo-form-input'>
-              <div className='register_expo-div-input'>
-                <p className='register_expo-label'>Nom exposition</p>
-                <input
-                  className='register_expo-nom'
-                  type="text"
-                  placeholder="Paris exposition"
-                  name="nom"
-                  value={formData.nom}
-                  onChange={expohandleChange}
-                  required
-                />
-              </div>
-              <div className='register_expo-div-input'>
-                <p className='register_expo-label'>Date début</p>
-                <input
-                  className='register_expo-date_debut'
-                  type="date"
-                  placeholder="jj-mm-aaaa"
-                  name="dateDebut"
-                  value={formData.dateDebut}
-                  onChange={expohandleChange}
-                  min = {convertDateToISO(`${datenow}`)}
-                  required
-                />
-              </div>
-              <div className='register_expo-div-input'>
-                <p className='register_expo-label'>Date fin</p>
-                <input
-                  className='register_expo-date_fin'
-                  type="date"
-                  placeholder="jj-mm-aaaa"
-                  name="dateFin"
-                  value={formData.dateFin}
-                  onChange={expohandleChange}
-                  min = {convertDateToISO(`${datenow}`)}
-                  required
-                />
-              </div>
-              <div className='register_expo-div-input'>
-                <p className='register_expo-label'>Heure début</p>
-                <input
-                  className='register_expo-heure_debut'
-                  type="time"
-                  placeholder="Heure début"
-                  name="heureDebut"
-                  value={formData.heureDebut}
-                  onChange={expohandleChange}
-                  required
-                />
-              </div>
-              <div className='register_expo-div-input'>
-                <p className='register_expo-label'>Heure fin</p>
-                <input
-                  className='register_expo-heure_fin'
-                  type="time"
-                  placeholder="Heure fin"
-                  name="heureFin"
-                  value={formData.heureFin}
-                  onChange={expohandleChange}
-                  required
-                />
-              </div>
-              <div className='register_expo-div-input'>
-                <p className='register_expo-label'>Estimation durée en min</p>
-                <input
-                  className='register_expo-estimation'
-                  type="number"
-                  placeholder="30"
-                  name="estimation"
-                  value={formData.estimation}
-                  onChange={expohandleChange}
-                  required
-                />
-              </div>
-              <div className='register_expo-div-input'>
-                <p className='register_expo-label'>Quota</p>
-                <input
-                  className='register_expo-quota'
-                  type="text"
-                  placeholder="200"
-                  name="quota"
-                  value={formData.quota}
-                  onChange={expohandleChange}
-                  required
-                />
-              </div>
-              <div className='register_expo-div-input'>
-                <p className='register_expo-label'>Type</p>
-                <input
-                  className='register_expo-type'
-                  type="text"
-                  placeholder="Art"
-                  name="type"
-                  value={formData.type}
-                  onChange={expohandleChange}
-                  required
-                />
-              </div>
-              <div className='register_expo-div-input'>
-                <p className='register_expo-label'>Adresse</p>
-                <input
-                  id='lieuInput'
-                  className='register_expo-lieu'
-                  type="text"
-                  placeholder="13 bis rue de Paris, 54000 Paris"
-                  name="lieu"
-                  value={formData.lieu}
-                  onChange={expohandleChange}
-                  required
-                />
-                {suggestions.length > 0 && (
-                  <ul className="register_expo-suggestions-list">
-                    {suggestions.map((suggestion, index) => (
-                      <li key={index} onClick={() => handleSuggestionClick(suggestion)}>
-                        {suggestion}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-              <div className='register_expo-div-input'>
-                <p className='register_expo-label'>Latitude</p>
-                <input
-                  className='register_expo-latitude'
-                  type="text"
-                  placeholder="48.6896627"
-                  name="latitude"
-                  value={formData.latitude}
-                  onChange={expohandleChange}
-                  disabled
-                />
-              </div>
-              <div className='register_expo-div-input'>
-                <p className='register_expo-label'>Longitude</p>
-                <input
-                  className='register_expo-longitude'
-                  type="text"
-                  placeholder="6.1880792"
-                  name="longitude"
-                  value={formData.longitude}
-                  onChange={expohandleChange}
-                  disabled
-                />
-              </div>
-              <p className='register_expo-coordonnee' >* La latitude et la longitude seront automatiquement complétées</p>
-            </div>
-          </div>
-          <center>
-            <div className='register_expo-but'>
-              <Button color="success" variant="contained" type="submit" >Enregistrer</Button>
-            </div>
-          </center>
-        </form>
-      </div>
-        </div>
+        </center>
       )}
     </div>
   );
