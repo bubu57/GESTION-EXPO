@@ -7,7 +7,7 @@ import Header from './header.js';
 import CryptoJS from 'crypto-js';
 import dayjs from 'dayjs';
 import "../styles/register_user.css";
-import logo from '../img/logo.svg';
+import logo from '../img/logo.png';
 
 const FormEnregistrements = () => {
   const [expositions, setExpositions] = useState([]);
@@ -158,7 +158,7 @@ const FormEnregistrements = () => {
       logoImg.src = logo;
       
       // En-tête
-      doc.addImage(logoImg, 'svg', 10, 10, 20, 20); // Ajout du logo
+      doc.addImage(logoImg, 'png', 10, 10, 20, 20); // Ajout du logo
       doc.setFontSize(18);
       doc.text("Votre Réservation", 40, 20); // Titre
       
