@@ -1,45 +1,99 @@
-.form {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #ffffff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 50px;
-    padding-bottom: 100px;
-  }
-  
-  .title {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .form-block {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .div-input {
-    width: 100%;
-  }
-  
-  input[type="text"],
-  input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    outline: none;
-    font-size: 16px;
-  }
-  
-  .but {
-    margin-top: 20px;
-  }
-  
-  .error {
-    color: #ff0000;
-    text-align: center;
-  }
-  
+/* login.css */
+
+.login-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 50px;
+}
+
+.login-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.login-form-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-div-input {
+  width: 100%;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  font-size: 16px;
+}
+
+.login-but {
+  margin-top: 20px;
+}
+
+.login-error {
+  color: #ff0000;
+  text-align: center;
+}
+
+/* Styles for admin container */
+
+.login-admin-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 50px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-admin-container h2 {
+  font-size: 24px;
+  margin-top: 20px;
+}
+
+.login-admin-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.login-admin-container li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.login-admin-container span {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.login-add-admin {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.login-add-admin input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  font-size: 16px;
+}
+
+.login-add-admin .login-but {
+  flex-shrink: 0;
+  margin-top: 0;
+}
