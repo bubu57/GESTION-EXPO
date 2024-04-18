@@ -172,6 +172,7 @@ const FormEnregistrements = () => {
       if (selectedExpo) {
         doc.setFontSize(12);
         const dateSelectionnee = `Bonjour ${formData.prenom} ${formData.prenom}, gestion exposition vous donne rendez vous à ${selectedExpo.nom}\n le ${dayjs(formData.date_debut).format('DD/MM/YYYY')} a ${formData.heure} au ${selectedExpo.lieu}\n`;
+        console.log(dateSelectionnee);
         doc.text(dateSelectionnee, 10, 40);
       }
       
