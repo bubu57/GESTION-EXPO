@@ -292,17 +292,3 @@ app.get('/*', (_, res) => {
 app.listen(PORT, () => {
   console.log(`server lancé sur le port: ${PORT}`);
 })
-
-
-// Gestion de la fermeture de l'application
-process.on('SIGINT', () => {
-  console.log('Arrêt du serveur, fermeture de la connexion à la base de données...');
-  connection.end((err) => {
-    if (err) {
-      console.error('Erreur lors de la fermeture de la connexion à la base de données :', err);
-    } else {
-      console.log('Connexion à la base de données fermée avec succès');
-    }
-    process.exit(0); // Arrêtez le processus Node.js
-  });
-});
