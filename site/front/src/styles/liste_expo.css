@@ -88,12 +88,15 @@ body {
 }
 
 .acceuil-maps-link {
+  font-size: 16px;
+  color: #2e7d32;
+}
+
+.acceuil-maps-box {
   margin-top: 5px;
   margin-bottom: 10px;
   padding-top: 5px;
   padding-bottom: 10px;
-  font-size: 16px;
-  color: #2e7d32;
 }
 
 .acceuil-label-type,
