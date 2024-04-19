@@ -171,7 +171,7 @@ const FormEnregistrements = () => {
       doc.text(footerText, 105, 280); // Positionnez le texte du pied de page
 
       doc.setFontSize(12);
-      const dateSelectionnee = `Bonjour ${formData.prenom} ${formData.nom},\n\ngestion exposition vous donne rendez vous à ${nomexpo} le ${dayjs(formData.date_debut).format('DD/MM/YYYY')} à ${formData.heure}\nau ${Adresse}`;
+      const dateSelectionnee = `Bonjour ${formData.prenom} ${formData.nom},\n\ngestion exposition vous donne rendez vous à ${nomexpo}\nle ${dayjs(formData.date_debut).format('DD/MM/YYYY')} à ${formData.heure}\nau ${Adresse}`;
       doc.text(dateSelectionnee, 10, 50);
 
       const mess = `Veuillez vous présenter a l'entrée avec votre QR-Code, une plage de 10 min vous est accorder pour\nscanner votre QR-Code`;
