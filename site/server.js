@@ -5,11 +5,9 @@ require('dotenv').config()
 const app = express();
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
-const multer = require('multer');
 
 // recuperation du port via .env sinon utilise le port 5000
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 const SECRET_KEY = 'secretkey123';
 
 const connection = mysql.createConnection({
@@ -24,7 +22,7 @@ connection.connect((err) => {
   if (err) {
     console.error('Erreur de connexion à la base de données:', err);
     // Réessayer la connexion après un délai
-    setTimeout(connecterBaseDonnees, 5000); // Réessayer la connexion après 5 secondes
+    setTimeout(connecterBaseDonnees, 7000); // Réessayer la connexion après 5 secondes
   } else {
     console.log('Connexion à la base de données réussie');
   }
@@ -157,7 +155,6 @@ app.post('/api/enregistrement', (req, res) => {
       });
     });
   });
-  connection.commit()
 });
 
 
@@ -198,7 +195,6 @@ app.post('/api/register_user', (req, res) => {
       });
     });
   });
-  connection.commit()
 });
 
 
@@ -282,8 +278,6 @@ app.get('/api/map', (req, res) => {
     }
   });
 });
-
-
 
 app.get('/*', (_, res) => {
   res.sendFile(path.join(__dirname, '/front/build/index.html'));
