@@ -32,6 +32,8 @@ const connecterBaseDonnees = () => {
   return connection;
 };
 
+let connection = connecterBaseDonnees();
+
 const enddb = async (connection) => {
   console.log('Arrêt du serveur, fermeture de la connexion à la base de données...');
   connection.end((err) => {
@@ -68,7 +70,7 @@ app.post('/api/login', (req, res) => {
       res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
     }
   });
-  enddb(connection);
+  //enddb(connection);
 });
 
 app.get('/api/app', (req, res) => {
@@ -98,7 +100,7 @@ app.get('/api/app', (req, res) => {
       });
     }
   });
-  enddb(connection);
+  //enddb(connection);
 });
 
 let quotanb = [];
@@ -117,7 +119,7 @@ app.post('/api/quota', (req, res) => {
       res.json({ success: true, message: 'ok' });
     }
   });
-  enddb(connection);
+  //enddb(connection);
 })
 
 app.get('/api/quotanb', (req, res) => {
@@ -180,7 +182,7 @@ app.post('/api/enregistrement', (req, res) => {
       });
     });
   });
-  enddb(connection);
+  //enddb(connection);
 });
 
 
@@ -222,7 +224,7 @@ app.post('/api/register_user', (req, res) => {
       });
     });
   });
-  enddb(connection);
+  //enddb(connection);
 });
 
 
@@ -240,7 +242,7 @@ app.get('/api/admins', (req, res) => {
     }
     res.json(results);
   });
-  enddb(connection);
+  //enddb(connection);
 });
 
 app.post('/api/admins', (req, res) => {
@@ -254,7 +256,7 @@ app.post('/api/admins', (req, res) => {
     }
     res.json({ success: true, message: 'Enregistrement réussi' });
   });
-  enddb(connection);
+  //enddb(connection);
 });
 
 app.post('/api/dadmins', (req, res) => {
@@ -268,7 +270,7 @@ app.post('/api/dadmins', (req, res) => {
     }
     res.json({ success: true, message: 'Enregistrement réussi' });
   });
-  enddb(connection);
+  //enddb(connection);
 });
 
 app.post('/api/dexpo', (req, res) => {
@@ -282,7 +284,7 @@ app.post('/api/dexpo', (req, res) => {
     }
     res.json({ success: true, message: 'Enregistrement réussi' });
   });
-  enddb(connection);
+  //enddb(connection);
 });
 
 
@@ -314,7 +316,7 @@ app.get('/api/map', (req, res) => {
       });
     }
   });
-  enddb(connection);
+  //enddb(connection);
 });
 
 app.get('/*', (_, res) => {
