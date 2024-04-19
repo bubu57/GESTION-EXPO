@@ -57,7 +57,7 @@ body {
 /* Content styles */
 .acceuil-content {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
   gap: 20px;
   padding-left: 4%;
   padding-right: 4%;
@@ -120,4 +120,10 @@ body {
 
 .acceuil-details button {
   margin-top: 20px;
+}
+
+@media screen and (max-width: 700px){
+  .acceuil-content {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
 }
