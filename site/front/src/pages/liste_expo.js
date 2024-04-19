@@ -177,6 +177,7 @@ const ListesExpos = () => {
                       <p className='acceuil-labell'>Adresse: {expo.numero} {expo.rue} {expo.ville} {expo.cp}</p>
                       <p className='acceuil-labell'>Coordonnee: {expo.latitude} {expo.longitude}</p>
                       <p className='acceuil-label-quota'>Places: {expo.quota}</p>
+                      <a className='acceuil-maps-link' href={"https://www.google.fr/maps/place/" + expo.latitude + "," + expo.longitude}>Voir sur maps</a>
                     </div>
                   )}
                   <Button color="success" variant="contained" onClick={() => handleVoirPlusClick(expo)}>Details</Button>
