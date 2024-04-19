@@ -10,29 +10,48 @@ const jwt = require('jsonwebtoken');
 const PORT = process.env.PORT;
 const SECRET_KEY = 'secretkey123';
 
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
-});
+const connectdb = async () => {
+  const connection = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT,
+  });
+  
+  connection.connect((err) => {
+    if (err) {
+      console.error('Erreur de connexion à la base de données:', err);
+      // Réessayer la connexion après un délai
+      setTimeout(connecterBaseDonnees, 7000); // Réessayer la connexion après 5 secondes
+    } else {
+      console.log('Connexion à la base de données réussie');
+    }
+  });
 
-connection.connect((err) => {
-  if (err) {
-    console.error('Erreur de connexion à la base de données:', err);
-    // Réessayer la connexion après un délai
-    setTimeout(connecterBaseDonnees, 7000); // Réessayer la connexion après 5 secondes
-  } else {
-    console.log('Connexion à la base de données réussie');
-  }
-});
+  return connection
+}
+
+const enddb = async (connection) => {
+  console.log('Arrêt du serveur, fermeture de la connexion à la base de données...');
+  connection.end((err) => {
+    if (err) {
+      console.error('Erreur lors de la fermeture de la connexion à la base de données :', err);
+    } else {
+      console.log('Connexion à la base de données fermée avec succès');
+    }
+    process.exit(0); // Arrêtez le processus Node.js
+  });
+}
+
+
 
 app.use(express.json())
 app.use(express.static('front/build'))
 app.use(bodyParser.json());
 
 app.post('/api/login', (req, res) => {
+  const connection = connectdb();
   const { username, password } = req.body;
   const sql = 'SELECT * FROM Admin WHERE User = ? AND Password = ?';
   connection.query(sql, [username, password], (err, results) => {
@@ -49,9 +68,11 @@ app.post('/api/login', (req, res) => {
       res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
     }
   });
+  enddb(connection);
 });
 
 app.get('/api/app', (req, res) => {
+  const connection = connectdb();
   const today = new Date().toISOString().split('T')[0];
   const expositionQuery = `SELECT *, DATE_FORMAT(date_debut, '%d/%m/%Y') AS date_debut, DATE_FORMAT(date_fin, '%d/%m/%Y') AS date_fin FROM Exposition WHERE date_fin >= '${today}'`;
   const lieuQuery = 'SELECT * FROM Lieu';
@@ -77,11 +98,13 @@ app.get('/api/app', (req, res) => {
       });
     }
   });
+  enddb(connection);
 });
 
 let quotanb = [];
 
 app.post('/api/quota', (req, res) => {
+  const connection = connectdb();
   console.log(req.body);
   const expositionQuery = `SELECT * FROM Visiteur WHERE id_expo = ${req.body.id_expo} AND date_entree = '${req.body.date_debut}';`;
 
@@ -94,6 +117,7 @@ app.post('/api/quota', (req, res) => {
       res.json({ success: true, message: 'ok' });
     }
   });
+  enddb(connection);
 })
 
 app.get('/api/quotanb', (req, res) => {
@@ -103,6 +127,7 @@ app.get('/api/quotanb', (req, res) => {
 
 
 app.post('/api/enregistrement', (req, res) => {
+  const connection = connectdb();
 
   const lieuQuery = `
   INSERT INTO Lieu (numero, rue, code_postal, ville, latitude, longitude)
@@ -155,11 +180,13 @@ app.post('/api/enregistrement', (req, res) => {
       });
     });
   });
+  enddb(connection);
 });
 
 
 
 app.post('/api/register_user', (req, res) => {
+  const connection = connectdb();
 
   const lieuQuery = `
   INSERT INTO Visiteur (nom, prenom, email, id_expo, date_entree, heure)
@@ -195,6 +222,7 @@ app.post('/api/register_user', (req, res) => {
       });
     });
   });
+  enddb(connection);
 });
 
 
@@ -202,6 +230,7 @@ app.post('/api/register_user', (req, res) => {
 
 
 app.get('/api/admins', (req, res) => {
+  const connection = connectdb();
   const query = 'SELECT * FROM Admin';
   connection.query(query, (error, results) => {
     if (error) {
@@ -211,9 +240,11 @@ app.get('/api/admins', (req, res) => {
     }
     res.json(results);
   });
+  enddb(connection);
 });
 
 app.post('/api/admins', (req, res) => {
+  const connection = connectdb();
   const query = `INSERT INTO Admin (User, Password) VALUES ('${req.body.username}', '${req.body.password}')`;
   connection.query(query, (error, results) => {
     if (error) {
@@ -223,9 +254,11 @@ app.post('/api/admins', (req, res) => {
     }
     res.json({ success: true, message: 'Enregistrement réussi' });
   });
+  enddb(connection);
 });
 
 app.post('/api/dadmins', (req, res) => {
+  const connection = connectdb();
   const query = `DELETE FROM Admin WHERE id = ${req.body.id}`;
   connection.query(query, (error, results) => {
     if (error) {
@@ -235,9 +268,11 @@ app.post('/api/dadmins', (req, res) => {
     }
     res.json({ success: true, message: 'Enregistrement réussi' });
   });
+  enddb(connection);
 });
 
 app.post('/api/dexpo', (req, res) => {
+  const connection = connectdb();
   const query = `DELETE Exposition, Lieu FROM Exposition INNER JOIN Lieu ON Exposition.id = Lieu.id WHERE Exposition.id = ${req.body.id}`;
   connection.query(query, (error, results) => {
     if (error) {
@@ -247,11 +282,13 @@ app.post('/api/dexpo', (req, res) => {
     }
     res.json({ success: true, message: 'Enregistrement réussi' });
   });
+  enddb(connection);
 });
 
 
 
 app.get('/api/map', (req, res) => {
+  const connection = connectdb();
   const today = new Date().toISOString().split('T')[0];
   const expositionQuery = `SELECT *, DATE_FORMAT(date_debut, '%d/%m/%Y') AS date_debut, DATE_FORMAT(date_fin, '%d/%m/%Y') AS date_fin FROM Exposition WHERE date_fin <= '${today}'`;
   const lieuQuery = 'SELECT * FROM Lieu';
@@ -277,6 +314,7 @@ app.get('/api/map', (req, res) => {
       });
     }
   });
+  enddb(connection);
 });
 
 app.get('/*', (_, res) => {
