@@ -180,7 +180,9 @@ const ListesExpos = () => {
                       <div className='acceuil-maps-box'><a className='acceuil-maps-link' href={"https://www.google.fr/maps/place/" + expo.latitude + "," + expo.longitude}>Voir sur maps</a></div>
                     </div>
                   )}
-                  <Button color="success" variant="contained" onClick={() => handleVoirPlusClick(expo)}>Details</Button>
+                  <div className='acceuil-boutton-box'>
+                    <Button color="success" variant="contained" onClick={() => handleVoirPlusClick(expo)}>Details</Button>
+                  </div>
                 </div>
               </div>
             </div>
