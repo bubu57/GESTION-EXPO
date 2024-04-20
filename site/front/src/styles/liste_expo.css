@@ -152,4 +152,12 @@ body {
   .acceuil-box-flex {
     display: block;
   }
+
+  .acceuil-expo-box, .acceuil-expo-content, .acceuil-boutton-box {
+    margin-left: 4%;
+  }
+
+  .acceuil-boutton-box {
+    margin-bottom: 20px;
+  }
 }
