@@ -41,50 +41,27 @@ const FormEnregistrements = ({expositionf}) => {
     id_expo: '',
   });
 
-  useEffect(() => {
-    axios.get('/api/app')
-      .then(response => {
-        setExpositions(response.data);
-
-
-        console.log(expositionf.id);
-        const selectedExpoId = expositionf;
-        let selectedExpo;
-        for (let i = 0; i < expositions.length; i++) {
-          if (expositions[i].id == selectedExpoId) {
-            selectedExpo = expositions[i];
-            break;
-          }
-        }
-        console.log(selectedExpo.id)
-        setQuota(selectedExpo.quota);
-        setdateDebut(selectedExpo.date_debut);
-        console.log(convertDateToISO(dateDebut));
-        if (new Date(`${convertDateToISO(dateDebut)}`) > new Date(`${dayjs().format('YYYY-MM-DD')}`)) {
-          setdateDebut(dayjs().format('DD/MM/YYYY'))
-        }
-        setdateFin(selectedExpo.date_fin);
-        setHeured(selectedExpo.heure_debut);
-        setHeuref(selectedExpo.heure_fin);
-        setEstimation(selectedExpo.estimation);
-        setNomexpo(selectedExpo.nom);
-        setAdresse(`${selectedExpo.numero} ${selectedExpo.rue} ${selectedExpo.ville} ${selectedExpo.cp}`)
-        setReqData({
-          date_debut: selectedExpo.date_debut,
-          id_expo: selectedExpo.id
-        })
-        setFormData({
-          ...formData,
-          id_expo: selectedExpo.id,
-        });
-
-
-
-      })
-      .catch(error => {
-        console.error('Erreur lors de la récupération des expositions:', error);
-      });
-  }, []);
+  console.log(expositionf.id)
+  setQuota(expositionf.quota);
+  setdateDebut(expositionf.date_debut);
+  console.log(convertDateToISO(dateDebut));
+  if (new Date(`${convertDateToISO(dateDebut)}`) > new Date(`${dayjs().format('YYYY-MM-DD')}`)) {
+    setdateDebut(dayjs().format('DD/MM/YYYY'))
+  }
+  setdateFin(expositionf.date_fin);
+  setHeured(expositionf.heure_debut);
+  setHeuref(expositionf.heure_fin);
+  setEstimation(expositionf.estimation);
+  setNomexpo(expositionf.nom);
+  setAdresse(`${expositionf.numero} ${expositionf.rue} ${expositionf.ville} ${expositionf.cp}`)
+  setReqData({
+    date_debut: expositionf.date_debut,
+    id_expo: expositionf.id
+  })
+  setFormData({
+    ...formData,
+    id_expo: expositionf.id,
+  });
 
 
 
@@ -257,8 +234,8 @@ const FormEnregistrements = ({expositionf}) => {
 
   const sendMail = async () => {
     const { nom, prenom, mail, subject, date_debut, id_expo, heure } = formData;
-    const selectedExpo = expositions.find(expo => expo.id === id_expo);
-    console.log(selectedExpo); // Ajout du console.log pour vérifier les données d'exposition
+    const expositionf = expositions.find(expo => expo.id === id_expo);
+    console.log(expositionf); // Ajout du console.log pour vérifier les données d'exposition
     const qrCodeDataURL = await generateQRCode(formData); // Générer le QR code
   
     const formDataWithQRCode = {
