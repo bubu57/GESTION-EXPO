@@ -56,7 +56,7 @@ const FormEnregistrements = ({expositionf}) => {
             break;
           }
         }
-        console.log(selectedExpo)
+        console.log(selectedExpo.id)
         setQuota(selectedExpo.quota);
         setdateDebut(selectedExpo.date_debut);
         console.log(convertDateToISO(dateDebut));
