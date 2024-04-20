@@ -161,11 +161,12 @@ const ListesExpos = () => {
           />
         </div>
       </div>
-      <center>
         <div className='acceuil-content'>
           {expositionsFiltrees.map((expo, index) => (
             <div key={index} className='acceuil-expo'>
-              <center><p className='acceuil-text-expo'>{expo.nom}</p></center>
+              <div className='acceuil-expo-box'>
+                <p className='acceuil-text-expo'>{expo.nom}</p>
+              </div>
               <div className='acceuil-expo-content'>
                 <div className='acceuil-expo-text'>
                   <p className='acceuil-label-type'>Type: {expo.type}</p>
@@ -188,7 +189,6 @@ const ListesExpos = () => {
             </div>
           ))}
         </div>
-      </center>
     </div>
 
   );
