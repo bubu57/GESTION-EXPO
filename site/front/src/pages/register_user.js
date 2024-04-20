@@ -11,7 +11,7 @@ import logo from '../img/logo.png';
 
 const FormEnregistrements = ({expositionf}) => {
   const [expositions, setExpositions] = useState([]);
-  const [dat, setdat] = useState(True);
+  const [dat, setdat] = useState(true);
   const [quota, setQuota] = useState([]);
   const [dateDebut, setdateDebut] = useState("01/01/2024");
   const [dateFin, setdateFin] = useState("2024/01/02");
@@ -65,6 +65,7 @@ const FormEnregistrements = ({expositionf}) => {
       ...formData,
       id_expo: expositionf.id,
     });
+    setdat(false)
   }
 
   if (dat == true) {
