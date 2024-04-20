@@ -104,7 +104,7 @@ const FormEnregistrements = ({selectedExpo}) => {
       })
       setFormData({
         ...formData,
-        id_expo: selectedExpoId,
+        id_expo: selectedExpo.id,
       });
     }
   };
