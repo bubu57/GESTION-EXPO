@@ -165,29 +165,31 @@ const ListesExpos = () => {
         <div className='acceuil-content'>
           {expositionsFiltrees.map((expo, index) => (
             <div key={index} className='acceuil-expo'>
-              <div className='acceuil-expo-box'>
-                <p className='acceuil-text-expo'>{expo.nom}</p>
-              </div>
-              <div className='acceuil-expo-content'>
-                <div className='acceuil-expo-text'>
-                  <p className='acceuil-label-type'>Type: {expo.type}</p>
-                  <p className='acceuil-label-date'>Date: {expo.date_debut} - {expo.date_fin}</p>
-                  <p className='acceuil-label-ville'>Ville: {expo.ville}</p>
-                  <p className='acceuil-label-heure'>Horaire: {expo.heure_debut.slice(0, -3)} - {expo.heure_fin.slice(0, -3)}</p>
-                  <p className='acceuil-labell'>Adresse: {expo.numero} {expo.rue} {expo.ville} {expo.cp}</p>
-                  <p className='acceuil-labell'>Coordonnee: {expo.latitude} {expo.longitude}</p>
-                  <p className='acceuil-label-quota'>Places: {expo.quota}</p>
-                  <div className='acceuil-maps-box'><a className='acceuil-maps-link' href={"https://www.google.fr/maps/place/" + expo.latitude + "," + expo.longitude}>Voir sur maps</a></div>
-                  {expositionSelectionnee && expositionSelectionnee.id === expo.id && (
-                    <div className='acceuil-overlay'>
-                    <Form></Form>
-                    </div>
-                  )}
+              <div className='acceuil-box-flex'>
+                <div className='acceuil-expo-box'>
+                  <p className='acceuil-text-expo'>{expo.nom}</p>
+                </div>
+                <div className='acceuil-expo-content'>
+                  <div className='acceuil-expo-text'>
+                    <p className='acceuil-label-type'>Type: {expo.type}</p>
+                    <p className='acceuil-label-date'>Date: {expo.date_debut} - {expo.date_fin}</p>
+                    <p className='acceuil-label-ville'>Ville: {expo.ville}</p>
+                    <p className='acceuil-label-heure'>Horaire: {expo.heure_debut.slice(0, -3)} - {expo.heure_fin.slice(0, -3)}</p>
+                    <p className='acceuil-labell'>Adresse: {expo.numero} {expo.rue} {expo.ville} {expo.cp}</p>
+                    <p className='acceuil-labell'>Coordonnee: {expo.latitude} {expo.longitude}</p>
+                    <p className='acceuil-label-quota'>Places: {expo.quota}</p>
+                    <div className='acceuil-maps-box'><a className='acceuil-maps-link' href={"https://www.google.fr/maps/place/" + expo.latitude + "," + expo.longitude}>Voir sur maps</a></div>
+                  </div>
+                </div>
+                <div className='acceuil-boutton-box'>
+                  <Button color="success" variant="contained" onClick={() => handleVoirPlusClick(expo)}>Details</Button>
                 </div>
               </div>
-              <div className='acceuil-boutton-box'>
-                <Button color="success" variant="contained" onClick={() => handleVoirPlusClick(expo)}>Details</Button>
-              </div>
+              {expositionSelectionnee && expositionSelectionnee.id === expo.id && (
+                <div className='acceuil-overlay'>
+                <Form></Form>
+                </div>
+              )}
             </div>
           ))}
         </div>

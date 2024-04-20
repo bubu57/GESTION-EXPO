@@ -64,10 +64,15 @@ body {
   padding-bottom: 100px;
 }
 
+.acceuil-box-flex {
+  display: flex;
+  width: 100%;
+}
+
 .acceuil-expo {
   background-color: #ffffff;
   border-radius: 10px;
-  display: flex;
+  display: block;
   width: 100%;
   padding-top: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
