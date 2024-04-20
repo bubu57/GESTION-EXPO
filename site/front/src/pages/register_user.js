@@ -47,7 +47,7 @@ const FormEnregistrements = ({expositionf}) => {
         setExpositions(response.data);
 
 
-        console.log(expositionf);
+        console.log(expositionf.id);
         const selectedExpoId = expositionf;
         let selectedExpo;
         for (let i = 0; i < expositions.length; i++) {
