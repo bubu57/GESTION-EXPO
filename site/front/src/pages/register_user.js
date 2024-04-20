@@ -9,7 +9,7 @@ import dayjs from 'dayjs';
 import "../styles/register_user.css";
 import logo from '../img/logo.png';
 
-const FormEnregistrements = () => {
+const FormEnregistrements = ({selectedExpo}) => {
   const [expositions, setExpositions] = useState([]);
   const [quota, setQuota] = useState([]);
   const [dateDebut, setdateDebut] = useState("01/01/2024");
@@ -84,15 +84,6 @@ const FormEnregistrements = () => {
   }
 
   const handleExpoChange = (e) => {
-    const selectedExpoId = e.target.value;
-    let selectedExpo;
-
-    for (let i = 0; i < expositions.length; i++) {
-      if (expositions[i].id == selectedExpoId) {
-        selectedExpo = expositions[i];
-        break;
-      }
-    }
     if (selectedExpo) {
       console.log(selectedExpo.estimation)
       setQuota(selectedExpo.quota);

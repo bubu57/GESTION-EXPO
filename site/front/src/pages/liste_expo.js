@@ -187,7 +187,7 @@ const ListesExpos = () => {
               </div>
               {expositionSelectionnee && expositionSelectionnee.id === expo.id && (
                 <div className='acceuil-overlay'>
-                <Form></Form>
+                <Form exposition={expo}></Form>
                 </div>
               )}
             </div>
