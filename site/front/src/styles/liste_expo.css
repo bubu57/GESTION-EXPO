@@ -136,6 +136,11 @@ body {
   margin-right: 2%;
 }
 
+.acceuil-butt {
+  margin-left: auto; 
+  margin-right: 0;
+}
+
 .acceuil-reserver {
   margin-top: 10px;
 }
