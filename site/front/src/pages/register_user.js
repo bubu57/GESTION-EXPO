@@ -11,6 +11,7 @@ import logo from '../img/logo.png';
 
 const FormEnregistrements = ({expositionf}) => {
   const [expositions, setExpositions] = useState([]);
+  const [dat, setdat] = useState(True);
   const [quota, setQuota] = useState([]);
   const [dateDebut, setdateDebut] = useState("01/01/2024");
   const [dateFin, setdateFin] = useState("2024/01/02");
@@ -41,27 +42,35 @@ const FormEnregistrements = ({expositionf}) => {
     id_expo: '',
   });
 
-  console.log(expositionf.id)
-  setQuota(expositionf.quota);
-  setdateDebut(expositionf.date_debut);
-  console.log(convertDateToISO(dateDebut));
-  if (new Date(`${convertDateToISO(dateDebut)}`) > new Date(`${dayjs().format('YYYY-MM-DD')}`)) {
-    setdateDebut(dayjs().format('DD/MM/YYYY'))
+
+  function recup () {
+    console.log(expositionf.id)
+    setQuota(expositionf.quota);
+    setdateDebut(expositionf.date_debut);
+    console.log(convertDateToISO(dateDebut));
+    if (new Date(`${convertDateToISO(dateDebut)}`) > new Date(`${dayjs().format('YYYY-MM-DD')}`)) {
+      setdateDebut(dayjs().format('DD/MM/YYYY'))
+    }
+    setdateFin(expositionf.date_fin);
+    setHeured(expositionf.heure_debut);
+    setHeuref(expositionf.heure_fin);
+    setEstimation(expositionf.estimation);
+    setNomexpo(expositionf.nom);
+    setAdresse(`${expositionf.numero} ${expositionf.rue} ${expositionf.ville} ${expositionf.cp}`)
+    setReqData({
+      date_debut: expositionf.date_debut,
+      id_expo: expositionf.id
+    })
+    setFormData({
+      ...formData,
+      id_expo: expositionf.id,
+    });
   }
-  setdateFin(expositionf.date_fin);
-  setHeured(expositionf.heure_debut);
-  setHeuref(expositionf.heure_fin);
-  setEstimation(expositionf.estimation);
-  setNomexpo(expositionf.nom);
-  setAdresse(`${expositionf.numero} ${expositionf.rue} ${expositionf.ville} ${expositionf.cp}`)
-  setReqData({
-    date_debut: expositionf.date_debut,
-    id_expo: expositionf.id
-  })
-  setFormData({
-    ...formData,
-    id_expo: expositionf.id,
-  });
+
+  if (dat == true) {
+    recup()
+  }
+
 
 
 
