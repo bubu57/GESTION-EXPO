@@ -352,15 +352,6 @@ const FormEnregistrements = ({selectedExpo}) => {
                 required
               />
             </div>
-            <p>Exposition</p>
-            <select className='select-exposition' value={formData.id_expo} onChange={handleExpoChange} name="id_expo">
-              <option value="">Sélectionner une exposition</option>
-              {expositions.map((expo) => (
-                <option key={expo.id} value={expo.id}>
-                  {expo.nom} - {expo.heure_debut.slice(0, -3)} à {expo.heure_fin.slice(0, -3)} - {expo.date_debut} à {expo.date_fin}
-                </option>
-              ))}
-            </select>
             <div className='div-input'>
               <p>Date d'entrée</p>
               <input
