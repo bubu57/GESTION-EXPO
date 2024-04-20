@@ -36,40 +36,6 @@ const FormEnregistrements = ({expositionsf}) => {
   });
 
 
-  console.log(expositionsf);
-  const selectedExpoId = expositionsf;
-  let selectedExpo;
-
-  for (let i = 0; i < expositions.length; i++) {
-    if (expositions[i].id == selectedExpoId) {
-      selectedExpo = expositions[i];
-      break;
-    }
-  }
-
-  console.log(selectedExpo.estimation)
-  setQuota(selectedExpo.quota);
-  setdateDebut(selectedExpo.date_debut);
-  console.log(convertDateToISO(dateDebut));
-  if (new Date(`${convertDateToISO(dateDebut)}`) > new Date(`${dayjs().format('YYYY-MM-DD')}`)) {
-    setdateDebut(dayjs().format('DD/MM/YYYY'))
-  }
-  setdateFin(selectedExpo.date_fin);
-  setHeured(selectedExpo.heure_debut);
-  setHeuref(selectedExpo.heure_fin);
-  setEstimation(selectedExpo.estimation);
-  setNomexpo(selectedExpo.nom);
-  setAdresse(`${selectedExpo.numero} ${selectedExpo.rue} ${selectedExpo.ville} ${selectedExpo.cp}`)
-  setReqData({
-    date_debut: selectedExpo.date_debut,
-    id_expo: selectedExpo.id
-  })
-  setFormData({
-    ...formData,
-    id_expo: selectedExpo.id,
-  });
-
-
   const [reqData, setReqData] = useState({
     date_debut: '',
     id_expo: '',
@@ -79,11 +45,48 @@ const FormEnregistrements = ({expositionsf}) => {
     axios.get('/api/app')
       .then(response => {
         setExpositions(response.data);
+
+
+        console.log("idddd" + expositionsf);
+        const selectedExpoId = expositionsf;
+        let selectedExpo;
+        for (let i = 0; i < expositions.length; i++) {
+          if (expositions[i].id == selectedExpoId) {
+            selectedExpo = expositions[i];
+            break;
+          }
+        }
+        console.log(selectedExpo.estimation)
+        setQuota(selectedExpo.quota);
+        setdateDebut(selectedExpo.date_debut);
+        console.log(convertDateToISO(dateDebut));
+        if (new Date(`${convertDateToISO(dateDebut)}`) > new Date(`${dayjs().format('YYYY-MM-DD')}`)) {
+          setdateDebut(dayjs().format('DD/MM/YYYY'))
+        }
+        setdateFin(selectedExpo.date_fin);
+        setHeured(selectedExpo.heure_debut);
+        setHeuref(selectedExpo.heure_fin);
+        setEstimation(selectedExpo.estimation);
+        setNomexpo(selectedExpo.nom);
+        setAdresse(`${selectedExpo.numero} ${selectedExpo.rue} ${selectedExpo.ville} ${selectedExpo.cp}`)
+        setReqData({
+          date_debut: selectedExpo.date_debut,
+          id_expo: selectedExpo.id
+        })
+        setFormData({
+          ...formData,
+          id_expo: selectedExpo.id,
+        });
+
+
+
       })
       .catch(error => {
         console.error('Erreur lors de la récupération des expositions:', error);
       });
   }, []);
+
+
 
   useEffect(() => {
     const script = document.createElement('script');
