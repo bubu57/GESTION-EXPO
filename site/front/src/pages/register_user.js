@@ -326,9 +326,6 @@ const FormEnregistrements = () => {
 
   return (
     <div>
-      <Header />
-      <div className='form'>
-        <center><p className='title'>Enregistrement Utilisateur</p></center>
         <form onSubmit={handleSubmit}>
           <div className='form-block'>
             <div className='div-input'>
@@ -398,7 +395,6 @@ const FormEnregistrements = () => {
             <Button color="success" variant="contained" type="submit">Réserver</Button>
           </center>
         </form>
-      </div>
     </div>
   );
 };

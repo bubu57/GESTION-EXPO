@@ -186,7 +186,7 @@ const ListesExpos = () => {
                 </div>
               </div>
               <div className='acceuil-boutton-box'>
-                    <Button color="success" variant="contained" onClick={() => handleVoirPlusClick(expo)}>Details</Button>
+                <Button color="success" variant="contained" onClick={() => handleVoirPlusClick(expo)}>Details</Button>
               </div>
             </div>
           ))}

@@ -75,8 +75,9 @@ body {
 }
 
 .acceuil-expo-box {
-  width: 27%;
+  width: 25%;
   margin-right: 3%;
+  margin-left: 2%;
 }
 
 .acceuil-expo:hover {
@@ -120,7 +121,8 @@ body {
 
 .acceuil-boutton-box {
   margin-top: 30px;
-  width: 10%;
+  width: 8%;
+  margin-right: 2%;
 }
 
 .acceuil-reserver {
