@@ -137,10 +137,6 @@ const FormEnregistrements = ({expositionf}) => {
 
   const handleSaveQRCodeAsPDF = async (qrCodeDataURL) => {
     try {
-      if (expositions.length === 0) {
-        console.error('Aucune donnée d exposition disponible.');
-        return;
-      }
       
       // Création d'un nouveau document PDF
       const doc = new jsPDF('p', 'mm', 'a4');
@@ -244,8 +240,6 @@ const FormEnregistrements = ({expositionf}) => {
 
   const sendMail = async () => {
     const { nom, prenom, mail, subject, date_debut, id_expo, heure } = formData;
-    const expositionf = expositions.find(expo => expo.id === id_expo);
-    console.log(expositionf); // Ajout du console.log pour vérifier les données d'exposition
     const qrCodeDataURL = await generateQRCode(formData); // Générer le QR code
   
     const formDataWithQRCode = {
