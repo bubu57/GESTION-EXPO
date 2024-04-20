@@ -19,7 +19,6 @@ const Header = () => {
         <div className="menu-items">
           <Link to="/"><Button className="button" color="success" variant="text">Accueil</Button></Link>
           <Link to="/historique"><Button  className="button" color="success" variant="text">Historique</Button></Link>
-          <Link to="/register_user"><Button  className="button" color="success" variant="text">Inscription</Button></Link>
           <Link to="/login"><Button  className="button" color="success" variant="contained">Admin</Button></Link>
         </div>
       </div>
