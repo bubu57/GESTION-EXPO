@@ -155,7 +155,8 @@ body {
 
   .acceuil-expo-box, .acceuil-expo-content, .acceuil-boutton-box {
     margin-left: 4%;
-    width: 96%;
+    margin-right: 4%;
+    width: 92%;
   }
 
   .acceuil-boutton-box {
