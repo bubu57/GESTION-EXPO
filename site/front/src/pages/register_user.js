@@ -36,29 +36,27 @@ const FormEnregistrements = ({selectedExpo}) => {
   });
 
 
-  if (selectedExpo) {
-    console.log(selectedExpo.estimation)
-    setQuota(selectedExpo.quota);
-    setdateDebut(selectedExpo.date_debut);
-    console.log(convertDateToISO(dateDebut));
-    if (new Date(`${convertDateToISO(dateDebut)}`) > new Date(`${dayjs().format('YYYY-MM-DD')}`)) {
-      setdateDebut(dayjs().format('DD/MM/YYYY'))
-    }
-    setdateFin(selectedExpo.date_fin);
-    setHeured(selectedExpo.heure_debut);
-    setHeuref(selectedExpo.heure_fin);
-    setEstimation(selectedExpo.estimation);
-    setNomexpo(selectedExpo.nom);
-    setAdresse(`${selectedExpo.numero} ${selectedExpo.rue} ${selectedExpo.ville} ${selectedExpo.cp}`)
-    setReqData({
-      date_debut: selectedExpo.date_debut,
-      id_expo: selectedExpo.id
-    })
-    setFormData({
-      ...formData,
-      id_expo: selectedExpo.id,
-    });
+  console.log(selectedExpo.estimation)
+  setQuota(selectedExpo.quota);
+  setdateDebut(selectedExpo.date_debut);
+  console.log(convertDateToISO(dateDebut));
+  if (new Date(`${convertDateToISO(dateDebut)}`) > new Date(`${dayjs().format('YYYY-MM-DD')}`)) {
+    setdateDebut(dayjs().format('DD/MM/YYYY'))
   }
+  setdateFin(selectedExpo.date_fin);
+  setHeured(selectedExpo.heure_debut);
+  setHeuref(selectedExpo.heure_fin);
+  setEstimation(selectedExpo.estimation);
+  setNomexpo(selectedExpo.nom);
+  setAdresse(`${selectedExpo.numero} ${selectedExpo.rue} ${selectedExpo.ville} ${selectedExpo.cp}`)
+  setReqData({
+    date_debut: selectedExpo.date_debut,
+    id_expo: selectedExpo.id
+  })
+  setFormData({
+    ...formData,
+    id_expo: selectedExpo.id,
+  });
 
 
   const [reqData, setReqData] = useState({
