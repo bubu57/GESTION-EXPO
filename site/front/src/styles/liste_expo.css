@@ -74,6 +74,10 @@ body {
   transition: transform 0.3s ease;
 }
 
+.acceuil-expo-box {
+  width: 30%;
+}
+
 .acceuil-expo:hover {
   transform: translateY(-5px);
 }
@@ -86,6 +90,7 @@ body {
 
 .acceuil-expo-content {
   margin-top: 10px;
+  width: 50%;
 }
 
 .acceuil-maps-link {
@@ -113,6 +118,7 @@ body {
 
 .acceuil-boutton-box {
   margin-top: 30px;
+  width: 20%;
 }
 
 .acceuil-reserver {
