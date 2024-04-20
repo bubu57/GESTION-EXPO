@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import Footer from './footer.js';
 import Header from './header.js'
+import Form from './register_user.js'
 import Button from '@mui/material/Button';
 import "../styles/liste_expo.css";
 
@@ -173,12 +174,13 @@ const ListesExpos = () => {
                   <p className='acceuil-label-date'>Date: {expo.date_debut} - {expo.date_fin}</p>
                   <p className='acceuil-label-ville'>Ville: {expo.ville}</p>
                   <p className='acceuil-label-heure'>Horaire: {expo.heure_debut.slice(0, -3)} - {expo.heure_fin.slice(0, -3)}</p>
+                  <p className='acceuil-labell'>Adresse: {expo.numero} {expo.rue} {expo.ville} {expo.cp}</p>
+                  <p className='acceuil-labell'>Coordonnee: {expo.latitude} {expo.longitude}</p>
+                  <p className='acceuil-label-quota'>Places: {expo.quota}</p>
+                  <div className='acceuil-maps-box'><a className='acceuil-maps-link' href={"https://www.google.fr/maps/place/" + expo.latitude + "," + expo.longitude}>Voir sur maps</a></div>
                   {expositionSelectionnee && expositionSelectionnee.id === expo.id && (
                     <div className='acceuil-overlay'>
-                      <p className='acceuil-labell'>Adresse: {expo.numero} {expo.rue} {expo.ville} {expo.cp}</p>
-                      <p className='acceuil-labell'>Coordonnee: {expo.latitude} {expo.longitude}</p>
-                      <p className='acceuil-label-quota'>Places: {expo.quota}</p>
-                      <div className='acceuil-maps-box'><a className='acceuil-maps-link' href={"https://www.google.fr/maps/place/" + expo.latitude + "," + expo.longitude}>Voir sur maps</a></div>
+                    <Form></Form>
                     </div>
                   )}
                 </div>
