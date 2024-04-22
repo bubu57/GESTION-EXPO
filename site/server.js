@@ -45,8 +45,8 @@ let quotanb = []
 app.post('/api/login', async (req, res) => {
   try {
     const { username, password } = req.body;
-    const sql = `SELECT * FROM Admin WHERE user = ${req.body.username} AND password = ${req.body.password};`;
-    const results = await queryAsync(sql);
+    const sql = 'SELECT * FROM Admin WHERE user = ? AND password = ?';
+    const results = await queryAsync(sql, [username, password]);
     if (results.length > 0) {
       const user = results[0];
       const token = jwt.sign({ username: user.username, id: user.id }, SECRET_KEY);
