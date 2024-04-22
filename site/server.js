@@ -46,7 +46,7 @@ app.post('/api/login', async (req, res) => {
   try {
     const username  = req.body.username;
     const password = req.body.password;
-    const sql = `SELECT * FROM Admin WHERE user = ${req.body.username} AND password = ${req.body.password};`;
+    const sql = `SELECT * FROM Admin WHERE user = '${req.body.username}' AND password = '${req.body.password}';`;
     const results = await queryAsync(sql);
     if (results.length > 0) {
     } else {
