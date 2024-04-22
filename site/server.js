@@ -74,34 +74,42 @@ app.post('/api/login', (req, res) => {
 });
 
 app.get('/api/app', async (req, res) => {
-  let connection = connecterBaseDonnees();
-  const today = new Date().toISOString().split('T')[0];
-  const expositionQuery = `SELECT *, DATE_FORMAT(date_debut, '%d/%m/%Y') AS date_debut, DATE_FORMAT(date_fin, '%d/%m/%Y') AS date_fin FROM Exposition WHERE date_fin >= '${today}'`;
-  const lieuQuery = 'SELECT * FROM Lieu';
+  try {
+    const connection = connecterBaseDonnees();
+    const today = new Date().toISOString().split('T')[0];
+    const expositionQuery = `SELECT *, DATE_FORMAT(date_debut, '%d/%m/%Y') AS date_debut, DATE_FORMAT(date_fin, '%d/%m/%Y') AS date_fin FROM Exposition WHERE date_fin >= '${today}'`;
+    const lieuQuery = 'SELECT * FROM Lieu';
 
-  await connection.query(expositionQuery, (expositionErr, expositionResults) => {
-    if (expositionErr) {
-      console.error('Erreur lors de la récupération des données de la table exposition:', expositionErr);
-      res.status(500).json({ error: 'Erreur interne du serveur' });
-    } else {
-      connection.query(lieuQuery, (lieuErr, lieuResults) => {
-        if (lieuErr) {
-          console.error('Erreur lors de la récupération des données de la table lieu:', lieuErr);
-          res.status(500).json({ error: 'Erreur interne du serveur' });
-        } else {
-          // Combine les données exposition et lieu
-          const combinedResults = expositionResults.map(exposition => {
-            const lieu = lieuResults.find(l => l.id === exposition.id);
-            return { ...exposition, ville: lieu.ville, numero: lieu.numero, rue: lieu.rue, cp: lieu.code_postal, latitude: lieu.latitude, longitude: lieu.longitude };
-          });
+    const expositionResults = await queryAsync(connection, expositionQuery);
+    const lieuResults = await queryAsync(connection, lieuQuery);
 
-          res.json(combinedResults);
-        }
-      });
-    }
-  });
-  connection.end();
+    // Combine les données exposition et lieu
+    const combinedResults = expositionResults.map(exposition => {
+      const lieu = lieuResults.find(l => l.id === exposition.id);
+      return { ...exposition, ville: lieu.ville, numero: lieu.numero, rue: lieu.rue, cp: lieu.code_postal, latitude: lieu.latitude, longitude: lieu.longitude };
+    });
+
+    res.json(combinedResults);
+    connection.end();
+  } catch (error) {
+    console.error('Erreur:', error);
+    res.status(500).json({ error: 'Erreur interne du serveur' });
+  }
 });
+
+// Fonction pour exécuter des requêtes SQL de manière asynchrone
+function queryAsync(connection, query) {
+  return new Promise((resolve, reject) => {
+    connection.query(query, (error, results) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+}
+
 
 let quotanb = [];
 
