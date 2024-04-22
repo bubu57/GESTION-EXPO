@@ -74,8 +74,9 @@ app.post('/api/login', (req, res) => {
 });
 
 app.get('/api/app', async (req, res) => {
+  let connection;
   try {
-    const connection = connecterBaseDonnees();
+    connection = connecterBaseDonnees();
     const today = new Date().toISOString().split('T')[0];
     const expositionQuery = `SELECT *, DATE_FORMAT(date_debut, '%d/%m/%Y') AS date_debut, DATE_FORMAT(date_fin, '%d/%m/%Y') AS date_fin FROM Exposition WHERE date_fin >= '${today}'`;
     const lieuQuery = 'SELECT * FROM Lieu';
@@ -90,10 +91,13 @@ app.get('/api/app', async (req, res) => {
     });
 
     res.json(combinedResults);
-    connection.end();
   } catch (error) {
     console.error('Erreur:', error);
     res.status(500).json({ error: 'Erreur interne du serveur' });
+  } finally {
+    if (connection) {
+      connection.end();
+    }
   }
 });
 
@@ -109,6 +113,7 @@ function queryAsync(connection, query) {
     });
   });
 }
+
 
 
 let quotanb = [];
