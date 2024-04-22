@@ -45,7 +45,7 @@ let quotanb = []
 app.post('/api/login', async (req, res) => {
   try {
     const { username, password } = req.body;
-    const sql = `SELECT * FROM Admin WHERE User = ${req.body.username} AND Password = ${req.body.password};`;
+    const sql = `SELECT * FROM Admin WHERE user = ${req.body.username} AND password = ${req.body.password};`;
     const results = await queryAsync(sql);
     if (results.length > 0) {
       const user = results[0];
