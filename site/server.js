@@ -60,6 +60,7 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+
 app.get('/api/app', async (req, res) => {
   try {
     const today = new Date().toISOString().split('T')[0];
