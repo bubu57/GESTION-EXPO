@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 const SECRET_KEY = 'secretkey123';
 
 const pool = mysql.createPool({
-  connectionLimit: 10,
+  connectionLimit: 1000,
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -44,8 +44,9 @@ let quotanb = []
 
 app.post('/api/login', async (req, res) => {
   try {
-    const sql = `SELECT * FROM Admin WHERE User = ${req.body.username} AND Password = ${req.body.password}`;
-    const results = await queryAsync(sql);
+    const { username, password } = req.body;
+    const sql = 'SELECT * FROM Admin WHERE User = ? AND Password = ?';
+    const results = await queryAsync(sql, [username, password]);
     if (results.length > 0) {
       const user = results[0];
       const token = jwt.sign({ username: user.username, id: user.id }, SECRET_KEY);
