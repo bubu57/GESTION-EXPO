@@ -10,41 +10,31 @@ const jwt = require('jsonwebtoken');
 const PORT = process.env.PORT;
 const SECRET_KEY = 'secretkey123';
 
-const connecterBaseDonnees = () => {
-  const connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    port: process.env.DB_PORT,
-  });
+const pool = mysql.createPool({
+  connectionLimit: 10, // Limite de connexions simultanées
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT,
+});
 
-  function handleDisconnect() {
-    connection.connect((err) => {
+const queryAsync = (query) => {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
       if (err) {
-        console.error('Erreur de connexion à la base de données:', err);
-        // Réessayer la connexion après un délai
-        setTimeout(handleDisconnect, 5000); // Réessayer la connexion après 5 secondes
-      } else {
-        console.log('Connexion à la base de données réussie');
+        return reject(err);
       }
+      connection.query(query, (error, results) => {
+        connection.release(); // Libérer la connexion après l'exécution de la requête
+        if (error) {
+          reject(error);
+        } else {
+          resolve(results);
+        }
+      });
     });
-
-    connection.on('error', (err) => {
-      console.error('Erreur de connexion à la base de données:', err);
-      if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-        // Reconnecter la base de données en cas de déconnexion
-        handleDisconnect();
-      } else {
-        throw err;
-      }
-    });
-  }
-
-  // Gérer les déconnexions de manière asynchrone
-  handleDisconnect();
-
-  return connection;
+  });
 };
 
 
@@ -90,15 +80,13 @@ app.post('/api/login', (req, res) => {
 });
 
 app.get('/api/app', async (req, res) => {
-  let connection;
   try {
-    connection = connecterBaseDonnees();
     const today = new Date().toISOString().split('T')[0];
     const expositionQuery = `SELECT *, DATE_FORMAT(date_debut, '%d/%m/%Y') AS date_debut, DATE_FORMAT(date_fin, '%d/%m/%Y') AS date_fin FROM Exposition WHERE date_fin >= '${today}'`;
     const lieuQuery = 'SELECT * FROM Lieu';
 
-    const expositionResults = await queryAsync(connection, expositionQuery);
-    const lieuResults = await queryAsync(connection, lieuQuery);
+    const expositionResults = await queryAsync(expositionQuery);
+    const lieuResults = await queryAsync(lieuQuery);
 
     // Combine les données exposition et lieu
     const combinedResults = expositionResults.map(exposition => {
@@ -110,25 +98,8 @@ app.get('/api/app', async (req, res) => {
   } catch (error) {
     console.error('Erreur:', error);
     res.status(500).json({ error: 'Erreur interne du serveur' });
-  } finally {
-    if (connection) {
-      connection.end();
-    }
   }
 });
-
-// Fonction pour exécuter des requêtes SQL de manière asynchrone
-function queryAsync(connection, query) {
-  return new Promise((resolve, reject) => {
-    connection.query(query, (error, results) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(results);
-      }
-    });
-  });
-}
 
 
 
