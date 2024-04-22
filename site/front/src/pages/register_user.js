@@ -115,7 +115,7 @@ const FormEnregistrements = ({expositionf}) => {
       }
   
       // Création d'une chaîne de données à partir des informations du formulaire
-      const qrCodeData = `${formData.prenom};${formData.nom};${dayjs(formData.date_debut).format('YYYY-MM-DD')};${formData.id_expo};${formData.heure};${formData.email}`;
+      const qrCodeData = `${formData.prenom};${formData.nom};${dayjs(formData.date_debut).format('YYYY-MM-DD')};${formData.id_expo};${formData.heure};${formData.mail}`;
   
       // Clé de chiffrement
       const key = CryptoJS.enc.Utf8.parse('1234567890123456');
