@@ -38,7 +38,6 @@ const queryAsync = (query) => {
 };
 
 
-//// let connection
 
 const enddb = async (connection) => {
   console.log('Arrêt du serveur, fermeture de la connexion à la base de données...');
