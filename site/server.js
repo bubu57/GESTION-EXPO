@@ -70,7 +70,7 @@ app.post('/api/login', (req, res) => {
       res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
     }
   });
-  //enddb(connection);
+  connection.end();
 });
 
 app.get('/api/app', (req, res) => {
@@ -100,7 +100,7 @@ app.get('/api/app', (req, res) => {
       });
     }
   });
-  //enddb(connection);
+  connection.end();
 });
 
 let quotanb = [];
@@ -119,7 +119,7 @@ app.post('/api/quota', (req, res) => {
       res.json({ success: true, message: 'ok' });
     }
   });
-  //enddb(connection);
+  connection.end();
 })
 
 app.get('/api/quotanb', (req, res) => {
@@ -182,7 +182,7 @@ app.post('/api/enregistrement', (req, res) => {
       });
     });
   });
-  //enddb(connection);
+  connection.end();
 });
 
 
@@ -224,7 +224,7 @@ app.post('/api/register_user', (req, res) => {
       });
     });
   });
-  //enddb(connection);
+  connection.end();
 });
 
 
@@ -242,7 +242,7 @@ app.get('/api/admins', (req, res) => {
     }
     res.json(results);
   });
-  //enddb(connection);
+  connection.end();
 });
 
 app.post('/api/admins', (req, res) => {
@@ -256,7 +256,7 @@ app.post('/api/admins', (req, res) => {
     }
     res.json({ success: true, message: 'Enregistrement réussi' });
   });
-  //enddb(connection);
+  connection.end();
 });
 
 app.post('/api/dadmins', (req, res) => {
@@ -270,7 +270,7 @@ app.post('/api/dadmins', (req, res) => {
     }
     res.json({ success: true, message: 'Enregistrement réussi' });
   });
-  //enddb(connection);
+  connection.end();
 });
 
 app.post('/api/dexpo', (req, res) => {
@@ -284,7 +284,7 @@ app.post('/api/dexpo', (req, res) => {
     }
     res.json({ success: true, message: 'Enregistrement réussi' });
   });
-  //enddb(connection);
+  connection.end();
 });
 
 
@@ -316,7 +316,7 @@ app.get('/api/map', (req, res) => {
       });
     }
   });
-  //enddb(connection);
+  connection.end();
 });
 
 app.get('/*', (_, res) => {
