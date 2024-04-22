@@ -74,32 +74,34 @@ app.post('/api/login', (req, res) => {
 });
 
 app.get('/api/app', (req, res) => {
-  let connection = connecterBaseDonnees();
-  const today = new Date().toISOString().split('T')[0];
-  const expositionQuery = `SELECT *, DATE_FORMAT(date_debut, '%d/%m/%Y') AS date_debut, DATE_FORMAT(date_fin, '%d/%m/%Y') AS date_fin FROM Exposition WHERE date_fin >= '${today}'`;
-  const lieuQuery = 'SELECT * FROM Lieu';
-
-  connection.query(expositionQuery, (expositionErr, expositionResults) => {
-    if (expositionErr) {
-      console.error('Erreur lors de la récupération des données de la table exposition:', expositionErr);
-      res.status(500).json({ error: 'Erreur interne du serveur' });
-    } else {
-      connection.query(lieuQuery, (lieuErr, lieuResults) => {
-        if (lieuErr) {
-          console.error('Erreur lors de la récupération des données de la table lieu:', lieuErr);
-          res.status(500).json({ error: 'Erreur interne du serveur' });
-        } else {
-          // Combine les données exposition et lieu
-          const combinedResults = expositionResults.map(exposition => {
-            const lieu = lieuResults.find(l => l.id === exposition.id);
-            return { ...exposition, ville: lieu.ville, numero: lieu.numero, rue: lieu.rue, cp: lieu.code_postal, latitude: lieu.latitude, longitude: lieu.longitude };
-          });
-
-          res.json(combinedResults);
-        }
-      });
-    }
-  });
+  const apiapp = async () => {
+    let connection = connecterBaseDonnees();
+    const today = new Date().toISOString().split('T')[0];
+    const expositionQuery = `SELECT *, DATE_FORMAT(date_debut, '%d/%m/%Y') AS date_debut, DATE_FORMAT(date_fin, '%d/%m/%Y') AS date_fin FROM Exposition WHERE date_fin >= '${today}'`;
+    const lieuQuery = 'SELECT * FROM Lieu';
+  
+    await connection.query(expositionQuery, (expositionErr, expositionResults) => {
+      if (expositionErr) {
+        console.error('Erreur lors de la récupération des données de la table exposition:', expositionErr);
+        res.status(500).json({ error: 'Erreur interne du serveur' });
+      } else {
+        connection.query(lieuQuery, (lieuErr, lieuResults) => {
+          if (lieuErr) {
+            console.error('Erreur lors de la récupération des données de la table lieu:', lieuErr);
+            res.status(500).json({ error: 'Erreur interne du serveur' });
+          } else {
+            // Combine les données exposition et lieu
+            const combinedResults = expositionResults.map(exposition => {
+              const lieu = lieuResults.find(l => l.id === exposition.id);
+              return { ...exposition, ville: lieu.ville, numero: lieu.numero, rue: lieu.rue, cp: lieu.code_postal, latitude: lieu.latitude, longitude: lieu.longitude };
+            });
+  
+            res.json(combinedResults);
+          }
+        });
+      }
+    });
+  } 
   connection.end();
 });
 
