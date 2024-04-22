@@ -49,9 +49,6 @@ app.post('/api/login', async (req, res) => {
     const sql = `SELECT * FROM Admin WHERE user = ${req.body.username} AND password = ${req.body.password};`;
     const results = await queryAsync(sql);
     if (results.length > 0) {
-      const user = results[0];
-      const token = jwt.sign({ username: user.username, id: user.id }, SECRET_KEY);
-      res.json({ token });
     } else {
       res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
     }
