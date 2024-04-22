@@ -44,12 +44,10 @@ let quotanb = []
 
 app.post('/api/login', async (req, res) => {
   try {
-    const { username, password } = req.body;
-    if (!username || !password) {
-      return res.status(400).json({ error: 'Nom d\'utilisateur ou mot de passe manquant' });
-    }
-    const sql = 'SELECT * FROM Admin WHERE user = ? AND password = ?';
-    const results = await queryAsync(sql, [username, password]);
+    const username  = req.body.username;
+    const password = req.body.password;
+    const sql = `SELECT * FROM Admin WHERE user = ${req.body.username} AND password = ${req.body.password};`;
+    const results = await queryAsync(sql);
     if (results.length > 0) {
       const user = results[0];
       const token = jwt.sign({ username: user.username, id: user.id }, SECRET_KEY);
@@ -62,7 +60,6 @@ app.post('/api/login', async (req, res) => {
     res.status(500).json({ error: 'Erreur interne du serveur' });
   }
 });
-
 
 app.get('/api/app', async (req, res) => {
   try {
