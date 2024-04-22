@@ -19,18 +19,34 @@ const connecterBaseDonnees = () => {
     port: process.env.DB_PORT,
   });
 
-  connection.connect((err) => {
-    if (err) {
+  function handleDisconnect() {
+    connection.connect((err) => {
+      if (err) {
+        console.error('Erreur de connexion à la base de données:', err);
+        // Réessayer la connexion après un délai
+        setTimeout(handleDisconnect, 5000); // Réessayer la connexion après 5 secondes
+      } else {
+        console.log('Connexion à la base de données réussie');
+      }
+    });
+
+    connection.on('error', (err) => {
       console.error('Erreur de connexion à la base de données:', err);
-      // Réessayer la connexion après un délai
-      setTimeout(connecterBaseDonnees, 5000); // Réessayer la connexion après 5 secondes
-    } else {
-      console.log('Connexion à la base de données réussie');
-    }
-  });
+      if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+        // Reconnecter la base de données en cas de déconnexion
+        handleDisconnect();
+      } else {
+        throw err;
+      }
+    });
+  }
+
+  // Gérer les déconnexions de manière asynchrone
+  handleDisconnect();
 
   return connection;
 };
+
 
 let connection = connecterBaseDonnees();
 
