@@ -45,6 +45,9 @@ let quotanb = []
 app.post('/api/login', async (req, res) => {
   try {
     const { username, password } = req.body;
+    if (!username || !password) {
+      return res.status(400).json({ error: 'Nom d\'utilisateur ou mot de passe manquant' });
+    }
     const sql = 'SELECT * FROM Admin WHERE user = ? AND password = ?';
     const results = await queryAsync(sql, [username, password]);
     if (results.length > 0) {
