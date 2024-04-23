@@ -118,9 +118,9 @@ const FormEnregistrements = ({expositionf}) => {
       const qrCodeData = `${formData.prenom};${formData.nom};${dayjs(formData.date_debut).format('YYYY-MM-DD')};${formData.id_expo};${formData.heure};${formData.mail}`;
   
       // Clé de chiffrement
-      const key = CryptoJS.enc.Utf8.parse('1234567890123456');
+      const key = CryptoJS.enc.Utf8.parse('3759203564904835');
       // IV (Initialisation Vector)
-      const iv = CryptoJS.enc.Utf8.parse('1234567890123456');
+      const iv = CryptoJS.enc.Utf8.parse('3759203564904835');
       // Chiffrement AES
       const encrypted = CryptoJS.AES.encrypt(qrCodeData, key, { iv: iv });
   
