@@ -410,7 +410,7 @@ const Login = () => {
                     <p className='register_expo-label'>Quota</p>
                     <input
                       className='register_expo-quota'
-                      type="text"
+                      type="number"
                       placeholder="200"
                       name="quota"
                       value={expoformData.quota}
