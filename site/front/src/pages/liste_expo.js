@@ -150,13 +150,7 @@ const ListesExpos = () => {
         <div className='acceuil-div-titre'><p className='acceuil-titre'>Listes des expositions</p></div>
       </center>
 
-      <center>
-        <div className='acceuil-div-titre'><p className='acceuil-filtre'>Filtres:</p></div>
-      </center>
-
-
         <div className='acceuil-content'>
-
           <Button color="success" variant="text" onClick={() => handlefiltres()}>Filtres</Button>
           {showSearch && (
             <div className='acceuil-search'>
