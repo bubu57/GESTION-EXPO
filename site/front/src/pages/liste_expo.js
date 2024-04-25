@@ -15,6 +15,7 @@ const ListesExpos = () => {
   const [expositionsFiltrees, setExpositionsFiltrees] = useState([]);
   const [expositionSelectionnee, setExpositionSelectionnee] = useState(null);
   let [detail, setDetail] = useState(0);
+  const [showSearch, setShowSearch] = useState(false);
 
   useEffect(() => {
     fetch('/api/app')
@@ -33,6 +34,11 @@ const ListesExpos = () => {
         console.error('Erreur lors de la récupération des expositions:', error);
       });
   }, []);
+
+
+  const handlefiltres = () => {
+    setShowSearch(!showSearch); // Inverser l'état pour afficher ou masquer la section de recherche
+  };
   
 
   // filtrer par ville
@@ -148,41 +154,48 @@ const ListesExpos = () => {
         <div className='acceuil-div-titre'><p className='acceuil-filtre'>Filtres:</p></div>
       </center>
 
-      <div className='acceuil-search'>
-        <div className='acceuil-div-input'>
-          <p>Ville</p>
-          <input
-            className='acceuil-input'
-            type="text"
-            placeholder="Paris"
-            value={villeFiltre}
-            onChange={handleVilleInputChange}
-          />
-        </div>
 
-        <div className='acceuil-div-input'>
-          <p>Date</p>
-          <input
-            className='acceuil-input'
-            type="text"
-            placeholder="jj/mm/aaaa"
-            value={dateFiltre}
-            onChange={handleDateInputChange}
-          />
-        </div>
-
-        <div className='acceuil-div-input'>
-          <p>Heure</p>
-          <input
-            className='acceuil-input'
-            type="text"
-            placeholder="15:30"
-            value={heureFiltre}
-            onChange={handleHeureInputChange}
-          />
-        </div>
-      </div>
         <div className='acceuil-content'>
+
+          <Button color="success" variant="text" onClick={() => handlefiltres(expo)}>Filtres</Button>
+          {showSearch && (
+            <div className='acceuil-search'>
+              <div className='acceuil-div-input'>
+                <p>Ville</p>
+                <input
+                  className='acceuil-input'
+                  type="text"
+                  placeholder="Paris"
+                  value={villeFiltre}
+                  onChange={handleVilleInputChange}
+                />
+              </div>
+
+              <div className='acceuil-div-input'>
+                <p>Date</p>
+                <input
+                  className='acceuil-input'
+                  type="text"
+                  placeholder="jj/mm/aaaa"
+                  value={dateFiltre}
+                  onChange={handleDateInputChange}
+                />
+              </div>
+
+              <div className='acceuil-div-input'>
+                <p>Heure</p>
+                <input
+                  className='acceuil-input'
+                  type="text"
+                  placeholder="15:30"
+                  value={heureFiltre}
+                  onChange={handleHeureInputChange}
+                />
+              </div>
+            </div>
+          )}
+
+
           {expositionsFiltrees.map((expo, index) => (
             <div key={index} className='acceuil-expo'>
               <div className='acceuil-box-flex'>
