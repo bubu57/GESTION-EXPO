@@ -12,6 +12,24 @@ body {
   margin: 0 auto;
 }
 
+.status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+/* Style pour la pastille de statut des expositions à venir */
+.status-coming {
+  background-color: orange; /* Couleur orange */
+}
+
+/* Style pour la pastille de statut des expositions en cours */
+.status-in-progress {
+  background-color: green; /* Couleur verte */
+}
+
 /* Titre styles */
 .acceuil-div-titre {
   margin-bottom: 20px;

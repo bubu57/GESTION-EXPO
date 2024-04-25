@@ -105,6 +105,26 @@ const ListesExpos = () => {
     setHeureFiltre(e.target.value);
   };
 
+
+  // Fonction pour obtenir le statut d'une exposition
+  const getExpoStatus = (expo) => {
+    const now = new Date();
+    const startDate = new Date(expo.date_debut);
+    if (now < startDate) {
+      return 'À venir';
+    } else {
+      return 'En cours';
+    }
+  };
+
+  // Fonction pour obtenir la classe CSS du statut d'une exposition
+  const getExpoStatusClass = (expo) => {
+    const status = getExpoStatus(expo);
+    return status === 'À venir' ? 'status-coming' : 'status-in-progress';
+  };
+
+
+
   // Fonction pour afficher les détails
   const handleVoirPlusClick = (expo) => {
     if(detail == 0) {
@@ -167,6 +187,7 @@ const ListesExpos = () => {
             <div key={index} className='acceuil-expo'>
               <div className='acceuil-box-flex'>
                 <div className='acceuil-expo-box'>
+                  <div className={`status ${getExpoStatusClass(expo)}`}></div>
                   <p className='acceuil-text-expo'>{expo.nom}</p>
                 </div>
                 <div className='acceuil-expo-content'>
