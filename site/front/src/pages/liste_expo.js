@@ -187,7 +187,10 @@ const ListesExpos = () => {
             <div key={index} className='acceuil-expo'>
               <div className='acceuil-box-flex'>
                 <div className='acceuil-expo-box'>
-                  <div className={`status ${getExpoStatusClass(expo)}`}><p className='acceuil-status-txt'>{getExpoStatus(expo)}</p></div>
+                  <div className='acceuil-status'>
+                    <div className={`status ${getExpoStatusClass(expo)}`}></div>
+                    <p className='acceuil-status-txt'>{getExpoStatus(expo)}</p>
+                  </div>
                   <p className='acceuil-text-expo'>{expo.nom}</p>
                 </div>
                 <div className='acceuil-expo-content'>

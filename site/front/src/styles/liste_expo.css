@@ -20,6 +20,11 @@ body {
   margin-right: 5px;
 }
 
+.acceuil-status {
+  width: 100px;
+  display: flex;
+}
+
 /* Style pour la pastille de statut des expositions à venir */
 .status-coming {
   background-color: orange; /* Couleur orange */
