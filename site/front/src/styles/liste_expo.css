@@ -23,12 +23,8 @@ body {
 
 .acceuil-status {
   width: 100px;
-  height: 40px;
+  height: 30px;
   display: flex;
-  background-color: #ffffff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 20%;
-
 }
 
 /* Style pour la pastille de statut des expositions à venir */
