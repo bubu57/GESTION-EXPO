@@ -21,8 +21,12 @@ body {
 }
 
 .acceuil-status {
-  width: 100px;
+  width: 200px;
   display: flex;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+
 }
 
 /* Style pour la pastille de statut des expositions à venir */
