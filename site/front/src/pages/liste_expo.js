@@ -157,7 +157,7 @@ const ListesExpos = () => {
 
         <div className='acceuil-content'>
 
-          <Button color="success" variant="text" onClick={() => handlefiltres(expo)}>Filtres</Button>
+          <Button color="success" variant="text" onClick={() => handlefiltres()}>Filtres</Button>
           {showSearch && (
             <div className='acceuil-search'>
               <div className='acceuil-div-input'>
