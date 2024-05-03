@@ -30,7 +30,8 @@ const Login = () => {
     heure_debut: '',
     heure_fin: '',
     lieu: '',
-    estimation: ''
+    estimation: '',
+    description
   });
   const [suggestions, setSuggestions] = useState([]);
 
@@ -341,6 +342,19 @@ const Login = () => {
                       name="nom"
                       value={expoformData.nom}
                       onChange={expohandleChange}
+                      required
+                    />
+                  </div>
+                  <div className='register_expo-div-input'>
+                    <p className='register_expo-label'>Description exposition</p>
+                    <input
+                      className='register_expo-description'
+                      type="text"
+                      placeholder="description, max 200 caracteres"
+                      name="description"
+                      value={expoformData.description}
+                      onChange={expohandleChange}
+                      maxlength="200"
                       required
                     />
                   </div>
