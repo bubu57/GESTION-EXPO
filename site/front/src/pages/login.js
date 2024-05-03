@@ -31,7 +31,7 @@ const Login = () => {
     heure_fin: '',
     lieu: '',
     estimation: '',
-    description
+    description: ''
   });
   const [suggestions, setSuggestions] = useState([]);
 
