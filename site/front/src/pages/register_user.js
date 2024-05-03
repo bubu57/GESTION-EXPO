@@ -202,6 +202,7 @@ const FormEnregistrements = ({expositionf}) => {
         }
         currentTime.setMinutes(currentTime.getMinutes() + step);
       }
+      console.log(schedule);
       setheurelist(schedule);
     });
   };
@@ -214,6 +215,7 @@ const FormEnregistrements = ({expositionf}) => {
         count = count + 1;
       }
     }
+    console.log(count);
     return count;
   }
   
