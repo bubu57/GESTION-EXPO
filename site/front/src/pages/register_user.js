@@ -3,7 +3,6 @@ import axios from 'axios';
 import QRCode from 'qrcode';
 import jsPDF from 'jspdf';
 import Button from '@mui/material/Button';
-import Header from './header.js';
 import CryptoJS from 'crypto-js';
 import dayjs from 'dayjs';
 import "../styles/register_user.css";
@@ -174,43 +173,49 @@ const FormEnregistrements = ({expositionf}) => {
       console.error('Erreur lors de la sauvegarde du QR code en PDF:', error);
     }
   };
-   function getresa(list, heure) {
-    let count = 0;
-    for (let i = 0; i < list.quotanb.length; i++) {
-      if (list.quotanb[i].heure && list.quotanb[i].heure.length > 3 && list.quotanb[i].heure.slice(0, -3) === heure) {
-        count = count + 1
-      }
-    }
-    if (count >= quota) {
-      return false
-    }
-    return true
-  }
 
   const generateReservationTimes = async (heured, heuref, est, datee) => {
-    const step = estimation
+    const step = estimation;
     const start = new Date(`2000-01-01T${heured}`);
     const end = new Date(`2000-01-01T${heuref}`);
     const schedule = [];
   
     let currentTime = new Date(start);
   
-    await axios.post('/api/quota', { id_expo: reqData.id_expo, date_debut: datee });
+    // Obtenez le quota total de places disponibles
+    let quotaTotal;
+    await axios.post('/api/quota', { id_expo: reqData.id_expo, date_debut: datee })
+      .then(response => {
+        quotaTotal = response.data.quota_total; // Assurez-vous que votre API retourne le quota total
+      });
+  
     await axios.get('/api/quotanb').then(response => {
       while (currentTime < end) {
         const currentTimeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         if (currentTime.getMinutes() + step >= end || schedule.includes(currentTimeString)) {
           break;
         }
-        if (getresa(response.data, currentTimeString) === false) {
-        } else {
-          schedule.push(currentTimeString);
+        // Obtenez le nombre de places restantes pour cette plage horaire
+        const placesRestantes = quotaTotal - getReservationCount(response.data, currentTimeString);
+        if (placesRestantes > 0) {
+          schedule.push({ time: currentTimeString, placesRestantes });
         }
         currentTime.setMinutes(currentTime.getMinutes() + step);
       }
       setheurelist(schedule);
     });
   };
+  
+  // Fonction pour obtenir le nombre de réservations pour une heure donnée
+  function getReservationCount(list, heure) {
+    let count = 0;
+    for (let i = 0; i < list.quotanb.length; i++) {
+      if (list.quotanb[i].heure && list.quotanb[i].heure.length > 3 && list.quotanb[i].heure.slice(0, -3) === heure) {
+        count = count + 1;
+      }
+    }
+    return count;
+  }
   
   
 
