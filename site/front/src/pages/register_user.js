@@ -181,7 +181,8 @@ const FormEnregistrements = ({expositionf}) => {
         count = count + 1;
       }
     }
-    console.log(quota - count);
+    console.log(quota);
+    console.log(count);
     setdispo = quota - count;
     if (count >= quota) {
       return false;
