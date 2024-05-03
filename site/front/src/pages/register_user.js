@@ -174,50 +174,44 @@ const FormEnregistrements = ({expositionf}) => {
     }
   };
 
+  function getresa(list, heure) {
+    let count = 0;
+    for (let i = 0; i < list.quotanb.length; i++) {
+      if (list.quotanb[i].heure && list.quotanb[i].heure.length > 3 && list.quotanb[i].heure.slice(0, -3) === heure) {
+        count = count + 1
+      }
+    }
+    if (count >= quota) {
+      console.log(count);
+      return false
+    }
+    return true
+  }
+
   const generateReservationTimes = async (heured, heuref, est, datee) => {
-    const step = estimation;
+    const step = estimation
     const start = new Date(`2000-01-01T${heured}`);
     const end = new Date(`2000-01-01T${heuref}`);
     const schedule = [];
   
     let currentTime = new Date(start);
   
-    // Obtenez le quota total de places disponibles
-    let quotaTotal;
-    await axios.post('/api/quota', { id_expo: reqData.id_expo, date_debut: datee })
-      .then(response => {
-        quotaTotal = response.data.quota_total; // Assurez-vous que votre API retourne le quota total
-      });
-  
+    await axios.post('/api/quota', { id_expo: reqData.id_expo, date_debut: datee });
     await axios.get('/api/quotanb').then(response => {
       while (currentTime < end) {
         const currentTimeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         if (currentTime.getMinutes() + step >= end || schedule.includes(currentTimeString)) {
           break;
         }
-        // Obtenez le nombre de places restantes pour cette plage horaire
-        const placesRestantes = quotaTotal - getReservationCount(response.data, currentTimeString);
-        if (placesRestantes > 0) {
-          schedule.push({ time: currentTimeString, placesRestantes });
+        if (getresa(response.data, currentTimeString) === false) {
+        } else {
+          schedule.push(currentTimeString);
         }
         currentTime.setMinutes(currentTime.getMinutes() + step);
       }
-      console.log(schedule);
       setheurelist(schedule);
     });
   };
-  
-  // Fonction pour obtenir le nombre de réservations pour une heure donnée
-  function getReservationCount(list, heure) {
-    let count = 0;
-    for (let i = 0; i < list.quotanb.length; i++) {
-      if (list.quotanb[i].heure && list.quotanb[i].heure.length > 3 && list.quotanb[i].heure.slice(0, -3) === heure) {
-        count = count + 1;
-      }
-    }
-    console.log(count);
-    return count;
-  }
   
   
 
