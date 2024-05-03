@@ -178,14 +178,14 @@ const FormEnregistrements = ({expositionf}) => {
     let count = 0;
     for (let i = 0; i < list.quotanb.length; i++) {
       if (list.quotanb[i].heure && list.quotanb[i].heure.length > 3 && list.quotanb[i].heure.slice(0, -3) === heure) {
-        count = count + 1
+        count = count + 1;
       }
     }
-    console.log(count);
+    console.log(count)
     if (count >= quota) {
-      return false
+      return false;
     }
-    return true
+    return true;
   }
 
   const generateReservationTimes = async (heured, heuref, est, datee) => {
@@ -223,21 +223,6 @@ const FormEnregistrements = ({expositionf}) => {
       heure: e.target.value,
     });
   };
-
-
-
-  function getresa(list, heure) {
-    let count = 0;
-    for (let i = 0; i < list.quotanb.length; i++) {
-      if (list.quotanb[i].heure && list.quotanb[i].heure.length > 3 && list.quotanb[i].heure.slice(0, -3) === heure) {
-        count = count + 1;
-      }
-    }
-    if (count >= quota) {
-      return false;
-    }
-    return true;
-  }
 
   const sendMail = async () => {
     const { nom, prenom, mail, subject, date_debut, id_expo, heure } = formData;
@@ -338,7 +323,7 @@ const FormEnregistrements = ({expositionf}) => {
             <div className='div-input'>
               <p>Votre email</p>
               <input
-                type="text"
+                type="email"
                 placeholder="Mail"
                 name="mail"
                 value={formData.mail}
