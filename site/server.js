@@ -100,7 +100,7 @@ app.get('/api/quotanb', (req, res) => {
 app.post('/api/enregistrement', async (req, res) => {
   try {
     const lieuQuery = `INSERT INTO Lieu (numero, rue, code_postal, ville, latitude, longitude) VALUES ("${req.body.numero}", "${req.body.rue}", "${req.body.code_postal}", "${req.body.ville}", "${req.body.latitude}", "${req.body.longitude}")`;
-    const expoQuery = `INSERT INTO Exposition (quota ,nom, type, date_debut, date_fin, heure_debut, heure_fin, estimation, visiteur) VALUES (${req.body.quota}, "${req.body.nom}", "${req.body.type}", "${req.body.date_debut}", "${req.body.date_fin}", "${req.body.heure_debut}", "${req.body.heure_fin}", "${req.body.estimation}", 0)`;
+    const expoQuery = `INSERT INTO Exposition (quota ,nom, type, date_debut, date_fin, heure_debut, heure_fin, estimation, visiteur, description) VALUES (${req.body.quota}, "${req.body.nom}", "${req.body.type}", "${req.body.date_debut}", "${req.body.date_fin}", "${req.body.heure_debut}", "${req.body.heure_fin}", "${req.body.estimation}", 0, "${req.body.description}")`;
     await queryAsync(lieuQuery);
     await queryAsync(expoQuery);
     res.json({ success: true, message: 'Enregistrement réussi' });
