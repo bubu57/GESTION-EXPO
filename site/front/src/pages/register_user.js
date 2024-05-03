@@ -15,6 +15,7 @@ const FormEnregistrements = ({expositionf}) => {
   const [dateDebut, setdateDebut] = useState("01/01/2024");
   const [dateFin, setdateFin] = useState("2024/01/02");
   const [estimation, setEstimation] = useState(0);
+  let [dispo, setdispo] = useState(0);
   
   let [heureliste, setheurelist] = useState([]);
   const [selectedTime, setSelectedTime] = useState('');
@@ -151,7 +152,6 @@ const FormEnregistrements = ({expositionf}) => {
       
       // Pied de page
       const footerText = "© 2024 gestion exposition. Tous droits réservés.";
-      const pageNumber = doc.internal.getNumberOfPages();
       doc.setFontSize(10);
       doc.text(footerText, 105, 280); // Positionnez le texte du pied de page
 
@@ -181,7 +181,8 @@ const FormEnregistrements = ({expositionf}) => {
         count = count + 1;
       }
     }
-    console.log(count)
+    console.log(quota - count);
+    setdispo = quota - count;
     if (count >= quota) {
       return false;
     }
@@ -205,7 +206,7 @@ const FormEnregistrements = ({expositionf}) => {
         }
         if (getresa(response.data, currentTimeString) === false) {
         } else {
-          schedule.push(currentTimeString);
+          schedule.push(`${currentTimeString} - ${dispo} place(s) restante(s)`);
         }
         currentTime.setMinutes(currentTime.getMinutes() + step);
       }
