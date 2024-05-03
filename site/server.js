@@ -81,6 +81,26 @@ app.get('/api/app', async (req, res) => {
   }
 });
 
+app.get('/api/allexpo', async (req, res) => {
+  try {
+    const today = new Date().toISOString().split('T')[0];
+    const expositionQuery = `SELECT *, DATE_FORMAT(date_debut, '%d/%m/%Y') AS date_debut, DATE_FORMAT(date_fin, '%d/%m/%Y') AS date_fin FROM Exposition`;
+    const lieuQuery = 'SELECT * FROM Lieu';
+    const [expositionResults, lieuResults] = await Promise.all([
+      queryAsync(expositionQuery),
+      queryAsync(lieuQuery)
+    ]);
+    const combinedResults = expositionResults.map(exposition => {
+      const lieu = lieuResults.find(l => l.id === exposition.id);
+      return { ...exposition, ville: lieu.ville, numero: lieu.numero, rue: lieu.rue, cp: lieu.code_postal, latitude: lieu.latitude, longitude: lieu.longitude };
+    });
+    res.json(combinedResults);
+  } catch (error) {
+    console.error('Erreur:', error);
+    res.status(500).json({ error: 'Erreur interne du serveur' });
+  }
+});
+
 app.post('/api/quota', async (req, res) => {
   try {
     console.log(req.body);

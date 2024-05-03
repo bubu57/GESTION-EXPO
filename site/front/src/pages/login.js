@@ -212,7 +212,7 @@ const Login = () => {
 
   const fetchExpositions = async () => {
     try {
-      const response = await axios.get('/api/app');
+      const response = await axios.get('/api/allexpo');
       setExpositions(response.data);
     } catch (error) {
       console.error('Erreur lors de la récupération des expositions:', error);
