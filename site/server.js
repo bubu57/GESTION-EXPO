@@ -157,11 +157,13 @@ app.post('/api/dadmins', async (req, res) => {
 app.post('/api/dexpo', async (req, res) => {
   try {
     const query = `DELETE Exposition, Lieu FROM Exposition INNER JOIN Lieu ON Exposition.id = Lieu.id WHERE Exposition.id = ${req.body.id}`;
+    const deluser = `DELETE Visiteur WHERE id_expo = ${req.body.id}`;
     await queryAsync(query);
-    res.json({ success: true, message: 'Enregistrement réussi' });
+    await queryAsync(deluser);
+    res.json({ success: true, message: 'Suppression réussi' });
   } catch (error) {
-    console.error('Erreur lors de la suppression de l\'administrateur :', error);
-    res.status(500).json({ error: 'Erreur lors de la suppression de l\'administrateur :' });
+    console.error('Erreur lors de la suppression de l\'expo :', error);
+    res.status(500).json({ error: 'Erreur lors de la suppression de l\'expo :' });
   }
 });
 
