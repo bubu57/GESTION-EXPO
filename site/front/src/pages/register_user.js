@@ -174,6 +174,8 @@ const FormEnregistrements = ({expositionf}) => {
     }
   };
 
+  let nbplace;
+
   function getresa(list, heure) {
     let count = 0;
     for (let i = 0; i < list.quotanb.length; i++) {
@@ -181,8 +183,7 @@ const FormEnregistrements = ({expositionf}) => {
         count = count + 1;
       }
     }
-    setdispo(quota - count);
-    console.log(quota - count);
+    nbplace = quota - count;
     if (count >= quota) {
       return false;
     }
@@ -206,7 +207,7 @@ const FormEnregistrements = ({expositionf}) => {
         }
         if (getresa(response.data, currentTimeString) === false) {
         } else {
-          schedule.push(`${currentTimeString} - ${dispo} place(s) restante(s)`);
+          schedule.push(`${currentTimeString} - ${nbplace} place(s) restante(s)`);
         }
         currentTime.setMinutes(currentTime.getMinutes() + step);
       }
