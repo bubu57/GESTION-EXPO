@@ -220,8 +220,7 @@ const FormEnregistrements = ({expositionf}) => {
   // Fonction appelée lorsque l'utilisateur choisit une heure
   const handleTimeSelection = (e) => {
     const heurebrt = e.target.value.slice(0, 5);
-    console.log(heurebrt);
-    setSelectedTime(heurebrt);
+    setSelectedTime(e.target.value);
     setFormData({
       ...formData,
       heure: heurebrt,
