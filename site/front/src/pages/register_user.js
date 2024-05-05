@@ -184,6 +184,7 @@ const FormEnregistrements = ({expositionf}) => {
       }
     }
     nbplace = quota - count;
+    console.log(count);
     if (count >= quota) {
       return false;
     }
