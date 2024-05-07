@@ -181,7 +181,7 @@ const FormEnregistrements = ({expositionf}) => {
         count = count + 1;
       }
     }
-    nbplace = quota - count;
+    // nbplace = quota - count;
     console.log(count);
     if (count >= quota) {
       return false;
@@ -205,7 +205,7 @@ const FormEnregistrements = ({expositionf}) => {
         }
         if (getresa(response.data, currentTimeString) === false) {
         } else {
-          schedule.push(`${currentTimeString} - ${nbplace} place(s) restante(s)`);
+          schedule.push(`${currentTimeString} - place(s) restante(s)`);
         }
         currentTime.setMinutes(currentTime.getMinutes() + step);
       }
