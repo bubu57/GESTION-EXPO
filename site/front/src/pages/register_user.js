@@ -174,11 +174,9 @@ const FormEnregistrements = ({expositionf}) => {
     }
   };
 
-  let nbplace;
-
   function getresa(list, heure) {
     let count = 0;
-    for (let i = 0; i < list.quotanb.length; i++) {
+    for (let i = 0; i < list; i++) {
       if (list.quotanb[i].heure && list.quotanb[i].heure.length > 3 && list.quotanb[i].heure.slice(0, -3) === heure) {
         count = count + 1;
       }
@@ -191,7 +189,7 @@ const FormEnregistrements = ({expositionf}) => {
     return true;
   }
 
-  const generateReservationTimes = async (heured, heuref, est, datee) => {
+  const generateReservationTimess = async (heured, heuref, est, datee) => {
     const step = estimation
     const start = new Date(`2000-01-01T${heured}`);
     const end = new Date(`2000-01-01T${heuref}`);
@@ -199,8 +197,7 @@ const FormEnregistrements = ({expositionf}) => {
   
     let currentTime = new Date(start);
   
-    await axios.post('/api/quota', { id_expo: reqData.id_expo, date_debut: datee });
-    await axios.get('/api/quotanb').then(response => {
+    await axios.get('/api/quota', { id_expo: reqData.id_expo, date_debut: datee }).then(response => {
       while (currentTime < end) {
         const currentTimeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         if (currentTime.getMinutes() + step >= end || schedule.includes(currentTimeString)) {
@@ -214,6 +211,29 @@ const FormEnregistrements = ({expositionf}) => {
       }
       setheurelist(schedule);
     });
+  };
+
+
+  const generateReservationTimes = async (heured, heuref, est, datee) => {
+    const step = estimation
+    let nbplace;
+    const start = new Date(`2000-01-01T${heured}`);
+    const end = new Date(`2000-01-01T${heuref}`);
+    const schedule = [];
+  
+    let currentTime = new Date(start);
+
+    while (currentTime < end) {
+      const currentTimeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      await axios.get('/api/quota', { id_expo: reqData.id_expo, date_debut: datee,  heure: currentTimeString}).then(response => {
+        nbplace = response.data;
+      });
+      if (nbplace < quota) {
+        schedule.push(`${currentTimeString} - ${nbplace} place(s) restante(s)`);
+      }
+      currentTime.setMinutes(currentTime.getMinutes() + step);
+    }
+    setheurelist(schedule);
   };
   
   
