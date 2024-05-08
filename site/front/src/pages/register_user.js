@@ -200,13 +200,14 @@ const FormEnregistrements = ({expositionf}) => {
     await axios.get('/api/quotanb').then(response => {
       console.log(response.data);
       while (currentTime < end) {
+        let nbplace = quota - response.data.length;
         const currentTimeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         if (currentTime.getMinutes() + step >= end || schedule.includes(currentTimeString)) {
           break;
         }
         if (getresa(response.data, currentTimeString) === false) {
         } else {
-          schedule.push(currentTimeString);
+          schedule.push(`${currentTimeString} - ${nbplace}`);
         }
         currentTime.setMinutes(currentTime.getMinutes() + step);
       }
