@@ -101,7 +101,7 @@ app.get('/api/allexpo', async (req, res) => {
   }
 });
 
-app.get('/api/quota', async (req, res) => {
+app.post('/api/quota', async (req, res) => {
   try {
     console.log(req.body);
     const expositionQuery = `SELECT * FROM Visiteur WHERE id_expo = ${req.body.id_expo} AND date_entree = '${req.body.date_debut}' AND heure = '${req.body.heure}';`;

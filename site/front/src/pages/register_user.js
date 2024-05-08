@@ -186,7 +186,6 @@ const FormEnregistrements = ({expositionf}) => {
       const currentTimeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   
       // Appel à votre API pour vérifier le quota pour ce créneau horaire et cette date
-      console.log(dateDebut)
       await axios.get('/api/quota', { id_expo: expositionf.id, date_debut: dateDebut, heure: currentTimeString })
         .then(response => {
           const nbPlacesRestantes = quota - response.data;
