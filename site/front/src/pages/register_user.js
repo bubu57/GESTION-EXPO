@@ -174,35 +174,45 @@ const FormEnregistrements = ({expositionf}) => {
     }
   };
 
-  const generateReservationTimes = async (heureDebut, heureFin, estimation, dateDebut) => {
-    const step = estimation;
-    const start = new Date(`2000-01-01T${heureDebut}`);
-    const end = new Date(`2000-01-01T${heureFin}`);
-    const schedule = [];
 
-    let currentTime = new Date(start);
-
-    while (currentTime < end) {
-      const currentTimeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  
-      // Appel à votre API pour vérifier le quota pour ce créneau horaire et cette date
-      await axios.get('/api/quota', { id_expo: expositionf.id, date_debut: dateDebut, heure: currentTimeString })
-        .then(response => {
-          const nbPlacesRestantes = quota - response.data;
-          if (nbPlacesRestantes > 0) {
-            schedule.push(`${currentTimeString} - ${nbPlacesRestantes} place(s) restante(s)`);
-          }
-        })
-        .catch(error => {
-          console.error('Erreur lors de la récupération du quota :', error);
-        });
-  
-      currentTime.setMinutes(currentTime.getMinutes() + step);
+  function getresa(list, heure) {
+    let count = 0;
+    for (let i = 0; i < list.quotanb.length; i++) {
+      if (list.quotanb[i].heure && list.quotanb[i].heure.length > 3 && list.quotanb[i].heure.slice(0, -3) === heure) {
+        count = count + 1
+      }
     }
+    if (count >= quota) {
+      return false
+    }
+    return true
+  }
+
+  const generateReservationTimes = async (heured, heuref, est, datee) => {
+    const step = estimation
+    const start = new Date(`2000-01-01T${heured}`);
+    const end = new Date(`2000-01-01T${heuref}`);
+    const schedule = [];
   
-    setheurelist(schedule);
+    let currentTime = new Date(start);
+  
+    await axios.post('/api/quota', { id_expo: reqData.id_expo, date_debut: datee });
+    await axios.get('/api/quotanb').then(response => {
+      console.log(response.data);
+      while (currentTime < end) {
+        const currentTimeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        if (currentTime.getMinutes() + step >= end || schedule.includes(currentTimeString)) {
+          break;
+        }
+        if (getresa(response.data, currentTimeString) === false) {
+        } else {
+          schedule.push(currentTimeString);
+        }
+        currentTime.setMinutes(currentTime.getMinutes() + step);
+      }
+      setheurelist(schedule);
+    });
   };
-  
   
   
 

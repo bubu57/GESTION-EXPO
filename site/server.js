@@ -104,9 +104,10 @@ app.get('/api/allexpo', async (req, res) => {
 app.post('/api/quota', async (req, res) => {
   try {
     console.log(req.body);
-    const expositionQuery = `SELECT * FROM Visiteur WHERE id_expo = ${req.body.id_expo} AND date_entree = '${req.body.date_debut}' AND heure = '${req.body.heure}';`;
+    const expositionQuery = `SELECT * FROM Visiteur WHERE id_expo = ${req.body.id_expo} AND date_entree = '${req.body.date_debut}';`;
     const expositionResults = await queryAsync(expositionQuery);
-    res.json(expositionResults);
+    quotanb = expositionResults;
+    res.json("get quota");
   } catch (error) {
     console.error('Erreur lors de la récupération des données de la table Visiteur:', error);
     res.status(500).json({ error: 'Erreur interne du serveur' });
