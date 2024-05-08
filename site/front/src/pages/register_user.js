@@ -174,67 +174,35 @@ const FormEnregistrements = ({expositionf}) => {
     }
   };
 
-  function getresa(list, heure) {
-    let count = 0;
-    for (let i = 0; i < list; i++) {
-      if (list.quotanb[i].heure && list.quotanb[i].heure.length > 3 && list.quotanb[i].heure.slice(0, -3) === heure) {
-        count = count + 1;
-      }
-    }
-    // nbplace = quota - count;
-    console.log(count);
-    if (count >= quota) {
-      return false;
-    }
-    return true;
-  }
-
-  const generateReservationTimess = async (heured, heuref, est, datee) => {
-    const step = estimation
-    const start = new Date(`2000-01-01T${heured}`);
-    const end = new Date(`2000-01-01T${heuref}`);
+  const generateReservationTimes = async (heureDebut, heureFin, estimation, dateDebut) => {
+    const step = estimation;
+    const start = new Date(`2000-01-01T${heureDebut}`);
+    const end = new Date(`2000-01-01T${heureFin}`);
     const schedule = [];
   
     let currentTime = new Date(start);
   
-    await axios.get('/api/quota', { id_expo: reqData.id_expo, date_debut: datee }).then(response => {
-      while (currentTime < end) {
-        const currentTimeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        if (currentTime.getMinutes() + step >= end || schedule.includes(currentTimeString)) {
-          break;
-        }
-        if (getresa(response.data, currentTimeString) === false) {
-        } else {
-          schedule.push(`${currentTimeString} - place(s) restante(s)`);
-        }
-        currentTime.setMinutes(currentTime.getMinutes() + step);
-      }
-      setheurelist(schedule);
-    });
-  };
-
-
-  const generateReservationTimes = async (heured, heuref, est, datee) => {
-    const step = estimation
-    let nbplace;
-    const start = new Date(`2000-01-01T${heured}`);
-    const end = new Date(`2000-01-01T${heuref}`);
-    const schedule = [];
-  
-    let currentTime = new Date(start);
-
     while (currentTime < end) {
       const currentTimeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      await axios.get('/api/quota', { id_expo: reqData.id_expo, date_debut: datee,  heure: currentTimeString}).then(response => {
-        nbplace = response.data;
-      });
-      if (nbplace < quota) {
-        schedule.push(`${currentTimeString} - ${nbplace} place(s) restante(s)`);
-      }
+  
+      // Appel à votre API pour vérifier le quota pour ce créneau horaire et cette date
+      await axios.get('/api/quota', { id_expo: reqData.id_expo, date_debut: dateDebut, heure: currentTimeString })
+        .then(response => {
+          const nbPlacesRestantes = quota - response.data;
+          if (nbPlacesRestantes > 0) {
+            schedule.push(`${currentTimeString} - ${nbPlacesRestantes} place(s) restante(s)`);
+          }
+        })
+        .catch(error => {
+          console.error('Erreur lors de la récupération du quota :', error);
+        });
+  
       currentTime.setMinutes(currentTime.getMinutes() + step);
     }
+  
     setheurelist(schedule);
   };
+  
   
   
 
