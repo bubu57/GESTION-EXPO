@@ -201,6 +201,8 @@ const FormEnregistrements = ({expositionf}) => {
       console.log(response.data);
       while (currentTime < end) {
         let nbplace = quota - response.data.length;
+        console.log(response.data.length)
+        console.log(quota)
         const currentTimeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         if (currentTime.getMinutes() + step >= end || schedule.includes(currentTimeString)) {
           break;
