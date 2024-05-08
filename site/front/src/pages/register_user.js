@@ -207,7 +207,7 @@ const FormEnregistrements = ({expositionf}) => {
         }
         if (getresa(response.data, currentTimeString) === false) {
         } else {
-          schedule.push(`${currentTimeString} - ${nbplace}`);
+          schedule.push(`${currentTimeString} - ${nbplace} place(s) restante(s)`);
         }
         currentTime.setMinutes(currentTime.getMinutes() + step);
       }
