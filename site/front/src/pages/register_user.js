@@ -186,6 +186,7 @@ const FormEnregistrements = ({expositionf}) => {
     return(count);
   }
 
+  
   const generateReservationTimes = async (heured, heuref, est, datee) => {
     const step = estimation
     const start = new Date(`2000-01-01T${heured}`);
