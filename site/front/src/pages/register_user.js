@@ -183,10 +183,7 @@ const FormEnregistrements = ({expositionf}) => {
       }
     }
     console.log(count);
-    if (count >= quota) {
-      return false
-    }
-    return true
+    return(count);
   }
 
   const generateReservationTimes = async (heured, heuref, est, datee) => {
@@ -201,14 +198,15 @@ const FormEnregistrements = ({expositionf}) => {
     await axios.get('/api/quotanb').then(response => {
       console.log(response.data);
       while (currentTime < end) {
-        let nbplace = quota - response.data.quotanb.length;
         const currentTimeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         if (currentTime.getMinutes() + step >= end || schedule.includes(currentTimeString)) {
           break;
         }
-        if (getresa(response.data, currentTimeString) === false) {
+        let checkplace = getresa(response.data, currentTimeString);
+        let nbplaces = quota - checkplace;
+        if (checkplace >= quota) {
         } else {
-          schedule.push(`${currentTimeString} - ${nbplace} place(s) restante(s)`);
+          schedule.push(`${currentTimeString} - ${nbplaces} place(s) restante(s)`);
         }
         currentTime.setMinutes(currentTime.getMinutes() + step);
       }
