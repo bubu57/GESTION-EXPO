@@ -179,14 +179,15 @@ const FormEnregistrements = ({expositionf}) => {
     const start = new Date(`2000-01-01T${heureDebut}`);
     const end = new Date(`2000-01-01T${heureFin}`);
     const schedule = [];
-  
+
     let currentTime = new Date(start);
-  
+
     while (currentTime < end) {
       const currentTimeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   
       // Appel à votre API pour vérifier le quota pour ce créneau horaire et cette date
-      await axios.get('/api/quota', { id_expo: reqData.id_expo, date_debut: dateDebut, heure: currentTimeString })
+      console.log(dateDebut)
+      await axios.get('/api/quota', { id_expo: expositionf.id, date_debut: dateDebut, heure: currentTimeString })
         .then(response => {
           const nbPlacesRestantes = quota - response.data;
           if (nbPlacesRestantes > 0) {
