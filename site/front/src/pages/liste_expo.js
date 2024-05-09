@@ -12,6 +12,7 @@ const ListesExpos = () => {
   const [villeFiltre, setVilleFiltre] = useState('');
   const [dateFiltre, setDateFiltre] = useState('');
   const [heureFiltre, setHeureFiltre] = useState('');
+  const [statutFiltre, setStatutFiltre] = useState(''); // Nouvel état pour le statut sélectionné
   const [expositionsFiltrees, setExpositionsFiltrees] = useState([]);
   const [expositionSelectionnee, setExpositionSelectionnee] = useState(null);
   let [detail, setDetail] = useState(0);
@@ -35,11 +36,9 @@ const ListesExpos = () => {
       });
   }, []);
 
-
   const handlefiltres = () => {
     setShowSearch(!showSearch); // Inverser l'état pour afficher ou masquer la section de recherche
   };
-  
 
   // filtrer par ville
   useEffect(() => {
@@ -111,6 +110,24 @@ const ListesExpos = () => {
     setHeureFiltre(e.target.value);
   };
 
+  // Filtrer par statut
+  useEffect(() => {
+    // Si aucun statut n'est sélectionné, afficher toutes les expositions
+    if (!statutFiltre) {
+      setExpositionsFiltrees(expositions);
+      return;
+    }
+
+    // Filtrer les expositions en fonction du statut sélectionné
+    const expositionsFiltrees = expositions.filter(expo => getExpoStatus(expo) === statutFiltre);
+    
+    // Mettre à jour les expositions filtrées
+    setExpositionsFiltrees(expositionsFiltrees);
+  }, [statutFiltre, expositions]);
+
+  const handleStatutChange = (e) => {
+    setStatutFiltre(e.target.value);
+  };
 
   // Fonction pour obtenir le statut d'une exposition
   const getExpoStatus = (expo) => {
@@ -128,8 +145,6 @@ const ListesExpos = () => {
     const status = getExpoStatus(expo);
     return status === 'À venir' ? 'status-coming' : 'status-in-progress';
   };
-
-
 
   // Fonction pour afficher les détails
   const handleVoirPlusClick = (expo) => {
@@ -186,9 +201,21 @@ const ListesExpos = () => {
                   onChange={handleHeureInputChange}
                 />
               </div>
+
+              <div className='acceuil-div-input'>
+                <p>Statut</p>
+                <select
+                  className='acceuil-input'
+                  value={statutFiltre}
+                  onChange={handleStatutChange}
+                >
+                  <option value="">Tous</option>
+                  <option value="À venir">À venir</option>
+                  <option value="En cours">En cours</option>
+                </select>
+              </div>
             </div>
           )}
-
 
           {expositionsFiltrees.map((expo, index) => (
             <div key={index} className='acceuil-expo'>
