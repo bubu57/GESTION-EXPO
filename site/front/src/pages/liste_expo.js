@@ -140,7 +140,6 @@ const ListesExpos = () => {
   const getExpoStatus = (expo) => {
     const now = dayjs().format('YYYY-MM-DD');
     const datedebut = convertDateToISO(expo.date_debut)
-    console.log(now, datedebut, `${expo.date_debut}`)
     if (datedebut > now) {
       return 'À venir';
     } else {
