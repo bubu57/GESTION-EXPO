@@ -136,9 +136,9 @@ const ListesExpos = () => {
     const datedebut = new Date(`${expo.date_debut}`)
 
 
-    console.log(now, datedebut);
+    console.log(now, expo.date_debut);
   
-    if (datedebut < now) {
+    if (expo.date_debut < now) {
       return 'À venir';
     } else {
       return 'En cours';
