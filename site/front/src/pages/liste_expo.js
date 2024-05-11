@@ -14,8 +14,10 @@ const ListesExpos = () => {
   const [dateFiltre, setDateFiltre] = useState('');
   const [heureFiltre, setHeureFiltre] = useState('');
   const [statutFiltre, setStatutFiltre] = useState(''); // Nouvel état pour le statut sélectionné
+  const [typeFiltre, setTypeFiltre] = useState('');
   const [expositionsFiltrees, setExpositionsFiltrees] = useState([]);
   const [expositionSelectionnee, setExpositionSelectionnee] = useState(null);
+  const [types, setTypes] = useState([]);
   let [detail, setDetail] = useState(0);
   const [showSearch, setShowSearch] = useState(false);
 
@@ -30,6 +32,8 @@ const ListesExpos = () => {
       })
       .then(data => {
         setExpositions(data);
+        const typesSet = new Set(data.map(expo => expo.type)); // Utilisation d'un ensemble pour garantir l'unicité des types
+        setTypes(Array.from(typesSet)); // Convertir l'ensemble en tableau et définir l'état
         console.log(data);
       })
       .catch(error => {
@@ -222,6 +226,20 @@ const ListesExpos = () => {
                   <option value="En cours">En cours</option>
                 </select>
               </div>
+
+              <div className='acceuil-div-input'>
+                <p>Type</p>
+                <select
+                  className='acceuil-input'
+                  value={typeFiltre}
+                  onChange={handleTypeChange}
+                >
+                  <option value="">Tous</option>
+                  {types.map((type, index) => (
+                    <option key={index} value={type}>{type}</option>
+                  ))}
+                </select>
+              </div>           
             </div>
           )}
 
