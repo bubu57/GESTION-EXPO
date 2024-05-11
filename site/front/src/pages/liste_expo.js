@@ -139,7 +139,7 @@ const ListesExpos = () => {
 
     console.log(formattedDate, expo.date_debut);
   
-    if (expoDateDebut < formattedDate) {
+    if (expo.date_debut < formattedDate) {
       return 'À venir';
     } else {
       return 'En cours';
