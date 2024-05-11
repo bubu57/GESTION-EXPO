@@ -12,7 +12,7 @@ const FormEnregistrements = ({expositionf}) => {
   const [expositions, setExpositions] = useState([]);
   const [dat, setdat] = useState(true);
   const [quota, setQuota] = useState(0);
-  const [dateDebut, setdateDebut] = useState("01/01/2024");
+  const [dateDebut, setdateDebut] = useState("2024/01/01");
   const [dateFin, setdateFin] = useState("2024/01/02");
   const [estimation, setEstimation] = useState(0);
   let [dispo, setdispo] = useState(0);
@@ -50,7 +50,7 @@ const FormEnregistrements = ({expositionf}) => {
     const now = dayjs().format('YYYY-MM-DD');
     const datedeb = convertDateToISO(expositionf.date_debut)
     if (datedeb < now) {
-      setdateDebut(now)
+      setdateDebut(dayjs().format('YYYY-MM-DD'))
     } else {
       setdateDebut(expositionf.date_debut);
     }
