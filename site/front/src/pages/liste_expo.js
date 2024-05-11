@@ -132,16 +132,13 @@ const ListesExpos = () => {
 
   // Fonction pour obtenir le statut d'une exposition
   const getExpoStatus = (expo) => {
-    const now = dayjs().format('DD/MM/YYYY')
-    const datedebut = new Date(`${expo.date_debut}`)
+    const now = dayjs().format('DD/MM/YYYY');
+    const datedebut = dayjs(expo.date_debut).format('DD/MM/YYYY');
 
-
-    console.log(now, expo.date_debut);
-  
-    if (expo.date_debut < now) {
-      return 'À venir';
-    } else {
+    if (datedebut < now) {
       return 'En cours';
+    } else {
+      return 'À venir';
     }
   };
 
