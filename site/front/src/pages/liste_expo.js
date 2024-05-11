@@ -134,6 +134,7 @@ const ListesExpos = () => {
   const getExpoStatus = (expo) => {
     const now = dayjs().format('YYYY-MM-DD');
     const datedebut = dayjs(expo.date_debut).format('YYYY-MM-DD');
+    console.log(now, datedebut)
     if (datedebut > now) {
       return 'À venir';
     } else {
