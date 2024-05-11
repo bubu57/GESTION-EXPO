@@ -130,10 +130,16 @@ const ListesExpos = () => {
     setStatutFiltre(e.target.value);
   };
 
+  function convertDateToISO(dateInput) {
+    const parts = dateInput.split("/");
+    const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+    return formattedDate;
+  }
+
   // Fonction pour obtenir le statut d'une exposition
   const getExpoStatus = (expo) => {
     const now = dayjs().format('YYYY-MM-DD');
-    const datedebut = dayjs(expo.date_debut).format('YYYY-MM-DD');
+    const datedebut = convertDateToISO(expo.date_debut)
     console.log(now, datedebut, `${expo.date_debut}`)
     if (datedebut > now) {
       return 'À venir';
