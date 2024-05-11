@@ -137,7 +137,7 @@ const ListesExpos = () => {
     const formattedDate = dayjs(now).format('DD/MM/YYYY');
     const expoDateDebut = dayjs(datedeb).format('DD/MM/YYYY');
 
-    console.log(formattedDate, expo.date_debut);
+    console.log(formattedDate, datedeb);
   
     if (expo.date_debut < formattedDate) {
       return 'À venir';
