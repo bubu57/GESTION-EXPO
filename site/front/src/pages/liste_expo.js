@@ -132,13 +132,13 @@ const ListesExpos = () => {
   // Fonction pour obtenir le statut d'une exposition
   const getExpoStatus = (expo) => {
     const now = new Date();
-    const startDate = new Date(expo.date_debut);
-    const date = new Date(expo.date_debut);
-    const formattedDate = date.toLocaleDateString('fr-FR');
-    console.log(formattedDate)
+    const nowformateddate = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const startdate = new Date(`2000-01-01T${expo.date_debut}`);;
+    const formattedDate = startdate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    console.log(nowformateddate);
+    console.log(formattedDate);
 
-    console.log(now);
-    if (now < startDate) {
+    if (nowformateddate < formattedDate) {
       return 'À venir';
     } else {
       return 'En cours';
