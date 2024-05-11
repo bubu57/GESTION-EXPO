@@ -137,7 +137,7 @@ const ListesExpos = () => {
     const startdate = new Date(expo.date_debut);;
     const formattedDate = startdate
     console.log(nowformateddate);
-    console.log(formattedDate);
+    console.log(startdate);
 
     if (nowformateddate < formattedDate) {
       return 'À venir';
