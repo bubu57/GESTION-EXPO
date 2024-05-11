@@ -133,8 +133,8 @@ const ListesExpos = () => {
   const getExpoStatus = (expo) => {
     const now = new Date();
     const startDate = new Date(expo.date_debut);
-    console.log(expo.date_debut);
     console.log(startDate);
+    console.log(now);
     if (now < startDate) {
       return 'À venir';
     } else {
