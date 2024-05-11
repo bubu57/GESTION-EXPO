@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import dayjs from 'dayjs';
 import Footer from './footer.js';
 import Header from './header.js'
 import Form from './register_user.js'
@@ -132,9 +133,9 @@ const ListesExpos = () => {
   // Fonction pour obtenir le statut d'une exposition
   const getExpoStatus = (expo) => {
     const now = new Date();
-    const nowformateddate = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const nowformateddate = now
     const startdate = new Date(expo.date_debut);;
-    const formattedDate = startdate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const formattedDate = startdate
     console.log(nowformateddate);
     console.log(formattedDate);
 
