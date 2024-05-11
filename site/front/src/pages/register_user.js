@@ -47,9 +47,10 @@ const FormEnregistrements = ({expositionf}) => {
     console.log(expositionf.id)
     setQuota(expositionf.quota);
     setdateDebut(expositionf.date_debut);
-    console.log(convertDateToISO(dateDebut));
-    if (new Date(`${convertDateToISO(dateDebut)}`) > new Date(`${dayjs().format('YYYY-MM-DD')}`)) {
-      setdateDebut(dayjs().format('DD/MM/YYYY'))
+    const now = dayjs().format('YYYY-MM-DD');
+    const datedebut = convertDateToISO(dateDebut)
+    if (datedebut < now) {
+      setdateDebut(now)
     }
     setdateFin(expositionf.date_fin);
     setHeured(expositionf.heure_debut);
