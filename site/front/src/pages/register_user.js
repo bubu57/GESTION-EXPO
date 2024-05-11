@@ -50,17 +50,12 @@ const FormEnregistrements = ({expositionf}) => {
     const now = dayjs().format('YYYY-MM-DD');
     const datedeb = convertDateToISO(expositionf.date_debut)
     if (datedeb <= now) {
-      if (expositionf.heure_debut < dayjs().format('HH:mm')) {
-        setHeured(dayjs().format('HH:mm'))
-      } else {
-        setHeured(expositionf.heure_debut)
-      }
       setdateDebut(dayjs().format('DD/MM/YYYY'))
       console.log(dayjs().format('YYYY-MM-DD'))
     } else {
-      setHeured(expositionf.heure_debut)
       setdateDebut(expositionf.date_debut);
     }
+    setHeured(expositionf.heure_debut)
     setdateFin(expositionf.date_fin);
     setHeuref(expositionf.heure_fin);
     setEstimation(expositionf.estimation);
@@ -108,8 +103,13 @@ const FormEnregistrements = ({expositionf}) => {
       ...formData,
       date_debut: e.target.value,
     });
-    if 
-    generateReservationTimes(heured, heuref, estimation, e.target.value);
+
+    const now = dayjs().format('YYYY-MM-DD');
+    if (e.target.value == now) {
+      generateReservationTimes(dayjs().format('HH:mm'), heuref, estimation, e.target.value);
+    } else {
+      generateReservationTimes(heured, heuref, estimation, e.target.value);
+    }
   };
 
   function convertDateToISO(dateInput) {
