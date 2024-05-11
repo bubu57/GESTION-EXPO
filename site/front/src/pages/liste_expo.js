@@ -134,6 +134,19 @@ const ListesExpos = () => {
     setStatutFiltre(e.target.value);
   };
 
+  useEffect(() => {
+    // Filtrer les expositions en fonction du type sélectionné
+    const expositionsFiltrees = expositions.filter(expo => {
+      return typeFiltre === '' || expo.type.toLowerCase() === typeFiltre.toLowerCase();
+    });
+
+    setExpositionsFiltrees(expositionsFiltrees);
+  }, [typeFiltre, expositions]);
+
+  const handleTypeChange = (e) => {
+    setTypeFiltre(e.target.value);
+  };
+
   function convertDateToISO(dateInput) {
     const parts = dateInput.split("/");
     const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
