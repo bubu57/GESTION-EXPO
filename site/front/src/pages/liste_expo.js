@@ -133,7 +133,7 @@ const ListesExpos = () => {
   const getExpoStatus = (expo) => {
     const now = new Date();
     const nowformateddate = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    const startdate = new Date(`2000-01-01T${expo.date_debut}`);;
+    const startdate = new Date(expo.date_debut);;
     const formattedDate = startdate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     console.log(nowformateddate);
     console.log(formattedDate);
