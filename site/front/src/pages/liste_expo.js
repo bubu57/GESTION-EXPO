@@ -135,6 +135,8 @@ const ListesExpos = () => {
     const now = dayjs().format('DD/MM/YYYY');
     const datedebut = dayjs(expo.date_debut).format('DD/MM/YYYY');
 
+    console.log(now, datedebut)
+
     if (datedebut < now) {
       return 'En cours';
     } else {
