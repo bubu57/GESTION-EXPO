@@ -133,7 +133,10 @@ const ListesExpos = () => {
   const getExpoStatus = (expo) => {
     const now = new Date();
     const startDate = new Date(expo.date_debut);
-    console.log(startDate);
+    const date = new Date(expo.date_debut);
+    const formattedDate = date.toLocaleDateString('fr-FR');
+    console.log(formattedDate)
+
     console.log(now);
     if (now < startDate) {
       return 'À venir';
