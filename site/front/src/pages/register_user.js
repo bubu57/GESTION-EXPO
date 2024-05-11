@@ -51,6 +51,7 @@ const FormEnregistrements = ({expositionf}) => {
     const datedeb = convertDateToISO(expositionf.date_debut)
     if (datedeb < now) {
       setdateDebut(dayjs().format('YYYY-MM-DD'))
+      console.log(dayjs().format('YYYY-MM-DD'))
     } else {
       setdateDebut(expositionf.date_debut);
     }
