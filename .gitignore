@@ -1,4 +1,4 @@
 site/node_modules
+site/.env
 node_modules
 .idx
-site/.env
