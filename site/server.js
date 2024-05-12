@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mysql = require('mysql2');
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 
