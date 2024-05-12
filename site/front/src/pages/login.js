@@ -59,7 +59,7 @@ const Login = () => {
 
   const autoCompleterAdresse = async (adresse) => {
     // Utiliser l'API de géocodage de Google Maps pour obtenir des suggestions d'adresse
-    const apiKey = 'AIzaSyDsRLiCf-00haCE_rSfT0klkQ9ite7g0z8';
+    const apiKey = '';
     const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${adresse}&key=${apiKey}`;
 
     try {
@@ -88,7 +88,8 @@ const Login = () => {
 
   const getLatitudeLongitude = async (adresse) => {
     // Utiliser l'API de géocodage de Google Maps pour obtenir la latitude et la longitude
-    const apiKey = 'AIzaSyDsRLiCf-00haCE_rSfT0klkQ9ite7g0z8';
+    // AJOUTER API
+    const apiKey = '';
     const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${adresse}&key=${apiKey}`;
 
     try {
