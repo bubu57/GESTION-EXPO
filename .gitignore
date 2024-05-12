@@ -1,5 +1,5 @@
 site/node_modules
-.env
+site/config
 .vscode
 node_modules
 .idx
