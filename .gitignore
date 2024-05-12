@@ -1,3 +1,4 @@
 site/node_modules
 node_modules
 .idx
+front/.env
