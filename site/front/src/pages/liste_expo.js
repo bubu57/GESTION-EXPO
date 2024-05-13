@@ -209,10 +209,11 @@ const ListesExpos = () => {
                 <p>Date</p>
                 <input
                   className='acceuil-input'
-                  type="text"
+                  type="date"
                   placeholder="jj/mm/aaaa"
                   value={dateFiltre}
                   onChange={handleDateInputChange}
+                  readonly
                 />
               </div>
 
