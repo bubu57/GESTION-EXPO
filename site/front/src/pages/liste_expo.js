@@ -74,9 +74,7 @@ const ListesExpos = () => {
       // Filtrer les expositions en fonction de la date
       const expositionsFiltrees = expositions.filter(expo => {
         const dateFiltreLowerCase = dateFiltre.toLowerCase();
-        console.log(dateFiltre);
         const dateDebutLowerCase = convertDateToISO(expo.date_debut).toLowerCase();
-        console.log(expo.date_debut)
         const dateFinLowerCase = convertDateToISO(expo.date_fin).toLowerCase();
         
         // Vérifier si la date filtrée est comprise entre la date de début et la date de fin de chaque exposition
@@ -223,10 +221,11 @@ const ListesExpos = () => {
                 <p>Heure</p>
                 <input
                   className='acceuil-input'
-                  type="text"
+                  type="time"
                   placeholder="15:30"
                   value={heureFiltre}
                   onChange={handleHeureInputChange}
+                  readonly
                 />
               </div>
 
