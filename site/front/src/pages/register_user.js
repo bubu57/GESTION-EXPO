@@ -376,7 +376,7 @@ const FormEnregistrements = ({expositionf}) => {
             </div>
             <div className='div-input'>
               <p>Nombre de places</p>
-              <select className='select-exposition' value={selectedPlace} onChange={handlePlaceSelection}>
+              <select className='select-exposition' value={selectedPlaces} onChange={handlePlaceSelection}>
                 <option value="">Sélectionner le nombre de places</option>
                 {places.map((time, index) => (
                   <option key={index} value={time}>{time}</option>
