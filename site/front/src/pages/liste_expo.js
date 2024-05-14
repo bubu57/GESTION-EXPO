@@ -21,6 +21,12 @@ const ListesExpos = () => {
   let [detail, setDetail] = useState(0);
   const [showSearch, setShowSearch] = useState(false);
 
+  function convertDateToISO(dateInput) {
+    const parts = dateInput.split("/");
+    const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+    return formattedDate;
+  }
+
   useEffect(() => {
     fetch('/api/app')
       .then(response => {
@@ -69,9 +75,9 @@ const ListesExpos = () => {
       const expositionsFiltrees = expositions.filter(expo => {
         const dateFiltreLowerCase = dateFiltre.toLowerCase();
         console.log(dateFiltre);
-        const dateDebutLowerCase = expo.date_debut.toLowerCase();
+        const dateDebutLowerCase = convertDateToISO(expo.date_debut).toLowerCase();
         console.log(expo.date_debut)
-        const dateFinLowerCase = expo.date_fin.toLowerCase();
+        const dateFinLowerCase = convertDateToISO(expo.date_fin).toLowerCase();
         
         // Vérifier si la date filtrée est comprise entre la date de début et la date de fin de chaque exposition
         return dateDebutLowerCase <= dateFiltreLowerCase && dateFiltreLowerCase <= dateFinLowerCase;
@@ -148,12 +154,6 @@ const ListesExpos = () => {
   const handleTypeChange = (e) => {
     setTypeFiltre(e.target.value);
   };
-
-  function convertDateToISO(dateInput) {
-    const parts = dateInput.split("/");
-    const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
-    return formattedDate;
-  }
 
   // Fonction pour obtenir le statut d'une exposition
   const getExpoStatus = (expo) => {
