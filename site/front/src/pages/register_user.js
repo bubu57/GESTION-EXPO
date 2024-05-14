@@ -22,6 +22,7 @@ const FormEnregistrements = ({expositionf}) => {
   const [heured, setHeured] = useState('');
   const [places, setplaces] = useState(1);
   const [selectedPlaces, setSelectedPlaces] = useState(1);
+  const [placeslist, setPlacesList] = useState([]);
   const [heuref, setHeuref] = useState('');
   const [nomexpo, setNomexpo] =  useState('');
   const [Adresse, setAdresse] =  useState('');
@@ -231,7 +232,7 @@ const FormEnregistrements = ({expositionf}) => {
 
   // Fonction appelée lorsque l'utilisateur choisit une heure
   const handleTimeSelection = (e) => {
-    console.log(e.target.value.slice(31, 999))
+    generatePlace(e.target.value.slice(31, 999))
     const heurebrt = e.target.value.slice(0, 5);
     setSelectedTime(e.target.value);
     setFormData({
@@ -240,7 +241,22 @@ const FormEnregistrements = ({expositionf}) => {
     });
   };
 
-  const handlePlaceSelection = (e) => {
+  const generatePlace = async (nbplace) => {
+    const schedule = [];
+    let y = 1;
+    for (i = 1; i != 10; i++) {
+      if (i >= nbplace) {
+        break
+      } else {
+        y++;
+        schedule.push(y);
+      }
+    }
+    setPlacesList(schedule)
+  }
+
+  const handlePlacesSelection = (e) => {
+    setSelectedPlaces(e.target.value);
     setFormData({
       ...formData,
       places: e.target.value,
@@ -370,6 +386,15 @@ const FormEnregistrements = ({expositionf}) => {
               <select className='select-exposition' value={selectedTime} onChange={handleTimeSelection}>
                 <option value="">Sélectionner une heure</option>
                 {heureliste.map((time, index) => (
+                  <option key={index} value={time}>{time}</option>
+                ))}
+              </select>
+            </div>
+            <div className='div-input'>
+              <p>Nombre de places</p>
+              <select className='select-places' value={selectedPlaces} onChange={handlePlacesSelection}>
+                <option value="">Sélectionner un nombre de places</option>
+                {placeslist.map((time, index) => (
                   <option key={index} value={time}>{time}</option>
                 ))}
               </select>
