@@ -243,7 +243,7 @@ const FormEnregistrements = ({expositionf}) => {
 
   const generatePlace = async (nbplace) => {
     const schedule = [];
-    let y = 1;
+    let y = 0;
     let i = 1
     for (i; i != 10; i++) {
       if (i >= nbplace) {
