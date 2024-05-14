@@ -309,7 +309,6 @@ const FormEnregistrements = ({expositionf}) => {
     e.preventDefault();
     try {
       // Enregistrer les données dans la base de données
-      console.log(formData)
       const response = await fetch('/api/register_user', {
         method: 'POST',
         headers: {
