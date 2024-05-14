@@ -219,7 +219,7 @@ const FormEnregistrements = ({expositionf}) => {
         let nbplaces = quota - checkplace;
         if (checkplace >= quota) {
         } else {
-          schedule.push(`${currentTimeString} - ${nbplaces} place(s) restante(s)`);
+          schedule.push(`${currentTimeString} - place(s) restante(s) : ${nbplaces}`);
         }
         currentTime.setMinutes(currentTime.getMinutes() + step);
       }
@@ -231,7 +231,7 @@ const FormEnregistrements = ({expositionf}) => {
 
   // Fonction appelée lorsque l'utilisateur choisit une heure
   const handleTimeSelection = (e) => {
-    console.log(e.target.value.slice(8, 10))
+    console.log(e.target.value.slice(29, 999))
     const heurebrt = e.target.value.slice(0, 5);
     setSelectedTime(e.target.value);
     setFormData({
