@@ -70,6 +70,7 @@ const ListesExpos = () => {
         const dateFiltreLowerCase = dateFiltre.toLowerCase();
         console.log(dateFiltre);
         const dateDebutLowerCase = expo.date_debut.toLowerCase();
+        console.log(expo.date_debut)
         const dateFinLowerCase = expo.date_fin.toLowerCase();
         
         // Vérifier si la date filtrée est comprise entre la date de début et la date de fin de chaque exposition
