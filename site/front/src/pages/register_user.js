@@ -258,6 +258,7 @@ const FormEnregistrements = ({expositionf}) => {
 
   const handlePlacesSelection = (e) => {
     setSelectedPlaces(e.target.value);
+    console.log(e.target.value)
     setFormData({
       ...formData,
       places: e.target.value,
