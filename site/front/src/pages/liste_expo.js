@@ -153,6 +153,15 @@ const ListesExpos = () => {
     setTypeFiltre(e.target.value);
   };
 
+  const resetFilters = () => {
+    setVilleFiltre('');
+    setDateFiltre('');
+    setHeureFiltre('');
+    setStatutFiltre('');
+    setTypeFiltre('');
+    setExpositionsFiltrees(expositions);
+  };
+
   // Fonction pour obtenir le statut d'une exposition
   const getExpoStatus = (expo) => {
     const now = dayjs().format('YYYY-MM-DD');
@@ -192,6 +201,7 @@ const ListesExpos = () => {
 
         <div className='acceuil-content'>
           <Button color="success" variant="text" onClick={() => handlefiltres()}>Filtres</Button>
+          <Button color="warning" variant="text" onClick={() => resetFilters()}>Effacer les filtres</Button>
           {showSearch && (
             <div className='acceuil-search'>
               <div className='acceuil-div-input'>
