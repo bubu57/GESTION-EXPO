@@ -231,6 +231,7 @@ const FormEnregistrements = ({expositionf}) => {
 
   // Fonction appelée lorsque l'utilisateur choisit une heure
   const handleTimeSelection = (e) => {
+    console.log(e.target.value.slice(8, 10))
     const heurebrt = e.target.value.slice(0, 5);
     setSelectedTime(e.target.value);
     setFormData({
@@ -239,9 +240,11 @@ const FormEnregistrements = ({expositionf}) => {
     });
   };
 
-  const handlePlacesSelection = (e) => {
-    const selectedPlaces = parseInt(e.target.value);
-    setSelectedPlaces(selectedPlaces);
+  const handlePlaceSelection = (e) => {
+    setFormData({
+      ...formData,
+      places: e.target.value,
+    });
   };
 
   const sendMail = async () => {
@@ -373,12 +376,10 @@ const FormEnregistrements = ({expositionf}) => {
             </div>
             <div className='div-input'>
               <p>Nombre de places</p>
-              <select
-                value={selectedPlaces}
-                onChange={handlePlacesSelection}
-              >
-                {[...Array(Math.min(10, places) + 1).keys()].slice(1).map((place) => (
-                  <option key={place} value={place}>{place}</option>
+              <select className='select-exposition' value={selectedPlace} onChange={handlePlaceSelection}>
+                <option value="">Sélectionner le nombre de places</option>
+                {places.map((time, index) => (
+                  <option key={index} value={time}>{time}</option>
                 ))}
               </select>
             </div>
