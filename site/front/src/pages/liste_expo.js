@@ -68,6 +68,7 @@ const ListesExpos = () => {
       // Filtrer les expositions en fonction de la date
       const expositionsFiltrees = expositions.filter(expo => {
         const dateFiltreLowerCase = dateFiltre.toLowerCase();
+        console.log(dateFiltreLowerCase);
         const dateDebutLowerCase = expo.date_debut.toLowerCase();
         const dateFinLowerCase = expo.date_fin.toLowerCase();
         
