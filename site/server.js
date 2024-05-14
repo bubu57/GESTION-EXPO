@@ -44,8 +44,6 @@ let quotanb = [];
 
 app.post('/api/login', async (req, res) => {
   try {
-    const username  = req.body.username;
-    const password = req.body.password;
     const sql = `SELECT * FROM Admin WHERE user = '${req.body.username}' AND password = '${req.body.password}';`;
     const results = await queryAsync(sql);
     if (results.length > 0) {
@@ -83,7 +81,6 @@ app.get('/api/app', async (req, res) => {
 
 app.get('/api/allexpo', async (req, res) => {
   try {
-    const today = new Date().toISOString().split('T')[0];
     const expositionQuery = `SELECT *, DATE_FORMAT(date_debut, '%d/%m/%Y') AS date_debut, DATE_FORMAT(date_fin, '%d/%m/%Y') AS date_fin FROM Exposition`;
     const lieuQuery = 'SELECT * FROM Lieu';
     const [expositionResults, lieuResults] = await Promise.all([
@@ -133,7 +130,7 @@ app.post('/api/enregistrement', async (req, res) => {
 
 app.post('/api/register_user', async (req, res) => {
   try {
-    const lieuQuery = `INSERT INTO Visiteur (nom, prenom, email, id_expo, date_entree, heure) VALUES ("${req.body.nom}", "${req.body.prenom}", "${req.body.mail}", "${req.body.id_expo}", "${req.body.date_debut}", "${req.body.heure}")`;
+    const lieuQuery = `INSERT INTO Visiteur (nom, prenom, email, id_expo, date_entree, heure, places) VALUES ("${req.body.nom}", "${req.body.prenom}", "${req.body.mail}", "${req.body.id_expo}", "${req.body.date_debut}", "${req.body.heure}", ${req.body.places})`;
     await queryAsync(lieuQuery);
     res.json({ success: true, message: 'Enregistrement réussi' });
   } catch (error) {

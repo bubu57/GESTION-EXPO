@@ -20,6 +20,8 @@ const FormEnregistrements = ({expositionf}) => {
   let [heureliste, setheurelist] = useState([]);
   const [selectedTime, setSelectedTime] = useState('');
   const [heured, setHeured] = useState('');
+  const [places, setplaces] = useState(1);
+  const [selectedPlaces, setSelectedPlaces] = useState(1);
   const [heuref, setHeuref] = useState('');
   const [nomexpo, setNomexpo] =  useState('');
   const [Adresse, setAdresse] =  useState('');
@@ -237,6 +239,11 @@ const FormEnregistrements = ({expositionf}) => {
     });
   };
 
+  const handlePlacesSelection = (e) => {
+    const selectedPlaces = parseInt(e.target.value);
+    setSelectedPlaces(selectedPlaces);
+  };
+
   const sendMail = async () => {
     const { nom, prenom, mail, subject, date_debut, id_expo, heure } = formData;
     const qrCodeDataURL = await generateQRCode(formData); // Générer le QR code
@@ -361,6 +368,17 @@ const FormEnregistrements = ({expositionf}) => {
                 <option value="">Sélectionner une heure</option>
                 {heureliste.map((time, index) => (
                   <option key={index} value={time}>{time}</option>
+                ))}
+              </select>
+            </div>
+            <div className='div-input'>
+              <p>Nombre de places</p>
+              <select
+                value={selectedPlaces}
+                onChange={handlePlacesSelection}
+              >
+                {[...Array(Math.min(10, places) + 1).keys()].slice(1).map((place) => (
+                  <option key={place} value={place}>{place}</option>
                 ))}
               </select>
             </div>
