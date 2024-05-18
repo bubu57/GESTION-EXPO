@@ -172,7 +172,6 @@ app.post('/api/dadmins', async (req, res) => {
   }
 });
 
-
 app.post('/api/dexpo', async (req, res) => {
   try {
     const query = `DELETE Exposition, Lieu FROM Exposition INNER JOIN Lieu ON Exposition.id = Lieu.id WHERE Exposition.id = ${req.body.id}`;
