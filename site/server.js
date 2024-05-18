@@ -40,6 +40,7 @@ app.use(express.json());
 app.use(express.static('front/build'));
 app.use(bodyParser.json());
 
+
 let quotanb = [];
 
 app.post('/api/login', async (req, res) => {
