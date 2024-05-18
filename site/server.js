@@ -209,6 +209,7 @@ app.get('/*', (_, res) => {
   res.sendFile(path.join(__dirname, '/front/build/index.html'));
 });
 
+
 app.listen(PORT, () => {
   console.log(`Serveur lancé sur le port: ${PORT}`);
 });
