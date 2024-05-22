@@ -4,7 +4,6 @@ const mysql = require('mysql2');
 require('dotenv').config({ path: 'config/.env' });
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 const SECRET_KEY = 'secretkey123';
