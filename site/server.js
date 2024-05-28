@@ -8,6 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const SECRET_KEY = 'secretkey123';
 
+
 const pool = mysql.createPool({
   connectionLimit: 1000,
   host: process.env.DB_HOST,
