@@ -201,21 +201,15 @@ const FormEnregistrements = ({expositionf}) => {
     const step = estimation
     const schedule = [];
 
-    let [hours, minutes, seconds] = heured.split(':');
+    let [hours, minutes, seconds] = heured.split(':').map(Number);
     let date = new Date();
-    date.setHours(hours);
-    date.setMinutes(minutes);
-    date.setSeconds(seconds);
-    date.setMilliseconds(0);
+    date.setHours(hours, minutes, seconds, 0);
     const start = date;
 
-    [hours, minutes, seconds] = heuref.split(':');
+    [hours, minutes, seconds] = heuref.split(':').map(Number);
     date = new Date();
-    date.setHours(hours);
-    date.setMinutes(minutes);
-    date.setSeconds(seconds);
-    date.setMilliseconds(0);
-    const end = heuref;
+    date.setHours(hours, minutes, seconds, 0);
+    const end = date;
 
 
     console.log(start);
