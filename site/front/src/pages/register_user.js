@@ -9,13 +9,11 @@ import "../styles/register_user.css";
 import logo from '../img/logo.png';
 
 const FormEnregistrements = ({expositionf}) => {
-  const [expositions, setExpositions] = useState([]);
   const [dat, setdat] = useState(true);
-  const [quota, setQuota] = useState();
+  const [quota, setQuota] = useState(0);
   const [dateDebut, setdateDebut] = useState("2024/01/01");
   const [dateFin, setdateFin] = useState("2024/01/02");
   const [estimation, setEstimation] = useState(0);
-  let [dispo, setdispo] = useState(0);
   
   let [heureliste, setheurelist] = useState([]);
   const [selectedTime, setSelectedTime] = useState('');
@@ -69,8 +67,6 @@ const FormEnregistrements = ({expositionf}) => {
       id_expo: expositionf.id,
     });
     setQuota(expositionf.quota);
-    console.log("quota",quota)
-    console.log("return ",expositionf.quota)
     setdat(false)
   }
 
@@ -107,11 +103,10 @@ const FormEnregistrements = ({expositionf}) => {
     });
 
     const now = dayjs().format('YYYY-MM-DD');
-    if (e.target.value == now) {
-      generateReservationTimes(dayjs().format('HH:mm'), heuref, estimation, e.target.value);
-    } else {
-      generateReservationTimes(heured, heuref, estimation, e.target.value);
-    }
+
+    generateReservationTimes(heured, heuref, estimation, e.target.value);
+
+
   };
 
   function convertDateToISO(dateInput) {
@@ -219,7 +214,6 @@ const FormEnregistrements = ({expositionf}) => {
         }
         let checkplace = getresa(response.data, currentTimeString);
         let nbplaces = quota - checkplace;
-        console.log("f",quota)
         if (checkplace >= quota) {
         } else {
           schedule.push(`${currentTimeString} - ${nbplaces} place(s) restante(s)`);
@@ -228,6 +222,7 @@ const FormEnregistrements = ({expositionf}) => {
       }
       setheurelist(schedule);
     });
+    console.log(heureliste);
   };
   
   
