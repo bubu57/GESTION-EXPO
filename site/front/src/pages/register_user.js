@@ -101,8 +101,14 @@ const FormEnregistrements = ({expositionf}) => {
     });
 
     const now = dayjs().format('YYYY-MM-DD');
+    let status = true;
 
-    generateReservationTimes(heured, heuref, estimation, e.target.value);
+    if (now == e.target.value) {
+      generateReservationTimes(heured, heuref, estimation, e.target.value, status);
+    } else {
+      status = false;
+      generateReservationTimes(heured, heuref, estimation, e.target.value, status);
+    }
 
 
   };
@@ -190,8 +196,26 @@ const FormEnregistrements = ({expositionf}) => {
     return(count);
   }
 
+  function removePastTimes(schedule) {
+    const now = new Date();
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
   
-  const generateReservationTimes = async (heured, heuref, est, datee) => {
+    const filteredSchedule = schedule.filter(timeSlot => {
+      const [time, ] = timeSlot.split(' - ');
+      const [hour, minute] = time.split(':').map(Number);
+  
+      if (hour > currentHour || (hour === currentHour && minute >= currentMinute)) {
+        return true;
+      }
+      return false;
+    });
+  
+    return filteredSchedule;
+  }
+
+  
+  const generateReservationTimes = async (heured, heuref, est, datee, now) => {
     const step = estimation
     const start = new Date(`2000-01-01T${heured}`);
     const end = new Date(`2000-01-01T${heuref}`);
@@ -214,8 +238,12 @@ const FormEnregistrements = ({expositionf}) => {
         }
         currentTime.setMinutes(currentTime.getMinutes() + step);
       }
-      setheurelist(schedule);
-      console.log("heure listes", schedule);
+      if (now == true) {
+        setheurelist(removePastTimes(schedule));
+      } else {
+        setheurelist(schedule);
+      }
+
     });
   };
   
