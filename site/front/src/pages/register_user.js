@@ -199,8 +199,8 @@ const FormEnregistrements = ({expositionf}) => {
   
   const generateReservationTimes = async (heured, heuref, est, datee) => {
     const step = estimation
-    const start = new Date(`${heured}`);
-    const end = new Date(`${heuref}`);
+    const start = heured;
+    const end = heuref;
     const schedule = [];
 
     console.log(heuref);
