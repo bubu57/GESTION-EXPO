@@ -46,6 +46,7 @@ const FormEnregistrements = ({expositionf}) => {
   function recup () {
     console.log(expositionf.id)
     setQuota(expositionf.quota);
+    console.log(quota)
 
     const now = dayjs().format('YYYY-MM-DD');
     const datedeb = convertDateToISO(expositionf.date_debut)
@@ -218,7 +219,6 @@ const FormEnregistrements = ({expositionf}) => {
         let checkplace = getresa(response.data, currentTimeString);
         let nbplaces = quota - checkplace;
         console.log(quota)
-        console.log(checkplace)
         if (checkplace >= quota) {
         } else {
           schedule.push(`${currentTimeString} - ${nbplaces} place(s) restante(s)`);
