@@ -215,8 +215,8 @@ const FormEnregistrements = ({expositionf}) => {
         currentTime.setMinutes(currentTime.getMinutes() + step);
       }
       setheurelist(schedule);
+      console.log("heure listes", schedule);
     });
-    console.log("heure listes", heureliste);
   };
   
   
