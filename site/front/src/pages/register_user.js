@@ -42,13 +42,11 @@ const FormEnregistrements = ({expositionf}) => {
 
 
   function recup () {
-    console.log(expositionf.id)
 
     const now = dayjs().format('YYYY-MM-DD');
     const datedeb = convertDateToISO(expositionf.date_debut)
     if (datedeb <= now) {
       setdateDebut(dayjs().format('DD/MM/YYYY'))
-      console.log(dayjs().format('YYYY-MM-DD'))
     } else {
       setdateDebut(expositionf.date_debut);
     }
@@ -189,7 +187,6 @@ const FormEnregistrements = ({expositionf}) => {
         count = count + 1
       }
     }
-    console.log(count);
     return(count);
   }
 
@@ -199,14 +196,11 @@ const FormEnregistrements = ({expositionf}) => {
     const start = new Date(`2000-01-01T${heured}`);
     const end = new Date(`2000-01-01T${heuref}`);
     const schedule = [];
-
-    console.log(end);
   
     let currentTime = new Date(start);
   
     await axios.post('/api/quota', { id_expo: reqData.id_expo, date_debut: datee });
     await axios.get('/api/quotanb').then(response => {
-      console.log(response.data);
       while (currentTime < end) {
         const currentTimeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         if (currentTime.getMinutes() + step >= end || schedule.includes(currentTimeString)) {
@@ -222,7 +216,7 @@ const FormEnregistrements = ({expositionf}) => {
       }
       setheurelist(schedule);
     });
-    console.log(heureliste);
+    console.log("heure listes", heureliste);
   };
   
   
