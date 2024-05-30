@@ -203,7 +203,7 @@ const FormEnregistrements = ({expositionf}) => {
     const end = new Date(`${heuref}`);
     const schedule = [];
 
-    console.log(end);
+    console.log(heuref);
   
     let currentTime = new Date(start);
   
