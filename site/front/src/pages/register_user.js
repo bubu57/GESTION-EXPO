@@ -268,6 +268,7 @@ const FormEnregistrements = ({expositionf}) => {
       qrCodeDataURL: qrCodeDataURL // Ajouter l'URL de données du QR code aux données du formulaire
     };
   
+    
     const formDataString = JSON.stringify(formDataWithQRCode);
     const formDataBlob = new Blob([formDataString], { type: "application/json" });
     const formDataFile = new File([formDataBlob], "formData.json", { type: "application/json" });
