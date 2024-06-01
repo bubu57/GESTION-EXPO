@@ -259,8 +259,6 @@ const FormEnregistrements = ({expositionf}) => {
     });
   };
 
-
-
   const sendMail = async () => {
     const { nom, prenom, mail, subject, date_debut, id_expo, heure } = formData;
     const qrCodeDataURL = await generateQRCode(formData); // Générer le QR code
