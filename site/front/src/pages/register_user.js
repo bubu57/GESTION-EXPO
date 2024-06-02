@@ -195,6 +195,7 @@ const FormEnregistrements = ({expositionf}) => {
     }
     return(count);
   }
+  
 
   function removePastTimes(schedule) {
     const now = new Date();
