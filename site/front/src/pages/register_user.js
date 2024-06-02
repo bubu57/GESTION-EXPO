@@ -247,7 +247,6 @@ const FormEnregistrements = ({expositionf}) => {
     });
   };
   
-  
 
   // Fonction appelée lorsque l'utilisateur choisit une heure
   const handleTimeSelection = (e) => {
