@@ -34,7 +34,6 @@ const FormEnregistrements = ({expositionf}) => {
     subject: ''
   });
 
-
   const [reqData, setReqData] = useState({
     date_debut: '',
     id_expo: '',
