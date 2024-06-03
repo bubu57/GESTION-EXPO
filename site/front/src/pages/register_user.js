@@ -40,6 +40,7 @@ const FormEnregistrements = ({expositionf}) => {
     id_expo: '',
   });
 
+  
   function recup () {
 
     const now = dayjs().format('YYYY-MM-DD');
