@@ -72,7 +72,6 @@ const FormEnregistrements = ({expositionf}) => {
     recup()
   }
 
-  
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://smtpjs.com/v3/smtp.js';
