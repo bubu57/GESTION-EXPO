@@ -128,14 +128,14 @@ const FormEnregistrements = ({expositionf}) => {
     return formattedDate;
   }
 
-  const generateQRCode = async (formData) => {
+  const generateQRCode = async (formDataz) => {
     try {
-      if (!formData || !formData.prenom || !formData.nom || !formData.date_debut || !formData.id_expo || !formData.heure) {
+      if (!formDataz || !formDataz.prenom || !formDataz.nom || !formDataz.date_debut || !formDataz.id_expo || !formDataz.heure) {
         throw new Error('Les données du formulaire sont incomplètes.');
       }
   
       // Création d'une chaîne de données à partir des informations du formulaire
-      const qrCodeData = `${formData.prenom};${formData.nom};${dayjs(formData.date_debut).format('YYYY-MM-DD')};${formData.id_expo};${formData.heure};${formData.mail};${formData.userID}`;
+      const qrCodeData = `${formDataz.prenom};${formDataz.nom};${dayjs(formDataz.date_debut).format('YYYY-MM-DD')};${formDataz.id_expo};${formDataz.heure};${formDataz.mail};${formDataz.userId}`;
       console.log(qrCodeData);
       // Clé de chiffrement
       const key = CryptoJS.enc.Utf8.parse('3759203564904835');
