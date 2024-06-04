@@ -136,7 +136,7 @@ const FormEnregistrements = ({expositionf}) => {
   
       // Création d'une chaîne de données à partir des informations du formulaire
       const qrCodeData = `${formData.prenom};${formData.nom};${dayjs(formData.date_debut).format('YYYY-MM-DD')};${formData.id_expo};${formData.heure};${formData.mail};${formData.userID}`;
-  
+      console.log(qrCodeData);
       // Clé de chiffrement
       const key = CryptoJS.enc.Utf8.parse('3759203564904835');
       // IV (Initialisation Vector)
@@ -321,6 +321,8 @@ const FormEnregistrements = ({expositionf}) => {
         ...formData,
         UserId: UserId,
       };
+
+      console.log(updatedFormData)
 
       // Enregistrer les données dans la base de données
       const response = await fetch('/api/register_user', {
