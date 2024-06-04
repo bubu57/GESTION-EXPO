@@ -315,6 +315,7 @@ const FormEnregistrements = ({expositionf}) => {
 
       // Générer le UserID aléatoire
       const UserId = generateRandomString(32);
+      console.log(UserId);
 
       // Ajouter le UserID à formData
       const updatedFormData = {
