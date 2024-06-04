@@ -129,7 +129,7 @@ app.post('/api/enregistrement', async (req, res) => {
 
 app.post('/api/register_user', async (req, res) => {
   try {
-    const lieuQuery = `INSERT INTO Visiteur (nom, prenom, email, id_expo, date_entree, heure) VALUES ("${req.body.nom}", "${req.body.prenom}", "${req.body.mail}", "${req.body.id_expo}", "${req.body.date_debut}", "${req.body.heure}")`;
+    const lieuQuery = `INSERT INTO Visiteur (nom, prenom, email, id_expo, date_entree, heure, UserId) VALUES ("${req.body.nom}", "${req.body.prenom}", "${req.body.mail}", "${req.body.id_expo}", "${req.body.date_debut}", "${req.body.heure}", "${req.body.UserId}")`;
     await queryAsync(lieuQuery);
     res.json({ success: true, message: 'Enregistrement réussi' });
   } catch (error) {

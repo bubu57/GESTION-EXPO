@@ -72,6 +72,18 @@ const FormEnregistrements = ({expositionf}) => {
     recup()
   }
 
+  function genid (length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    let result = '';
+    const charactersLength = characters.length;
+  
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+  
+    return result;
+  }
+
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://smtpjs.com/v3/smtp.js';
@@ -123,7 +135,7 @@ const FormEnregistrements = ({expositionf}) => {
       }
   
       // Création d'une chaîne de données à partir des informations du formulaire
-      const qrCodeData = `${formData.prenom};${formData.nom};${dayjs(formData.date_debut).format('YYYY-MM-DD')};${formData.id_expo};${formData.heure};${formData.mail}`;
+      const qrCodeData = `${formData.prenom};${formData.nom};${dayjs(formData.date_debut).format('YYYY-MM-DD')};${formData.id_expo};${formData.heure};${formData.mail};${formData.userID}`;
   
       // Clé de chiffrement
       const key = CryptoJS.enc.Utf8.parse('3759203564904835');
@@ -256,9 +268,9 @@ const FormEnregistrements = ({expositionf}) => {
     });
   };
 
-  const sendMail = async () => {
+  const sendMail = async (updatedFormData) => {
     const { nom, prenom, mail, subject, date_debut, id_expo, heure } = formData;
-    const qrCodeDataURL = await generateQRCode(formData); // Générer le QR code
+    const qrCodeDataURL = await generateQRCode(updatedFormData); // Générer le QR code
   
     const formDataWithQRCode = {
       ...formData,
@@ -300,24 +312,34 @@ const FormEnregistrements = ({expositionf}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+
+      // Générer le UserID aléatoire
+      const UserId = generateRandomString(32);
+
+      // Ajouter le UserID à formData
+      const updatedFormData = {
+        ...formData,
+        UserId: UserId,
+      };
+
       // Enregistrer les données dans la base de données
       const response = await fetch('/api/register_user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(updatedFormData),
       });
       
       if (!response.ok) {
         throw new Error('Erreur lors de l\'enregistrement des données dans la base de données');
       }
 
-      const qrCodeDataURL = await generateQRCode(formData);
+      const qrCodeDataURL = await generateQRCode(updatedFormData);
       await handleSaveQRCodeAsPDF(qrCodeDataURL);
       
       // Envoyer l'email après l'enregistrement des données
-      await sendMail();
+      await sendMail(updatedFormData);
   
       console.log('Données enregistrées dans la base de données avec succès');
   
