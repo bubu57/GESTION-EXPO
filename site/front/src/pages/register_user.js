@@ -72,7 +72,7 @@ const FormEnregistrements = ({expositionf}) => {
     recup()
   }
 
-  function genid (length) {
+  function generateRandomString (length) {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     let result = '';
     const charactersLength = characters.length;
