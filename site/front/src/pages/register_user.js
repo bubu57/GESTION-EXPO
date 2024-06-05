@@ -333,7 +333,7 @@ const FormEnregistrements = ({expositionf}) => {
         },
         body: JSON.stringify(updatedFormData),
       });
-      
+
       if (!response.ok) {
         throw new Error('Erreur lors de l\'enregistrement des données dans la base de données');
       }
@@ -343,8 +343,11 @@ const FormEnregistrements = ({expositionf}) => {
       
       // Envoyer l'email après l'enregistrement des données
       await sendMail(updatedFormData);
-  
       console.log('Données enregistrées dans la base de données avec succès');
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
   
     } catch (error) {
       console.error('Erreur lors de la soumission du formulaire:', error);
