@@ -138,12 +138,9 @@ const FormEnregistrements = ({expositionf}) => {
       const qrCodeData = `${formDataz.prenom};${formDataz.nom};${dayjs(formDataz.date_debut).format('YYYY-MM-DD')};${formDataz.id_expo};${formDataz.heure};${formDataz.mail};${formDataz.UserId}`;
       console.log(qrCodeData);
       // Clé de chiffrement
-      const key = CryptoJS.enc.Utf8.parse('3759203564904835');
-      // IV (Initialisation Vector)
-      const iv = CryptoJS.enc.Utf8.parse('3759203564904835');
+      const encryptedDataResponse = await axios.post('/api/encrypt', { data: qrCodeData });
+      const encryptedData = encryptedDataResponse.data.encryptedData;
       // Chiffrement AES
-      const encrypted = CryptoJS.AES.encrypt(qrCodeData, key, { iv: iv });
-  
       // Génération du QR code avec les données chiffrées
       const qrCodeDataURL = await QRCode.toDataURL(encrypted.toString());
   

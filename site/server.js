@@ -4,9 +4,13 @@ const mysql = require('mysql2');
 require('dotenv').config({ path: 'config/.env' });
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
+const CryptoJS = require('crypto-js');
 const app = express();
 const PORT = process.env.PORT || 5000;
 const SECRET_KEY = 'secretkey123';
+
+const AES_KEY = CryptoJS.enc.Utf8.parse('3759203564904835'); // Your AES key
+const AES_IV = CryptoJS.enc.Utf8.parse('3759203564904835'); // Your AES IV
 
 const pool = mysql.createPool({
   connectionLimit: 1000,
@@ -40,6 +44,13 @@ app.use(express.static('front/build'));
 app.use(bodyParser.json());
 
 let quotanb = [];
+
+// Ajout de l'endpoint pour le chiffrement AES
+app.post('/api/encrypt', (req, res) => {
+  const { data } = req.body;
+  const encrypted = CryptoJS.AES.encrypt(data, AES_KEY, { iv: AES_IV }).toString();
+  res.json({ encrypted });
+});
 
 app.post('/api/login', async (req, res) => {
   try {
