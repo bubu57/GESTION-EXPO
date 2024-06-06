@@ -267,46 +267,44 @@ const FormEnregistrements = ({expositionf}) => {
       heure: heurebrt,
     });
   };
-  const nodemailer = require('nodemailer');
 
-  const sendMail = async (updatedFormData, qrCodeDataURL) => {
-    const { nom, prenom, mail, date_debut, heure, nomexpo } = updatedFormData;
+  const sendMail = async (updatedFormData) => {
+    const { nom, prenom, mail, subject, date_debut, id_expo, heure } = formData;
+    const qrCodeDataURL = await generateQRCode(updatedFormData); // Générer le QR code
   
-    // Configuration du transporteur
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'exposgratuites@gmail.com', // Votre adresse e-mail Gmail
-        pass: 'gestionexpo2024' // Votre mot de passe Gmail
-      }
-    });
-  
-    // Options de l'e-mail
-    const mailOptions = {
-      from: 'exposgratuites@gmail.com',
-      to: mail,
-      subject: 'Votre Réservation',
-      text: `Merci pour votre réservation pour l'exposition "${nomexpo}" le ${date_debut} à ${heure} ! Veuillez trouver ci-joint votre QR code.`,
-      attachments: [
-        {
-          filename: 'QRCode.png',
-          content: qrCodeDataURL.split(';base64,').pop(), // Données du QR code sans l'en-tête base64
-          encoding: 'base64' // Encodage des données du QR code
-        }
-      ]
+    const formDataWithQRCode = {
+      ...formData,
+      qrCodeDataURL: qrCodeDataURL // Ajouter l'URL de données du QR code aux données du formulaire
     };
   
+    
+    const formDataString = JSON.stringify(formDataWithQRCode);
+    const formDataBlob = new Blob([formDataString], { type: "application/json" });
+    const formDataFile = new File([formDataBlob], "formData.json", { type: "application/json" });
+  
+    const formDataAttachment = new FormData();
+    formDataAttachment.append("formData", formDataFile);
+  
     try {
-      // Envoi de l'e-mail
-      const info = await transporter.sendMail(mailOptions);
-      console.log('E-mail envoyé:', info.response);
-      alert("Email envoyé avec succès, veuillez vérifier votre boîte de réception !");
+      await window.Email.send({
+        SecureToken: "de3b96be-d360-4f4b-987d-47c0282903be",
+        To: mail,
+        From: "exposgratuites@gmail.com",
+        Subject: "Votre Réservation",
+        Body: `Merci pour votre réservation pour l'exposition "${nomexpo}" le ${date_debut} à ${heure} ! Veuillez trouver ci-joint votre QR code.`,
+        Attachments: [
+          {
+            name: "QRCode.png",
+            data: qrCodeDataURL // Inclure le QR code en tant que pièce jointe
+          }
+        ]
+      });
+      alert("Email envoyé avec succès merci de vérifier vos spams !");
     } catch (error) {
       console.error('Erreur lors de l envoi de l email:', error);
-      alert("Une erreur s'est produite lors de l'envoi de l'e-mail");
+      alert("Une erreur s'est produite lors de l'envoi de l'email");
     }
   };
-  
   
 
   
