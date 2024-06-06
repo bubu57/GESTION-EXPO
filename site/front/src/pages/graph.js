@@ -64,7 +64,7 @@ const ListesExpos = () => {
     const ctx = document.getElementById('bar-chart');
 
     const expoLabels = expositionsFiltrees.map(expo => expo.nom);
-    const visiteurData = expositionsFiltrees.map(expo => expo.visiteur);
+    const visiteurData = expositionsFiltrees.map(expo => expo.visiteur_tot);
     new Chart(ctx, {
       type: 'bar',
       data: {
@@ -216,7 +216,7 @@ const ListesExpos = () => {
                     <p class='historique-label'><strong>Horaire:</strong> {expo.heure_debut} - {expo.heure_fin}</p>
                     <p class='historique-label'><strong>Adresse:</strong> {expo.numero} {expo.rue}, {expo.cp} {expo.ville}</p>
                     <p class='historique-label'><strong>Coordonnées:</strong> {expo.latitude}, {expo.longitude}</p>
-                    <p class='historique-label'><strong>Nombre de visiteurs:</strong> {expo.visiteur}</p>
+                    <p class='historique-label'><strong>Nombre de visiteurs:</strong> {expo.visiteur_tot}</p>
                 </div>
               </div>
             </div>
