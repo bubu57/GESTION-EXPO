@@ -142,7 +142,7 @@ const FormEnregistrements = ({expositionf}) => {
       const encryptedData = encryptedDataResponse.data.encryptedData;
       // Chiffrement AES
       // Génération du QR code avec les données chiffrées
-      const qrCodeDataURL = await QRCode.toDataURL(encrypted.toString());
+      const qrCodeDataURL = await QRCode.toDataURL(encryptedData.toString());
   
       return qrCodeDataURL;
     } catch (error) {
