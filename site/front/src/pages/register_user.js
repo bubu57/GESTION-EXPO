@@ -128,7 +128,7 @@ const FormEnregistrements = ({expositionf}) => {
     return formattedDate;
   }
 
-  const generateQRCode = async (formDataz, aesKey) => {
+  const generateQRCode = async (formDataz) => {
     try {
       if (!formDataz || !formDataz.prenom || !formDataz.nom || !formDataz.date_debut || !formDataz.id_expo || !formDataz.heure) {
         throw new Error('Les données du formulaire sont incomplètes.');
@@ -138,9 +138,9 @@ const FormEnregistrements = ({expositionf}) => {
       const qrCodeData = `${formDataz.prenom};${formDataz.nom};${dayjs(formDataz.date_debut).format('YYYY-MM-DD')};${formDataz.id_expo};${formDataz.heure};${formDataz.mail};${formDataz.UserId}`;
       console.log(qrCodeData);
       // Clé de chiffrement
-      const key = CryptoJS.enc.Utf8.parse(aesKey);
+      const key = CryptoJS.enc.Utf8.parse('3759203564904835');
       // IV (Initialisation Vector)
-      const iv = CryptoJS.enc.Utf8.parse(aesKey);
+      const iv = CryptoJS.enc.Utf8.parse('3759203564904835');
       // Chiffrement AES
       const encrypted = CryptoJS.AES.encrypt(qrCodeData, key, { iv: iv });
   
@@ -153,7 +153,7 @@ const FormEnregistrements = ({expositionf}) => {
       throw error;
     }
   };
-
+  
 
   const handleSaveQRCodeAsPDF = async (qrCodeDataURL) => {
     try {
