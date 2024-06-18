@@ -1,0 +1,72 @@
+.register_expo-container {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.register_expo-form {
+  margin-top: 50px;
+  max-width: 800px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding-bottom: 100px;
+  text-align: left;
+}
+
+.register_expo-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.register_expo-form-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.register_expo-div-input {
+  width: 100%;
+  margin-top: 20px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  font-size: 16px;
+}
+
+.register_expo-suggestions-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.register_expo-suggestions-list li {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.register_expo-suggestions-list li:hover {
+  background-color: #f0f0f0;
+}
+
+.register_expo-coordonnee {
+  font-size: 14px;
+  color: #888;
+}
+
+.register_expo-but {
+  margin-top: 20px;
+}

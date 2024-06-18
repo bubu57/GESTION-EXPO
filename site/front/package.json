@@ -1,0 +1,66 @@
+{
+  "name": "front",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emailjs/browser": "^4.3.3",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
+    "@iconify/icons-mdi": "^1.2.48",
+    "@iconify/react": "^4.1.1",
+    "@mui/material": "^5.15.13",
+    "axios": "^1.6.7",
+    "chart.js": "^4.4.2",
+    "child_process": "^1.0.2",
+    "child-process": "^1.0.2",
+    "childprocess": "^2.0.2",
+    "crypto": "^1.0.1",
+    "crypto-js": "^4.2.0",
+    "dayjs": "^1.11.10",
+    "fs": "^0.0.1-security",
+    "google-map-react": "^2.2.1",
+    "iconify": "^1.4.0",
+    "jspdf": "^2.5.1",
+    "leaflet": "^1.9.4",
+    "ol": "^9.0.0",
+    "qrcode": "^1.5.3",
+    "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3",
+    "react-simple-maps": "^3.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:5000",
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "depcheck": "^1.4.7",
+    "html-loader": "^5.0.0",
+    "react-scripts": "^5.0.1"
+  },
+  "browser": {
+    "crypto": false
+  }
+}

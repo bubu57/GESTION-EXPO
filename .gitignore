@@ -1,0 +1,6 @@
+site/node_modules
+site/config
+.vscode
+node_modules
+.idx
+.env

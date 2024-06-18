@@ -1,0 +1,101 @@
+/* historique-listesExpos.css */
+
+/* Reset des styles par défaut */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Utilisation de la même police d'écriture que dans le header */
+body, input, button, select, textarea {
+  font-family: 'Roboto', sans-serif; /* Police d'écriture */
+}
+
+/* Style pour le titre */
+.historique-div-titre {
+  margin-bottom: 30px; /* Plus d'espace en bas du titre */
+  margin-top: 50px;
+}
+
+.historique-titre {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Style pour la zone de recherche */
+.historique-search {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  padding-left: 4%;
+  padding-right: 4%;
+}
+
+.historique-div-input {
+  flex: 1;
+  margin-right: 20px; /* Plus d'espace à droite des champs de recherche */
+}
+
+.historique-input {
+  width: 100%;
+  padding: 12px; /* Un peu plus de padding */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.historique-nb-expo {
+  padding: 30px;
+}
+
+/* Style pour le contenu des expositions */
+.historique-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding-left: 4%;
+  padding-right: 4%;
+  width: 100%;
+}
+
+.historique-expo {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  width: 100%;
+  padding: 20px;
+}
+
+.historique-text-expo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px; /* Plus d'espace en bas du texte de l'exposition */
+}
+
+
+.historique-expo-content {
+  display: flex;
+  align-items: center;
+}
+
+.historique-expo-text {
+  flex: 1;
+}
+
+.historique-label {
+  font-size: 16px;
+  color: #6c757d;
+  margin-bottom: 10px;
+}
+
+.historique-canvas, .historique-maps {
+  margin-top: 50px;
+  padding-left: 4%;
+  padding-right: 4%;
+}
+
+.historique-maps {
+  padding-bottom: 100px;
+}

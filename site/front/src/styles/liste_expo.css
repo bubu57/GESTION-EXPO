@@ -1,0 +1,199 @@
+/* acceuil-global.css */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f7f8fa;
+  color: #1a202c;
+  margin: 0;
+  padding: 0;
+}
+
+.acceuil-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+  margin-top: 9px;
+}
+
+.acceuil-status {
+  width: 100px;
+  height: 30px;
+  display: flex;
+}
+
+/* Style pour la pastille de statut des expositions à venir */
+.status-coming {
+  background-color: orange; /* Couleur orange */
+}
+
+/* Style pour la pastille de statut des expositions en cours */
+.status-in-progress {
+  background-color: green; /* Couleur verte */
+}
+
+/* Titre styles */
+.acceuil-div-titre {
+  margin-bottom: 20px;
+}
+
+.acceuil-titre {
+  font-size: 32px;
+  font-weight: bold;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+/* Search section styles */
+.acceuil-search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.acceuil-div-input {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.acceuil-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #495057;
+  font-size: 16px;
+}
+
+.acceuil-input::placeholder {
+  color: #6c757d;
+}
+
+/* Content styles */
+.acceuil-content {
+  display: block;
+  gap: 20px;
+  padding-left: 4%;
+  padding-right: 4%;
+  width: 100%;
+  padding-bottom: 100px;
+}
+
+.acceuil-box-flex {
+  display: flex;
+  width: 100%;
+  padding-top: 20px;
+}
+
+.acceuil-overlay {
+  margin-left: 2%;
+  margin-right: 2%;
+  padding-bottom: 20px; 
+}
+
+.acceuil-expo {
+  background-color: #ffffff;
+  border-radius: 10px;
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.acceuil-expo-box {
+  width: 25%;
+  margin-right: 3%;
+  margin-left: 2%;
+}
+
+.acceuil-expo:hover {
+  transform: translateY(-5px);
+}
+
+.acceuil-text-expo {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.acceuil-expo-content {
+  width: 47%;
+  margin-right: 3%;
+}
+
+.acceuil-maps-link {
+  font-size: 16px;
+  color: #2e7d32;
+}
+
+.acceuil-maps-box {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+.acceuil-description-txt {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #6c757d;
+}
+
+.acceuil-label-type,
+.acceuil-status-txt,
+.acceuil-label-quota,
+.acceuil-label-date,
+.acceuil-label-ville,
+.acceuil-label-heure,
+.acceuil-labell {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #6c757d;
+}
+
+.acceuil-boutton-box {
+  margin-top: 30px;
+  width: 18%;
+  margin-right: 2%;
+}
+
+.acceuil-reserver {
+  margin-top: 10px;
+}
+
+.acceuil-details p {
+  margin: 5px 0;
+}
+
+.acceuil-details button {
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 700px){
+  .acceuil-box-flex {
+    display: block;
+  }
+
+  .acceuil-expo-box, .acceuil-expo-content, .acceuil-boutton-box {
+    margin-left: 4%;
+    margin-right: 4%;
+    width: 92%;
+  }
+
+  .acceuil-boutton-box {
+    padding-bottom: 20px;
+  }
+
+  .acceuil-expo-box {
+    padding-bottom: 10px;
+  }
+}
